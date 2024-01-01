@@ -27,6 +27,7 @@ version = "0.0.0"
 "Changelog" = "https://github.com/MartinHjelmare/aiohomeconnect/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
+httpx = "^0.26.0"
 python = "^3.11"
 
 [tool.poetry.group.dev.dependencies]
