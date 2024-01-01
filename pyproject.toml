@@ -85,12 +85,12 @@ pythonpath = ["src"]
 
 [tool.ruff]
 ignore = [
+  "ANN101", # missing-type-self
+  "ANN401", # any-type
   "D203", # 1 blank line required before class docstring
-  "D212", # Multi-line docstring summary should start at the first line
-  "D100", # Missing docstring in public module
-  "D104", # Missing docstring in public package
-  "D107", # Missing docstring in `__init__`
-  "D401", # First line of docstring should be in imperative mood
+  "D213", # Multi-line docstring summary should start at the second line
+  "D417", # False positives in some occasions
+  "PLR2004", # magic-value-comparison
 ]
 line-length = 88
 select = [

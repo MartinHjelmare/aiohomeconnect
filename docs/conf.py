@@ -5,7 +5,7 @@
 
 # Project information
 project = "aiohomeconnect"
-copyright = "2024, Martin Hjelmare"
+project_copyright = "2024, Martin Hjelmare"
 author = "Martin Hjelmare"
 release = "0.0.0"
 
