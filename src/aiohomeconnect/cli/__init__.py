@@ -6,7 +6,7 @@ from rich import print
 import typer
 import uvicorn
 
-from .client import TokenManager
+from .client import CLIClient, TokenManager
 
 cli = typer.Typer()
 app = FastAPI()
@@ -62,6 +62,36 @@ async def _authorize(client_id: str, client_secret: str) -> None:
 
     print(f"Visit the following URL to authorize this client:\n{uri}")
     await server.serve()
+
+
+@cli.command()
+def get_appliances(
+    client_id: str,
+    client_secret: str,
+) -> None:
+    """Get the appliances."""
+    asyncio.run(_get_appliances(client_id, client_secret))
+
+
+async def _get_appliances(
+    client_id: str,
+    client_secret: str,
+) -> None:
+    """Get the appliances."""
+    client = CLIClient(client_id, client_secret)
+    print(await client.get_appliances())
+
+
+@cli.command()
+def get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
+    """Get the operation state of the device."""
+    asyncio.run(_get_operation_state(client_id, client_secret, ha_id))
+
+
+async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
+    """Get the operation state of the device."""
+    client = CLIClient(client_id, client_secret)
+    print(await client.get_operation_state(ha_id))
 
 
 if __name__ == "__main__":

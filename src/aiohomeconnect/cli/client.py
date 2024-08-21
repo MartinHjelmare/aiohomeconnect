@@ -11,11 +11,36 @@ from typing import Any
 from authlib.integrations.httpx_client import AsyncOAuth2Client
 from httpx import AsyncClient
 
-from aiohomeconnect.client import AbstractAuth
-from aiohomeconnect.const import OAUTH2_AUTHORIZE, OAUTH2_TOKEN
+from aiohomeconnect.client import AbstractAuth, Client
+from aiohomeconnect.const import API_ENDPOINT, OAUTH2_AUTHORIZE, OAUTH2_TOKEN
 
 TOKEN_FILE = "token.json"  # noqa: S105
 TOKEN_EXPIRES_MARGIN = 20
+
+
+class CLIClient(Client):
+    """Represent a CLI client for Home Connect API."""
+
+    def __init__(
+        self,
+        client_id: str,
+        client_secret: str,
+        redirect_uri: str | None = None,
+        scope: str | None = None,
+    ) -> None:
+        """Initialize the client."""
+        super().__init__(
+            Auth(
+                AsyncClient(),
+                API_ENDPOINT,
+                TokenManager(
+                    client_id=client_id,
+                    client_secret=client_secret,
+                    redirect_uri=redirect_uri,
+                    scope=scope,
+                ),
+            ),
+        )
 
 
 class Auth(AbstractAuth):
