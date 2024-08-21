@@ -29,11 +29,7 @@ async def test_abstract_auth(httpx_client: AsyncClient, httpx_mock: HTTPXMock) -
 
     assert response.status_code == 200
     assert response.json() == {"test": "test_result"}
-    assert (
-        httpx_mock.get_request().headers["authorization"]
-        == f"Bearer {TEST_ACCESS_TOKEN}"
-    )
-    assert (
-        httpx_mock.get_request().url.query.decode(encoding="utf-8")
-        == "key1=value1&key2=value2"
-    )
+    request = httpx_mock.get_request()
+    assert request
+    assert request.headers["authorization"] == f"Bearer {TEST_ACCESS_TOKEN}"
+    assert request.url.query.decode(encoding="utf-8") == "key1=value1&key2=value2"
