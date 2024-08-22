@@ -140,6 +140,7 @@ known-first-party = ["aiohomeconnect", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "docs/conf.py" = ["D100"]
+"scripts/*" = ["ERA001", "T201"]
 "setup.py" = ["D100"]
 "src/aiohomeconnect/cli/*" = ["T201"]
 "tests/**/*" = [
