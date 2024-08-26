@@ -9,6 +9,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
+import re
 from typing import Any
 
 from yaml import CSafeLoader as SafeLoader  # type: ignore[import-untyped]
@@ -46,9 +47,10 @@ class Parameter:
 
     name: str
     in_: str
-    description: str | None
-    required: bool
-    type_: str
+    description: str | None = None
+    required: bool = False
+    type_: str | None = None
+    definition: str | None = None
 
 
 @dataclass
@@ -61,22 +63,41 @@ class SwaggerPathModel:
     operation_id: str
     description: str | None = None
     path_parameters: list[Parameter] | None = None
-    method_parameters: list[Parameter] | None = None
+    body_parameter: Parameter | None = None
 
     def generate_code(self) -> str:
         """Return the Python code as a string for this model."""
-        path_parameters = self.path_parameters or []
-        path_parameters_code = ", ".join(
-            f"{param.name}: {PATH_TYPE_MAP[param.type_]}"
-            for param in path_parameters
-            if param.in_ == "path"
+        parameters = self.path_parameters or []
+        body_parameter_name = ""
+        if (body_parameter := self.body_parameter) and (
+            definition := body_parameter.definition
+        ):
+            body_parameter_name = (
+                re.sub("([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", definition))
+                .split()[-1]
+                .lower()
+            )
+            body_parameter.name = body_parameter_name
+            parameters.append(body_parameter)
+        parameters_code = ", ".join(
+            f"{param.name}: "
+            f"{PATH_TYPE_MAP[param.type_] if param.type_ else param.definition}"
+            f"{' | None = None' if not param.required else ''}"
+            for param in sorted(parameters, key=lambda x: not x.required)
         ).strip()
         docstring = f"{self.summary}.\n\n    {self.description or ''}".strip()
-        signature = f"self, {path_parameters_code}".strip(", ")
+        signature = f"self, {parameters_code}".strip(", ")
+        data = (
+            f"\n\tdata={body_parameter_name}.to_dict()," if body_parameter_name else ""
+        )
         return f"""
 async def {self.operation_id}({signature}) -> None:
     \"""{docstring}\"""
-    response = await self._auth.request({PATH_METHOD_MAP[self.method]}, {self.path})
+    response = await self._auth.request(
+        "{PATH_METHOD_MAP[self.method]}",
+        f"{self.path}",
+        headers={{"Accept-Language": Accept-Language}},{data}
+    )
     return response.json()
 """
 
@@ -305,6 +326,21 @@ def create_definition_model(
             raise ValueError(f"Missing model: {type_}")
 
 
+def get_parameters(parameters: list[dict[str, Any]]) -> list[Parameter]:
+    """Return parsed parameters."""
+    return [
+        Parameter(
+            name=p_data["name"],
+            in_=p_data["in"],
+            description=p_data.get("description"),
+            required=p_data.get("required", False),
+            type_=p_data.get("type"),
+            definition=p_data.get("schema", {}).get("$ref", "").split("/")[-1],
+        )
+        for p_data in parameters
+    ]
+
+
 def run() -> None:
     """Run script."""
     swagger = load_yaml()
@@ -312,17 +348,9 @@ def run() -> None:
         path_parameters: list[Parameter] | None = None
         for method, method_model in data.items():
             if method == "parameters":
-                path_parameters = [
-                    Parameter(
-                        name=m_model["name"],
-                        in_=m_model["in"],
-                        description=m_model.get("description"),
-                        required=m_model.get("required", False),
-                        type_=m_model["type"],
-                    )
-                    for m_model in method_model
-                ]
+                path_parameters = get_parameters(method_model)
             else:
+                parameters = get_parameters(method_model.get("parameters", []))
                 path_model = SwaggerPathModel(
                     path=path,
                     method=method,
@@ -330,6 +358,7 @@ def run() -> None:
                     operation_id=method_model["operationId"],
                     description=method_model.get("description"),
                     path_parameters=path_parameters,
+                    body_parameter=parameters[0] if parameters else None,
                 )
                 print(path_model.generate_code())
 
