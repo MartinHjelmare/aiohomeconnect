@@ -25,7 +25,7 @@ async def test_abstract_auth(httpx_client: AsyncClient, httpx_mock: HTTPXMock) -
 
     params = {"key1": "value1", "key2": "value2"}
     client = AuthClient(httpx_client, "https://example.com")
-    response = await client.request("GET", "test", params=params)
+    response = await client.request("GET", "/test", params=params)
 
     assert response.status_code == 200
     assert response.json() == {"test": "test_result"}
