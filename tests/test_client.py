@@ -1,4 +1,5 @@
 """Test the client."""
+
 from httpx import AsyncClient
 from pytest_httpx import HTTPXMock
 

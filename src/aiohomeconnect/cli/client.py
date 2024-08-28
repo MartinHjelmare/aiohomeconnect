@@ -1,4 +1,5 @@
 """Provide a CLI client for Home Connect API."""
+
 from __future__ import annotations
 
 import asyncio
