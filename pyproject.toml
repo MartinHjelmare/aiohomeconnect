@@ -39,7 +39,6 @@ uvicorn = "^0.30.6"
 cli = ["authlib", "fastapi", "typer", "uvicorn"]
 
 [tool.poetry.group.dev.dependencies]
-black = "23.12.1"
 codespell = "^2.3.0"
 copier = "^9.3.1"
 mypy = "^1.0"
