@@ -1841,9 +1841,9 @@ files = [
 ]
 
 [extras]
-cli = ["authlib", "fastapi", "typer"]
+cli = ["authlib", "fastapi", "typer", "uvicorn"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "18fc25d0ab9e7f8229f7b2145024587704318cb96d004b711ae74fb0d90bf476"
+content-hash = "1c2bbceabd88b3296127b29d93769b09d4a0485e17638ada1f17a792ca06ee40"
