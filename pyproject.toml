@@ -28,12 +28,13 @@ version = "0.0.0"
 
 [tool.poetry.dependencies]
 authlib = "^1.3.0"
+fastapi = "^0.112.2"
 httpx = "^0.26.0"
 python = "^3.11"
 typer = {extras = ["all"], version = "^0.9.0"}
 
 [tool.poetry.extras]
-cli = ["authlib", "typer"]
+cli = ["authlib", "fastapi", "typer"]
 
 [tool.poetry.group.dev.dependencies]
 black = "23.12.1"
