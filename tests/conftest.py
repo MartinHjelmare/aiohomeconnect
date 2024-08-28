@@ -1,4 +1,5 @@
 """Provide common fixtures for tests."""
+
 from collections.abc import AsyncGenerator
 
 from httpx import AsyncClient

@@ -1,4 +1,5 @@
 """Test the main module."""
+
 from aiohomeconnect.main import add
 
 
