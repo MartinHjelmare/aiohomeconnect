@@ -27,16 +27,26 @@ version = "0.0.0"
 "Changelog" = "https://github.com/MartinHjelmare/aiohomeconnect/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
+authlib = "^1.3.0"
+fastapi = "^0.112.2"
+httpx = "^0.26.0"
 python = "^3.11"
+typer = {extras = ["all"], version = "^0.9.0"}
+uvicorn = "^0.30.6"
+
+[tool.poetry.extras]
+cli = ["authlib", "fastapi", "typer", "uvicorn"]
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.12.1"
-codespell = "^2.2.6"
-mypy = "^1.8.0"
-pre-commit = "^3.6.0"
-pytest = "^7.0"
-pytest-cov = "^4.0"
-ruff = "^0.1.9"
+black = "23.12.1"
+codespell = "2.2.6"
+mypy = "1.8.0"
+pre-commit = "3.6.0"
+pytest = "7.4.4"
+pytest-asyncio = "0.23.3"
+pytest-cov = "4.1.0"
+pytest-httpx = "0.28.0"
+ruff = "0.1.9"
 
 [tool.poetry.group.docs]
 optional = true
@@ -46,6 +56,9 @@ furo = ">=2023.5.20"
 myst-parser = ">=0.16"
 sphinx = ">=4.0"
 sphinx-autobuild = ">=2021.3.14"
+
+[tool.poetry.scripts]
+aiohomeconnect = "aiohomeconnect.cli:cli"
 
 [tool.coverage.report]
 exclude_lines = [
@@ -82,40 +95,54 @@ module = "tests.*"
 ignore_errors = true
 module = "docs.*"
 
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = "authlib.*"
+
 [tool.pytest.ini_options]
 addopts = "-v -Wdefault --cov=aiohomeconnect --cov-report=term-missing:skip-covered"
+asyncio_mode = "auto"
 pythonpath = ["src"]
 
 [tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
 ignore = [
   "ANN101", # missing-type-self
   "ANN401", # any-type
   "D203", # 1 blank line required before class docstring
   "D213", # Multi-line docstring summary should start at the second line
   "D417", # False positives in some occasions
+  "EM101", # raw-string-in-exception
+  "EM102", # f-string-in-exception
   "PLR2004", # magic-value-comparison
+  "TCH001", # typing-only-first-party-import
+  "TCH002", # typing-only-third-party-import
+  "TCH003", # typing-only-stdlib-import
+  "TRY003", # raise-vanilla-args
 ]
-line-length = 88
 select = [
   "ALL", # all rules
 ]
-target-version = "py311"
 
-[tool.ruff.per-file-ignores]
-"conftest.py" = ["D100"]
-"docs/conf.py" = ["D100"]
-"setup.py" = ["D100"]
-"tests/**/*" = [
-  "D100",
-  "D101",
-  "D102",
-  "D103",
-  "D104",
-  "S101",
-]
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
 
 [tool.ruff.isort]
+force-sort-within-sections = true
 known-first-party = ["aiohomeconnect", "tests"]
+
+[tool.ruff.per-file-ignores]
+"docs/conf.py" = ["D100"]
+"setup.py" = ["D100"]
+"src/aiohomeconnect/cli/*" = ["T201"]
+"tests/**/*" = [
+  "S101",
+  "S105",
+]
 
 [tool.semantic_release]
 build_command = "pip install poetry && poetry build"

@@ -138,3 +138,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Visual Studio Code
+.vscode/*
+
+# CLI token file
+token.json
