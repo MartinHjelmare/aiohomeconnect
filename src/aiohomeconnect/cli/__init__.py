@@ -1,4 +1,5 @@
 """Provide a CLI for Home Connect API."""
+
 import asyncio
 
 from fastapi import FastAPI, HTTPException
@@ -10,12 +11,6 @@ from .client import CLIClient, TokenManager
 
 cli = typer.Typer()
 app = FastAPI()
-
-
-@cli.command()
-def hello(name: str) -> None:
-    """Say hello."""
-    print(f"Hello {name}")
 
 
 @cli.command()
