@@ -90,7 +90,7 @@ class SwaggerPathModel:
             f"{' | None = None' if not param.required else ''}"
             for param in sorted(parameters, key=lambda x: not x.required)
         ).strip()
-        docstring = f"{self.summary}.\n\n    {self.description or ''}".strip()
+        docstring = f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
         signature = f"self, {parameters_code}".strip(", ")
         data = (
             f"\n\tdata={body_parameter_name}.to_dict()," if body_parameter_name else ""
