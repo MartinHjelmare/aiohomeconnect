@@ -65,6 +65,7 @@ class SwaggerPathModel:
     method: str
     summary: str
     operation_id: str
+    responses: dict[int, dict[str, Any]]
     description: str | None = None
     path_parameters: list[Parameter] | None = None
     body_parameter: Parameter | None = None
@@ -94,15 +95,21 @@ class SwaggerPathModel:
         data = (
             f"\n\tdata={body_parameter_name}.to_dict()," if body_parameter_name else ""
         )
+        if (response := self.responses.get(200)) and (schema := response.get("schema")):
+            return_type = schema["$ref"].split("/")[-1]
+            return_value = f"return {return_type}.from_dict(response.json())"
+        else:
+            return_type = "None"
+            return_value = ""
         return f"""
-async def {self.operation_id}({signature}) -> None:
+async def {self.operation_id}({signature}) -> {return_type}:
     \"""{docstring}\"""
-    response = await self._auth.request(
+    {'response = ' if return_value != '' else ''}await self._auth.request(
         "{PATH_METHOD_MAP[self.method]}",
         f"{self.path.replace('haId', 'ha_id')}",
         headers={{"Accept-Language": accept_language}},{data}
     )
-    return response.json()
+    {return_value}
 """
 
 
@@ -360,6 +367,7 @@ def run() -> None:
                     method=method,
                     summary=method_model["summary"],
                     operation_id=method_model["operationId"],
+                    responses=method_model["responses"],
                     description=method_model.get("description"),
                     path_parameters=path_parameters,
                     body_parameter=parameters[0] if parameters else None,
