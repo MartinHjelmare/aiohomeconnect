@@ -1,6 +1,8 @@
 """Provide a swagger model for mashumaru."""  # noqa: INP001
 # /// script
 # dependencies = [
+#   "camel-converter",
+#   "python-slugify",
 #   "PyYAML",
 #   "types-PyYAML",
 # ]
@@ -12,6 +14,8 @@ from pathlib import Path
 import re
 from typing import Any
 
+from camel_converter import to_snake  # type: ignore[import-not-found]
+from slugify import slugify  # type: ignore[import-untyped]
 from yaml import CSafeLoader as SafeLoader  # type: ignore[import-untyped]
 from yaml import load
 
@@ -80,7 +84,7 @@ class SwaggerPathModel:
             body_parameter.name = body_parameter_name
             parameters.append(body_parameter)
         parameters_code = ", ".join(
-            f"{param.name}: "
+            f"{slugify(to_snake(param.name), separator='_')}: "
             f"{PATH_TYPE_MAP[param.type_] if param.type_ else param.definition}"
             f"{' | None = None' if not param.required else ''}"
             for param in sorted(parameters, key=lambda x: not x.required)
@@ -95,8 +99,8 @@ async def {self.operation_id}({signature}) -> None:
     \"""{docstring}\"""
     response = await self._auth.request(
         "{PATH_METHOD_MAP[self.method]}",
-        f"{self.path}",
-        headers={{"Accept-Language": Accept-Language}},{data}
+        f"{self.path.replace('haId', 'ha_id')}",
+        headers={{"Accept-Language": accept_language}},{data}
     )
     return response.json()
 """
