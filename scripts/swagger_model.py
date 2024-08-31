@@ -11,7 +11,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
-import re
 from typing import Any
 
 from camel_converter import to_snake  # type: ignore[import-not-found]
@@ -51,10 +50,18 @@ class Parameter:
 
     name: str
     in_: str
+    code_name: str = field(init=False)
     description: str | None = None
     required: bool = False
     type_: str | None = None
     definition: str | None = None
+
+    def __post_init__(self) -> None:
+        """Initialize instance."""
+        if self.type_ is None and self.definition is None:
+            raise ValueError("Missing type or definition")
+        code_name = self.definition or self.name
+        self.code_name = f"{slugify(to_snake(code_name), separator='_')}"
 
 
 @dataclass
@@ -73,19 +80,11 @@ class SwaggerPathModel:
     def generate_code(self) -> str:
         """Return the Python code as a string for this model."""
         parameters = self.path_parameters or []
-        body_parameter_name = ""
-        if (body_parameter := self.body_parameter) and (
-            definition := body_parameter.definition
-        ):
-            body_parameter_name = (
-                re.sub("([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", definition))
-                .split()[-1]
-                .lower()
-            )
-            body_parameter.name = body_parameter_name
+        if body_parameter := self.body_parameter:
             parameters.append(body_parameter)
+
         parameters_code = ", ".join(
-            f"{slugify(to_snake(param.name), separator='_')}: "
+            f"{param.code_name}: "
             f"{PATH_TYPE_MAP[param.type_] if param.type_ else param.definition}"
             f"{' | None = None' if not param.required else ''}"
             for param in sorted(parameters, key=lambda x: not x.required)
@@ -93,7 +92,7 @@ class SwaggerPathModel:
         docstring = f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
         signature = f"self, {parameters_code}".strip(", ")
         data = (
-            f"\n\tdata={body_parameter_name}.to_dict()," if body_parameter_name else ""
+            f"\n\tdata={body_parameter.code_name}.to_dict()," if body_parameter else ""
         )
         if (response := self.responses.get(200)) and (schema := response.get("schema")):
             return_type = schema["$ref"].split("/")[-1]
