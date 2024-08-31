@@ -96,7 +96,7 @@ class SwaggerPathModel:
         )
         if (response := self.responses.get(200)) and (schema := response.get("schema")):
             return_type = schema["$ref"].split("/")[-1]
-            return_value = f"return {return_type}.from_dict(response.json())"
+            return_value = f"\n    return {return_type}.from_dict(response.json())"
         else:
             return_type = "None"
             return_value = ""
@@ -107,8 +107,7 @@ async def {self.operation_id}({signature}) -> {return_type}:
         "{PATH_METHOD_MAP[self.method]}",
         f"{self.path.replace('haId', 'ha_id')}",
         headers={{"Accept-Language": accept_language}},{data}
-    )
-    {return_value}
+    ){return_value}
 """
 
 
