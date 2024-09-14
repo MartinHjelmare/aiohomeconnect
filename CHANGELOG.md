@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.5 (2024-09-14)
+
+### Fix
+
+* Update dependency fastapi to v0.114.2 ([`d6696fc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d6696fc00c89a6948349f4102e5066242be8b3ab))
+
 ## v0.1.4 (2024-09-11)
 
 ### Fix
