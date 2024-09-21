@@ -64,7 +64,7 @@ class Parameter:
         self.code_name = f"{slugify(to_snake(code_name), separator='_')}"
 
 
-@dataclass
+@dataclass(kw_only=True)
 class SwaggerPathModel:
     """Represent a Swagger model."""
 
@@ -72,10 +72,22 @@ class SwaggerPathModel:
     method: str
     summary: str
     operation_id: str
+    headers: str = ""
     responses: dict[int, dict[str, Any]]
     description: str | None = None
     path_parameters: list[Parameter] | None = None
     body_parameter: Parameter | None = None
+
+    def __post_init__(self) -> None:
+        """Initialize instance."""
+        if self.path_parameters:
+            headers = {
+                param.name: param.code_name
+                for param in self.path_parameters
+                if param.in_ == "header"
+            }
+            items = ", ".join(f"'{key}':{val}" for key, val in headers.items())
+            self.headers = f"{{{items}}}"
 
     def generate_code(self) -> str:
         """Return the Python code as a string for this model."""
@@ -106,7 +118,7 @@ async def {self.operation_id}({signature}) -> {return_type}:
     {'response = ' if return_value != '' else ''}await self._auth.request(
         "{PATH_METHOD_MAP[self.method]}",
         f"{self.path.replace('haId', 'ha_id')}",
-        headers={{"Accept-Language": accept_language}},{data}
+        headers={self.headers},{data}
     ){return_value}
 """
 
