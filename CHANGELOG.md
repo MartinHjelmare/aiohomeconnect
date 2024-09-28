@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.7 (2024-09-28)
+
+### Fix
+
+* Update dependency uvicorn to ^0.31.0 ([`d42aafd`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d42aafdbee1c96658f520cec0a05a2a013750ce7))
+
 ## v0.1.6 (2024-09-18)
 
 ### Fix
