@@ -105,8 +105,13 @@ class SwaggerPathModel:
                 for param in self.path_parameters
                 if param.in_ == "header"
             }
-            items = ", ".join(f"'{key}':{val}" for key, val in headers.items())
-            self.headers = f"{{{items}}}"
+            items = ", ".join(f"'{key}': {val}" for key, val in headers.items())
+            if items:
+                self.headers = f"{{{items}}}"
+            else:
+                self.headers = "None"
+        else:
+            self.headers = "None"
 
         parameters = self.path_parameters or []
         if body_parameter := self.body_parameter:
