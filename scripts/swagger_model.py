@@ -108,9 +108,9 @@ class SwaggerPathModel:
         self.data_parameter = (
             f"\n\tdata={body_parameter.code_name}.to_dict()," if body_parameter else ""
         )
-        self.docstring = (
-            f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
-        )
+        docstring = f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
+        docstring_ending = "\n" if "\n" in docstring else ""
+        self.docstring = f"{docstring}{docstring_ending}"
         self.signature = f"self, {parameters_code}".strip(", ")
 
         if (response := self.responses.get(200)) and (schema := response.get("schema")):
