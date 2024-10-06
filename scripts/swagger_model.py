@@ -178,7 +178,7 @@ class DefinitionModelBase(ABC):
         suffix = f'    """{docstring.strip()}."""\n' if docstring else ""
         return f"""
 @dataclass
-class {definition}:
+class {definition}(DataClassJSONMixin):
 {suffix}
 """
 
