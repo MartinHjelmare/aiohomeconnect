@@ -129,18 +129,18 @@ class SwaggerPathModel:
         )
         if self.description:
             description_lines = self.description.splitlines()
-            description = "\n    ".join(description_lines)
+            description = "\n        ".join(description_lines)
         else:
             description = ""
-        docstring = f"{self.summary.strip()}.\n\n    {description}".strip()
-        docstring_ending = "\n    " if "\n" in docstring else ""
+        docstring = f"{self.summary.strip()}.\n\n        {description}".strip()
+        docstring_ending = "\n        " if "\n" in docstring else ""
         self.docstring = f"{docstring}{docstring_ending}"
         self.signature = f"self, {parameters_code}".strip(", ")
 
         if (response := self.responses.get(200)) and (schema := response.get("schema")):
             self.return_type = schema["$ref"].split("/")[-1]
             self.return_value = (
-                f"\n    return {self.return_type}.from_dict(response.json())"
+                f"\n        return {self.return_type}.from_dict(response.json())"
             )
         else:
             self.return_type = "None"
@@ -149,13 +149,13 @@ class SwaggerPathModel:
     def generate_code(self) -> str:
         """Return the Python code as a string for this model."""
         return f"""
-async def {self.operation_id}({self.signature}) -> {self.return_type}:
-    \"""{self.docstring}\"""
-    {'response = ' if self.return_value != '' else ''}await self._auth.request(
-        "{PATH_METHOD_MAP[self.method]}",
-        f"{self.path.replace('haId', 'ha_id')}",
-        headers={self.headers},{self.data_parameter}
-    ){self.return_value}
+    async def {self.operation_id}({self.signature}) -> {self.return_type}:
+        \"""{self.docstring}\"""
+        {'response = ' if self.return_value != '' else ''}await self._auth.request(
+            "{PATH_METHOD_MAP[self.method]}",
+            f"{self.path.replace('haId', 'ha_id')}",
+            headers={self.headers},{self.data_parameter}
+        ){self.return_value}
 """
 
 
@@ -189,7 +189,7 @@ class DefinitionModelUnknown(DefinitionModelBase):
 
     def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
         """Return the Python code as a string for this model."""
-        return "unknown"
+        return "Any"
 
 
 @dataclass(kw_only=True)
@@ -402,6 +402,44 @@ def get_parameters(parameters: list[dict[str, Any]]) -> list[Parameter]:
 def run() -> None:
     """Run script."""
     swagger = load_yaml()
+    content = """
+\"""Provide a model for the Home Connect API.\"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from numbers import Number
+from typing import Any
+
+from mashumaro.mixins.json import DataClassJSONMixin
+
+"""
+    output = Path("output.py")
+
+    all_definitions = list(swagger["definitions"])
+    for definition, data in swagger["definitions"].items():
+        definition_model = create_definition_model(
+            definition=definition,
+            all_definitions=all_definitions,
+            data=data,
+        )
+        header = definition_model.generate_class(
+            definition,
+            definition_model.description,
+        )
+        body = definition_model.generate_code(definition)
+        content += f"{header}    {body}\n"
+
+    content += """
+
+class Client:
+    \"""Represent a client for the Home Connect API.\"""
+
+    def __init__(self, auth: AbstractAuth) -> None:
+        \"""Initialize the client.\"""
+        self._auth = auth
+
+"""
+
     for path, data in swagger["paths"].items():
         path_parameters: list[Parameter] | None = None
         for method, method_model in data.items():
@@ -419,21 +457,9 @@ def run() -> None:
                     path_parameters=path_parameters,
                     body_parameter=parameters[0] if parameters else None,
                 )
-                print(path_model.generate_code())
+                content += path_model.generate_code()
 
-    all_definitions = list(swagger["definitions"])
-    for definition, data in swagger["definitions"].items():
-        definition_model = create_definition_model(
-            definition=definition,
-            all_definitions=all_definitions,
-            data=data,
-        )
-        header = definition_model.generate_class(
-            definition,
-            definition_model.description,
-        )
-        body = definition_model.generate_code(definition)
-        print(f"{header}    {body}\n")
+    output.write_text(content, encoding="utf-8")
 
 
 if __name__ == "__main__":
