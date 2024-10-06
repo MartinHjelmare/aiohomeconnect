@@ -142,7 +142,8 @@ class SwaggerPathModel:
         if (response := self.responses.get(200)) and (schema := response.get("schema")):
             self.return_type = schema["$ref"].split("/")[-1]
             self.return_value = (
-                f"\n        return {self.return_type}.from_dict(response.json())"
+                f"\n        return {self.return_type}"
+                '.from_dict(response.json()["data"])'
             )
         else:
             self.return_type = "None"
