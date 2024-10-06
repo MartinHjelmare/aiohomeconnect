@@ -127,7 +127,9 @@ class SwaggerPathModel:
         ).strip()
 
         self.data_parameter = (
-            f"\n\tdata={body_parameter.code_name}.to_dict()," if body_parameter else ""
+            f"\n            data={body_parameter.code_name}.to_dict(),"
+            if body_parameter
+            else ""
         )
         if self.description:
             description_lines = self.description.splitlines()
