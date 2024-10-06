@@ -77,6 +77,11 @@ class SwaggerPathModel:
     description: str | None = None
     path_parameters: list[Parameter] | None = None
     body_parameter: Parameter | None = None
+    data_parameter: str = ""
+    docstring: str = ""
+    signature: str = ""
+    return_type: str = ""
+    return_value: str = ""
 
     def __post_init__(self) -> None:
         """Initialize instance."""
@@ -89,8 +94,6 @@ class SwaggerPathModel:
             items = ", ".join(f"'{key}':{val}" for key, val in headers.items())
             self.headers = f"{{{items}}}"
 
-    def generate_code(self) -> str:
-        """Return the Python code as a string for this model."""
         parameters = self.path_parameters or []
         if body_parameter := self.body_parameter:
             parameters.append(body_parameter)
@@ -101,25 +104,34 @@ class SwaggerPathModel:
             f"{' | None = None' if not param.required else ''}"
             for param in sorted(parameters, key=lambda x: not x.required)
         ).strip()
-        docstring = f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
-        signature = f"self, {parameters_code}".strip(", ")
-        data = (
+
+        self.data_parameter = (
             f"\n\tdata={body_parameter.code_name}.to_dict()," if body_parameter else ""
         )
+        self.docstring = (
+            f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
+        )
+        self.signature = f"self, {parameters_code}".strip(", ")
+
         if (response := self.responses.get(200)) and (schema := response.get("schema")):
-            return_type = schema["$ref"].split("/")[-1]
-            return_value = f"\n    return {return_type}.from_dict(response.json())"
+            self.return_type = schema["$ref"].split("/")[-1]
+            self.return_value = (
+                f"\n    return {self.return_type}.from_dict(response.json())"
+            )
         else:
-            return_type = "None"
-            return_value = ""
+            self.return_type = "None"
+            self.return_value = ""
+
+    def generate_code(self) -> str:
+        """Return the Python code as a string for this model."""
         return f"""
-async def {self.operation_id}({signature}) -> {return_type}:
-    \"""{docstring}\"""
-    {'response = ' if return_value != '' else ''}await self._auth.request(
+async def {self.operation_id}({self.signature}) -> {self.return_type}:
+    \"""{self.docstring}\"""
+    {'response = ' if self.return_value != '' else ''}await self._auth.request(
         "{PATH_METHOD_MAP[self.method]}",
         f"{self.path.replace('haId', 'ha_id')}",
-        headers={self.headers},{data}
-    ){return_value}
+        headers={self.headers},{self.data_parameter}
+    ){self.return_value}
 """
 
 
