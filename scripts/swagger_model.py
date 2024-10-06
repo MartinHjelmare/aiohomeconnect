@@ -30,8 +30,10 @@ DEFINITION_NESTED_MAP = {
         "EnumerateAvailableProgram",
         "constraints",
     ): "EnumerateAvailableProgramConstraints",
+    ("EnumerateAvailableProgramConstraints", "execution"): "Execution",
     ("ArrayOfPrograms", "programs"): "EnumerateProgram",
     ("EnumerateProgram", "constraints"): "EnumerateProgramConstraints",
+    ("EnumerateProgramConstraints", "execution"): "Execution",
     ("ProgramDefinition", "options"): "ProgramDefinitionOption",
     ("ProgramDefinitionOption", "constraints"): "ProgramDefinitionConstraints",
     ("ArrayOfOptions", "options"): "Option",
@@ -202,6 +204,31 @@ class DefinitionModelString(DefinitionModelBase):
 
 
 @dataclass(kw_only=True)
+class DefinitionModelStringEnum(DefinitionModelBase):
+    """Represent a StrEnum type model."""
+
+    enum: list[str]
+
+    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+        """Return the Python code as a string for this model."""
+        if (description := self.description) is None:
+            raise ValueError("Missing description")
+        suffix = ""
+        if generate_class:
+            code_enum = "\n    ".join(
+                f'{enum.upper()} = "{enum}"' for enum in self.enum
+            )
+            suffix = (
+                "\n\n"
+                f"class {definition.capitalize()}(StrEnum):\n"
+                f'    """{description.strip()}."""\n\n    '
+                f"{code_enum}"
+                "\n\n"
+            )
+        return f"{definition.capitalize()}{suffix}"
+
+
+@dataclass(kw_only=True)
 class DefinitionModelInteger(DefinitionModelBase):
     """Represent a integer type model."""
 
@@ -303,17 +330,17 @@ class DefinitionModelObject(DefinitionModelBase):
 
         generate_class = False
         original_definition = definition
-        for prop, data in self.properties.items():
+        for prop, model in self.properties.items():
             if nested_definition := DEFINITION_NESTED_MAP.get((definition, prop)):
                 definition = nested_definition
                 generate_class = True
             if prop in ("data", "error") and definition == self.definition:
-                properties += f"    {data.generate_code(definition)}\n"
+                properties += f"    {model.generate_code(definition)}\n"
             else:
-                properties += (
-                    f"    {prop}: "
-                    f"{data.generate_code(definition, generate_class=generate_class)}\n"
+                prop_code = model.generate_code(
+                    definition, generate_class=generate_class
                 )
+                properties += f"    {prop}: {prop_code}\n"
             definition = original_definition
 
         return f"{properties}".strip()
@@ -341,6 +368,13 @@ def create_definition_model(
         )
     match type_:
         case "string":
+            if enum := data.get("enum"):
+                return DefinitionModelStringEnum(
+                    definition=definition,
+                    all_definitions=all_definitions,
+                    description=data.get("description"),
+                    enum=enum,
+                )
             return DefinitionModelString(
                 definition=definition,
                 all_definitions=all_definitions,
@@ -407,6 +441,7 @@ def run() -> None:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import StrEnum
 from numbers import Number
 from typing import Any
 
