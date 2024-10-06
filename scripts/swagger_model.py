@@ -42,6 +42,10 @@ DEFINITION_NESTED_MAP = {
     ("ArrayOfStatus", "status"): "Status",
     ("Status", "constraints"): "StatusConstraints",
 }
+PARAMETER_ENUM_MAP = {
+    "Accept": "ContentType",
+    "Accept-Language": "Language",
+}
 
 
 @dataclass
@@ -54,6 +58,8 @@ class Parameter:
     description: str | None = None
     required: bool = False
     type_: str | None = None
+    enum: list[str] | None = None
+    code_type: str = field(init=False)
     definition: str | None = None
 
     def __post_init__(self) -> None:
@@ -62,6 +68,14 @@ class Parameter:
             raise ValueError("Missing type or definition")
         code_name = self.definition or self.name
         self.code_name = f"{slugify(to_snake(code_name), separator='_')}"
+        if self.enum:
+            self.code_type = PARAMETER_ENUM_MAP[self.name]
+        elif self.type_:
+            self.code_type = PATH_TYPE_MAP[self.type_]
+        elif definition := self.definition:
+            self.code_type = definition
+        else:
+            self.code_type = ""
 
 
 @dataclass(kw_only=True)
@@ -100,7 +114,7 @@ class SwaggerPathModel:
 
         parameters_code = ", ".join(
             f"{param.code_name}: "
-            f"{PATH_TYPE_MAP[param.type_] if param.type_ else param.definition}"
+            f"{param.code_type}"
             f"{' | None = None' if not param.required else ''}"
             for param in sorted(parameters, key=lambda x: not x.required)
         ).strip()
@@ -373,6 +387,7 @@ def get_parameters(parameters: list[dict[str, Any]]) -> list[Parameter]:
             description=p_data.get("description"),
             required=p_data.get("required", False),
             type_=p_data.get("type"),
+            enum=p_data.get("enum"),
             definition=p_data.get("schema", {}).get("$ref", "").split("/")[-1],
         )
         for p_data in parameters
