@@ -447,6 +447,21 @@ from typing import Any
 
 from mashumaro.mixins.json import DataClassJSONMixin
 
+
+class ContentType(StrEnum):
+    \"""Represent the content type for the response.\"""
+
+    APPLICATION_JSON = "application/vnd.bsh.sdk.v1+json"
+    EVENT_STREAM = "text/event-stream"
+
+
+class Language(StrEnum):
+    \"""Represent the language for the response.\"""
+
+    DE = "de-DE"
+    EN = "en-US"
+    EN_GB = "en-GB"
+
 """
     output = Path("output.py")
 
