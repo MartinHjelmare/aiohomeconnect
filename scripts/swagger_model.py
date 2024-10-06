@@ -108,8 +108,13 @@ class SwaggerPathModel:
         self.data_parameter = (
             f"\n\tdata={body_parameter.code_name}.to_dict()," if body_parameter else ""
         )
-        docstring = f"{self.summary.strip()}.\n\n    {self.description or ''}".strip()
-        docstring_ending = "\n" if "\n" in docstring else ""
+        if self.description:
+            description_lines = self.description.splitlines()
+            description = "\n    ".join(description_lines)
+        else:
+            description = ""
+        docstring = f"{self.summary.strip()}.\n\n    {description}".strip()
+        docstring_ending = "\n    " if "\n" in docstring else ""
         self.docstring = f"{docstring}{docstring_ending}"
         self.signature = f"self, {parameters_code}".strip(", ")
 
