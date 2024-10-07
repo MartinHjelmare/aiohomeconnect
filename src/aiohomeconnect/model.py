@@ -29,13 +29,13 @@ class Language(StrEnum):
 class HomeAppliance(DataClassJSONMixin):
     """Represent HomeAppliance."""
 
-    ha_id: str = field(metadata=field_options(alias="haId"))
-    name: str
-    type: str
-    brand: str
-    vib: str
-    e_number: str = field(metadata=field_options(alias="enumber"))
-    connected: bool
+    ha_id: str | None = field(metadata=field_options(alias="haId"))
+    name: str | None
+    type: str | None
+    brand: str | None
+    vib: str | None
+    e_number: str | None = field(metadata=field_options(alias="enumber"))
+    connected: bool | None
 
 
 @dataclass
@@ -50,7 +50,7 @@ class UnauthorizedError(DataClassJSONMixin):
     """Represent UnauthorizedError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -58,7 +58,7 @@ class ForbiddenError(DataClassJSONMixin):
     """Represent ForbiddenError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -66,7 +66,7 @@ class NotFoundError(DataClassJSONMixin):
     """Represent NotFoundError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -74,7 +74,7 @@ class NoProgramSelectedError(DataClassJSONMixin):
     """Represent NoProgramSelectedError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -82,7 +82,7 @@ class NoProgramActiveError(DataClassJSONMixin):
     """Represent NoProgramActiveError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -90,7 +90,7 @@ class NotAcceptableError(DataClassJSONMixin):
     """Represent NotAcceptableError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -98,7 +98,7 @@ class RequestTimeoutError(DataClassJSONMixin):
     """Represent RequestTimeoutError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -106,7 +106,7 @@ class ConflictError(DataClassJSONMixin):
     """Represent ConflictError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -114,7 +114,7 @@ class SelectedProgramNotSetError(DataClassJSONMixin):
     """Represent SelectedProgramNotSetError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -122,7 +122,7 @@ class ActiveProgramNotSetError(DataClassJSONMixin):
     """Represent ActiveProgramNotSetError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -130,7 +130,7 @@ class WrongOperationStateError(DataClassJSONMixin):
     """Represent WrongOperationStateError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -138,7 +138,7 @@ class ProgramNotAvailableError(DataClassJSONMixin):
     """Represent ProgramNotAvailableError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -146,7 +146,7 @@ class UnsupportedMediaTypeError(DataClassJSONMixin):
     """Represent UnsupportedMediaTypeError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -154,7 +154,7 @@ class TooManyRequestsError(DataClassJSONMixin):
     """Represent TooManyRequestsError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -162,7 +162,7 @@ class InternalServerError(DataClassJSONMixin):
     """Represent InternalServerError."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -170,7 +170,7 @@ class Conflict(DataClassJSONMixin):
     """Represent Conflict."""
 
     key: str
-    description: str
+    description: str | None
 
 
 @dataclass
@@ -185,14 +185,14 @@ class Event(DataClassJSONMixin):
     """Represent Event."""
 
     key: str
-    name: str
-    uri: str
+    name: str | None
+    uri: str | None
     timestamp: int
     level: str
     handling: str
     value: str | float | bool
-    display_value: str = field(metadata=field_options(alias="displayvalue"))
-    unit: str
+    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
+    unit: str | None
 
 
 @dataclass
@@ -200,8 +200,16 @@ class Program(DataClassJSONMixin):
     """Represent Program."""
 
     key: str
-    name: str
-    options: list[Option]
+    name: str | None
+    options: list[Option] | None
+    constraints: ProgramConstraints | None
+
+
+@dataclass
+class ProgramConstraints(DataClassJSONMixin):
+    """Represent ProgramConstraints."""
+
+    access: str | None
 
 
 @dataclass
@@ -212,19 +220,19 @@ class ArrayOfAvailablePrograms(DataClassJSONMixin):
 
 
 @dataclass
+class EnumerateAvailableProgramConstraints(DataClassJSONMixin):
+    """Represent EnumerateAvailableProgramConstraints."""
+
+    execution: Execution | None
+
+
+@dataclass
 class EnumerateAvailableProgram(DataClassJSONMixin):
     """Represent EnumerateAvailableProgram."""
 
     key: str
-    name: str
-    constraints: EnumerateAvailableProgramConstraints
-
-
-@dataclass
-class EnumerateAvailableProgramConstraints(DataClassJSONMixin):
-    """Represent EnumerateAvailableProgramConstraints."""
-
-    execution: Execution
+    name: str | None
+    constraints: EnumerateAvailableProgramConstraints | None
 
 
 @dataclass
@@ -232,6 +240,16 @@ class ArrayOfPrograms(DataClassJSONMixin):
     """Represent ArrayOfPrograms."""
 
     programs: list[EnumerateProgram]
+    active: Program | None
+    selected: Program | None
+
+
+@dataclass
+class EnumerateProgramConstraints(DataClassJSONMixin):
+    """Represent EnumerateProgramConstraints."""
+
+    available: bool | None
+    execution: Execution | None
 
 
 @dataclass
@@ -239,16 +257,8 @@ class EnumerateProgram(DataClassJSONMixin):
     """Represent EnumerateProgram."""
 
     key: str
-    name: str
-    constraints: EnumerateProgramConstraints
-
-
-@dataclass
-class EnumerateProgramConstraints(DataClassJSONMixin):
-    """Represent EnumerateProgramConstraints."""
-
-    available: bool
-    execution: Execution
+    name: str | None
+    constraints: EnumerateProgramConstraints | None
 
 
 class Execution(StrEnum):
@@ -265,8 +275,25 @@ class ProgramDefinition(DataClassJSONMixin):
     """Represent ProgramDefinition."""
 
     key: str
-    name: str
-    options: list[ProgramDefinitionOption]
+    name: str | None
+    options: list[ProgramDefinitionOption] | None
+
+
+@dataclass
+class ProgramDefinitionConstraints(DataClassJSONMixin):
+    """Represent ProgramDefinitionConstraints."""
+
+    min: int | None
+    max: int | None
+    step_size: int | None = field(metadata=field_options(alias="stepsize"))
+    allowed_values: list[str | None] | None = field(
+        metadata=field_options(alias="allowedvalues")
+    )
+    display_values: list[str | None] | None = field(
+        metadata=field_options(alias="displayvalues")
+    )
+    default: Any | None
+    live_update: bool | None = field(metadata=field_options(alias="liveupdate"))
 
 
 @dataclass
@@ -274,23 +301,10 @@ class ProgramDefinitionOption(DataClassJSONMixin):
     """Represent ProgramDefinitionOption."""
 
     key: str
-    name: str
+    name: str | None
     type: str
-    unit: str
-    constraints: ProgramDefinitionConstraints
-
-
-@dataclass
-class ProgramDefinitionConstraints(DataClassJSONMixin):
-    """Represent ProgramDefinitionConstraints."""
-
-    min: int
-    max: int
-    step_size: int = field(metadata=field_options(alias="stepsize"))
-    allowed_values: list[str] = field(metadata=field_options(alias="allowedvalues"))
-    display_values: list[str] = field(metadata=field_options(alias="displayvalues"))
-    default: Any
-    live_update: bool = field(metadata=field_options(alias="liveupdate"))
+    unit: str | None
+    constraints: ProgramDefinitionConstraints | None
 
 
 @dataclass
@@ -298,10 +312,10 @@ class Option(DataClassJSONMixin):
     """Represent Option."""
 
     key: str
-    name: str
+    name: str | None
     value: Any
-    display_value: str = field(metadata=field_options(alias="displayvalue"))
-    unit: str
+    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
+    unit: str | None
 
 
 @dataclass
@@ -323,7 +337,7 @@ class Image(DataClassJSONMixin):
     """Represent Image."""
 
     key: str
-    name: str
+    name: str | None
     image_key: str = field(metadata=field_options(alias="imagekey"))
     preview_image_key: str = field(metadata=field_options(alias="previewimagekey"))
     timestamp: int
@@ -335,25 +349,29 @@ class GetSetting(DataClassJSONMixin):
     """Specific setting of the home appliance."""
 
     key: str
-    name: str
+    name: str | None
     value: Any
-    display_value: str = field(metadata=field_options(alias="displayvalue"))
-    unit: str
-    type: str
-    constraints: SettingConstraints
+    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
+    unit: str | None
+    type: str | None
+    constraints: SettingConstraints | None
 
 
 @dataclass
 class SettingConstraints(DataClassJSONMixin):
     """Represent SettingConstraints."""
 
-    min: int
-    max: int
-    step_size: int = field(metadata=field_options(alias="stepsize"))
-    allowed_values: list[str] = field(metadata=field_options(alias="allowedvalues"))
-    display_values: list[str] = field(metadata=field_options(alias="displayvalues"))
-    default: Any
-    access: str
+    min: int | None
+    max: int | None
+    step_size: int | None = field(metadata=field_options(alias="stepsize"))
+    allowed_values: list[str | None] | None = field(
+        metadata=field_options(alias="allowedvalues")
+    )
+    display_values: list[str | None] | None = field(
+        metadata=field_options(alias="displayvalues")
+    )
+    default: Any | None
+    access: str | None
 
 
 @dataclass
@@ -383,25 +401,29 @@ class Status(DataClassJSONMixin):
     """Represent Status."""
 
     key: str
-    name: str
+    name: str | None
     value: Any
-    display_value: str = field(metadata=field_options(alias="displayvalue"))
-    unit: str
-    type: str
-    constraints: StatusConstraints
+    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
+    unit: str | None
+    type: str | None
+    constraints: StatusConstraints | None
 
 
 @dataclass
 class StatusConstraints(DataClassJSONMixin):
     """Represent StatusConstraints."""
 
-    min: int
-    max: int
-    step_size: int = field(metadata=field_options(alias="stepsize"))
-    allowed_values: list[str] = field(metadata=field_options(alias="allowedvalues"))
-    display_values: list[str] = field(metadata=field_options(alias="displayvalues"))
-    default: Any
-    access: str
+    min: int | None
+    max: int | None
+    step_size: int | None = field(metadata=field_options(alias="stepsize"))
+    allowed_values: list[str | None] | None = field(
+        metadata=field_options(alias="allowedvalues")
+    )
+    display_values: list[str | None] | None = field(
+        metadata=field_options(alias="displayvalues")
+    )
+    default: Any | None
+    access: str | None
 
 
 @dataclass
@@ -423,7 +445,7 @@ class Command(DataClassJSONMixin):
     """Represent Command."""
 
     key: str
-    name: str
+    name: str | None
 
 
 @dataclass
