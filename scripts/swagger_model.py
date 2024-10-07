@@ -43,6 +43,8 @@ DEFINITION_NESTED_MAP = {
     ("PutSettings", "data"): "PutSetting",
     ("ArrayOfStatus", "status"): "Status",
     ("Status", "constraints"): "StatusConstraints",
+    ("ArrayOfCommands", "commands"): "Command",
+    ("PutCommands", "data"): "PutCommand",
 }
 PARAMETER_ENUM_MAP = {
     "Accept": "ContentType",
@@ -349,9 +351,9 @@ class DefinitionModelObject(DefinitionModelBase):
         return f"{properties}".strip()
 
 
-def load_yaml() -> dict[str, Any]:
+def load_yaml(path: str = "hcsdk-production.yaml") -> dict[str, Any]:
     """Load yaml."""
-    raw = Path("hcsdk.yaml").read_text(encoding="utf-8")
+    raw = Path(path).read_text(encoding="utf-8")
     return load(raw, Loader=SafeLoader)
 
 

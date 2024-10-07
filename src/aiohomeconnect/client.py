@@ -9,6 +9,7 @@ from httpx import AsyncClient, Response
 
 from .model import (
     ArrayOfAvailablePrograms,
+    ArrayOfCommands,
     ArrayOfEvents,
     ArrayOfHomeAppliances,
     ArrayOfImages,
@@ -16,6 +17,7 @@ from .model import (
     ArrayOfPrograms,
     ArrayOfSettings,
     ArrayOfStatus,
+    CommandKey,
     ContentType,
     GetSetting,
     HomeAppliance,
@@ -23,9 +25,12 @@ from .model import (
     Option,
     Program,
     ProgramDefinition,
+    PutCommand,
+    PutCommands,
     PutSetting,
     PutSettings,
     Status,
+    StatusKey,
 )
 
 
@@ -469,7 +474,7 @@ class Client:
         return ArrayOfStatus.from_dict(response.json()["data"])
 
     async def get_status_value(
-        self, ha_id: str, status_key: str, accept_language: Language | None = None
+        self, ha_id: str, status_key: StatusKey, accept_language: Language | None = None
     ) -> Status:
         """Get a specific status.
 
@@ -482,6 +487,46 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         return Status.from_dict(response.json()["data"])
+
+    async def get_available_commands(
+        self, ha_id: str, accept_language: Language | None = None
+    ) -> ArrayOfCommands:
+        """Get a list of available and writable commands."""
+        response = await self._auth.request(
+            "GET",
+            f"/homeappliances/{ha_id}/commands",
+            headers={"Accept-Language": accept_language},
+        )
+        return ArrayOfCommands.from_dict(response.json()["data"])
+
+    async def put_commands(
+        self,
+        ha_id: str,
+        put_commands: PutCommands,
+        accept_language: Language | None = None,
+    ) -> None:
+        """Execute multiple commands."""
+        await self._auth.request(
+            "PUT",
+            f"/homeappliances/{ha_id}/commands",
+            headers={"Accept-Language": accept_language},
+            data=put_commands.to_dict(),
+        )
+
+    async def put_command(
+        self,
+        ha_id: str,
+        command_key: CommandKey,
+        put_command: PutCommand,
+        accept_language: Language | None = None,
+    ) -> None:
+        """Execute a specific command."""
+        await self._auth.request(
+            "PUT",
+            f"/homeappliances/{ha_id}/commands/{command_key}",
+            headers={"Accept-Language": accept_language},
+            data=put_command.to_dict(),
+        )
 
     async def get_all_events(
         self, accept_language: Language | None = None

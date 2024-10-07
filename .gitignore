@@ -147,3 +147,4 @@ token.json
 
 # Swagger YAML
 hcsdk.yaml
+hcsdk-production.yaml

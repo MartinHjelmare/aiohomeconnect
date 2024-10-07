@@ -411,7 +411,55 @@ class ArrayOfStatus(DataClassJSONMixin):
     status: list[Status]
 
 
-class StatusKeysBSHCommon(StrEnum):
+@dataclass
+class ArrayOfCommands(DataClassJSONMixin):
+    """Represent ArrayOfCommands."""
+
+    commands: list[Command]
+
+
+@dataclass
+class Command(DataClassJSONMixin):
+    """Represent Command."""
+
+    key: str
+    name: str
+
+
+@dataclass
+class PutCommand(DataClassJSONMixin):
+    """Represent PutCommand."""
+
+    key: str
+    value: Any
+
+
+@dataclass
+class PutCommands(DataClassJSONMixin):
+    """A list of commands of the home appliance."""
+
+    data: list[PutCommand]
+
+
+class CommandKey(StrEnum):
+    """Represent a base class for command keys."""
+
+
+class CommandKeyBSHCommon(CommandKey):
+    """BSH Common command keys."""
+
+    PAUSE_PROGRAM = "BSH.Common.Command.PauseProgram"
+    RESUME_PROGRAM = "BSH.Common.Command.ResumeProgram"
+    OPEN_DOOR = "BSH.Common.Command.OpenDoor"
+    PARTLY_OPEN_DOOR = "BSH.Common.Command.PartlyOpenDoor"
+    ACKNOWLEDGE_EVENT = "BSH.Common.Command.AcknowledgeEvent"
+
+
+class StatusKey(StrEnum):
+    """Represent a base class for status keys."""
+
+
+class StatusKeyBSHCommon(StatusKey):
     """BSH Common Status keys."""
 
     BATTERY_CHARGING_STATE = "BSH.Common.Status.BatteryChargingState"
@@ -425,7 +473,7 @@ class StatusKeysBSHCommon(StrEnum):
     VIDEO_CAMERA_STATE = "BSH.Common.Status.Video.CameraState"
 
 
-class StatusKeysRefrigerationCommon(StrEnum):
+class StatusKeyRefrigerationCommon(StatusKey):
     """Refrigeration Common Status keys."""
 
     DOOR_BOTTLE_COOLER = "Refrigeration.Common.Status.Door.BottleCooler"
@@ -441,7 +489,7 @@ class StatusKeysRefrigerationCommon(StrEnum):
     DOOR_WINE_COMPARTMENT = "Refrigeration.Common.Status.Door.WineCompartment"
 
 
-class StatusKeysConsumerProductsCoffeeMaker(StrEnum):
+class StatusKeyConsumerProductsCoffeeMaker(StatusKey):
     """ConsumerProducts CoffeeMaker Status keys."""
 
     BEVERAGE_COUNTER_COFFEE = (
@@ -471,7 +519,7 @@ class StatusKeysConsumerProductsCoffeeMaker(StrEnum):
     )
 
 
-class StatusKeysConsumerProductsCleaningRobot(StrEnum):
+class StatusKeyConsumerProductsCleaningRobot(StatusKey):
     """ConsumerProducts CleaningRobot Status keys."""
 
     DUST_BOX_INSERTED = "ConsumerProducts.CleaningRobot.Status.DustBoxInserted"
