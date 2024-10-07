@@ -463,88 +463,150 @@ class PutCommands(DataClassJSONMixin):
     data: list[PutCommand]
 
 
-class CommandKey(StrEnum):
-    """Represent a base class for command keys."""
+class ProgramKey(StrEnum):
+    """Represent program keys."""
+
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
+        "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_CLEAN_ALL = (
+        "ConsumerProducts.CleaningRobot.Program.Cleaning.CleanAll"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_CLEAN_MAP = (
+        "ConsumerProducts.CleaningRobot.Program.Cleaning.CleanMap"
+    )
 
 
-class CommandKeyBSHCommon(CommandKey):
-    """BSH Common command keys."""
+class OptionKey(StrEnum):
+    """Represent option keys."""
 
-    PAUSE_PROGRAM = "BSH.Common.Command.PauseProgram"
-    RESUME_PROGRAM = "BSH.Common.Command.ResumeProgram"
-    OPEN_DOOR = "BSH.Common.Command.OpenDoor"
-    PARTLY_OPEN_DOOR = "BSH.Common.Command.PartlyOpenDoor"
-    ACKNOWLEDGE_EVENT = "BSH.Common.Command.AcknowledgeEvent"
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
+        "ConsumerProducts.CleaningRobot.Option.CleaningMode"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_REFERENCE_MAP_ID = (
+        "ConsumerProducts.CleaningRobot.Option.ReferenceMapId"
+    )
 
 
 class StatusKey(StrEnum):
-    """Represent a base class for status keys."""
+    """Represent status keys."""
 
-
-class StatusKeyBSHCommon(StatusKey):
-    """BSH Common Status keys."""
-
-    BATTERY_CHARGING_STATE = "BSH.Common.Status.BatteryChargingState"
-    BATTERY_LEVEL = "BSH.Common.Status.BatteryLevel"
-    CHARGING_CONNECTION = "BSH.Common.Status.ChargingConnection"
-    DOOR_STATE = "BSH.Common.Status.DoorState"
-    LOCAL_CONTROL_ACTIVE = "BSH.Common.Status.LocalControlActive"
-    OPERATION_STATE = "BSH.Common.Status.OperationState"
-    REMOTE_CONTROL_ACTIVE = "BSH.Common.Status.RemoteControlActive"
-    REMOTE_CONTROL_START_ALLOWED = "BSH.Common.Status.RemoteControlStartAllowed"
-    VIDEO_CAMERA_STATE = "BSH.Common.Status.Video.CameraState"
-
-
-class StatusKeyRefrigerationCommon(StatusKey):
-    """Refrigeration Common Status keys."""
-
-    DOOR_BOTTLE_COOLER = "Refrigeration.Common.Status.Door.BottleCooler"
-    DOOR_CHILLER = "Refrigeration.Common.Status.Door.Chiller"
-    DOOR_CHILLER_COMMON = "Refrigeration.Common.Status.Door.ChillerCommon"
-    DOOR_CHILLER_LEFT = "Refrigeration.Common.Status.Door.ChillerLeft"
-    DOOR_CHILLER_RIGHT = "Refrigeration.Common.Status.Door.ChillerRight"
-    DOOR_FLEX_COMPARTMENT = "Refrigeration.Common.Status.Door.FlexCompartment"
-    DOOR_FREEZER = "Refrigeration.Common.Status.Door.Freezer"
-    DOOR_REFRIGERATOR = "Refrigeration.Common.Status.Door.Refrigerator"
-    DOOR_REFRIGERATOR_2 = "Refrigeration.Common.Status.Door.Refrigerator2"
-    DOOR_REFRIGERATOR_3 = "Refrigeration.Common.Status.Door.Refrigerator3"
-    DOOR_WINE_COMPARTMENT = "Refrigeration.Common.Status.Door.WineCompartment"
-
-
-class StatusKeyConsumerProductsCoffeeMaker(StatusKey):
-    """ConsumerProducts CoffeeMaker Status keys."""
-
-    BEVERAGE_COUNTER_COFFEE = (
+    BSH_COMMON_BATTERY_CHARGING_STATE = "BSH.Common.Status.BatteryChargingState"
+    BSH_COMMON_BATTERY_LEVEL = "BSH.Common.Status.BatteryLevel"
+    BSH_COMMON_CHARGING_CONNECTION = "BSH.Common.Status.ChargingConnection"
+    BSH_COMMON_DOOR_STATE = "BSH.Common.Status.DoorState"
+    BSH_COMMON_LOCAL_CONTROL_ACTIVE = "BSH.Common.Status.LocalControlActive"
+    BSH_COMMON_OPERATION_STATE = "BSH.Common.Status.OperationState"
+    BSH_COMMON_REMOTE_CONTROL_ACTIVE = "BSH.Common.Status.RemoteControlActive"
+    BSH_COMMON_REMOTE_CONTROL_START_ALLOWED = (
+        "BSH.Common.Status.RemoteControlStartAllowed"
+    )
+    BSH_COMMON_VIDEO_CAMERA_STATE = "BSH.Common.Status.Video.CameraState"
+    REFRIGERATION_COMMON_DOOR_BOTTLE_COOLER = (
+        "Refrigeration.Common.Status.Door.BottleCooler"
+    )
+    REFRIGERATION_COMMON_DOOR_CHILLER = "Refrigeration.Common.Status.Door.Chiller"
+    REFRIGERATION_COMMON_DOOR_CHILLER_COMMON = (
+        "Refrigeration.Common.Status.Door.ChillerCommon"
+    )
+    REFRIGERATION_COMMON_DOOR_CHILLER_LEFT = (
+        "Refrigeration.Common.Status.Door.ChillerLeft"
+    )
+    REFRIGERATION_COMMON_DOOR_CHILLER_RIGHT = (
+        "Refrigeration.Common.Status.Door.ChillerRight"
+    )
+    REFRIGERATION_COMMON_DOOR_FLEX_COMPARTMENT = (
+        "Refrigeration.Common.Status.Door.FlexCompartment"
+    )
+    REFRIGERATION_COMMON_DOOR_FREEZER = "Refrigeration.Common.Status.Door.Freezer"
+    REFRIGERATION_COMMON_DOOR_REFRIGERATOR = (
+        "Refrigeration.Common.Status.Door.Refrigerator"
+    )
+    REFRIGERATION_COMMON_DOOR_REFRIGERATOR_2 = (
+        "Refrigeration.Common.Status.Door.Refrigerator2"
+    )
+    REFRIGERATION_COMMON_DOOR_REFRIGERATOR_3 = (
+        "Refrigeration.Common.Status.Door.Refrigerator3"
+    )
+    REFRIGERATION_COMMON_DOOR_WINE_COMPARTMENT = (
+        "Refrigeration.Common.Status.Door.WineCompartment"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffee"
     )
-    BEVERAGE_COUNTER_COFFEE_AND_MILK = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE_AND_MILK = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffeeAndMilk"
     )
-    BEVERAGE_COUNTER_FROTHY_MILK = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_FROTHY_MILK = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterFrothyMilk"
     )
-    BEVERAGE_COUNTER_HOT_MILK = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_MILK = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotMilk"
     )
-    BEVERAGE_COUNTER_HOT_WATER = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWater"
     )
-    BEVERAGE_COUNTER_HOT_WATER_CUPS = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER_CUPS = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWaterCups"
     )
-    BEVERAGE_COUNTER_MILK = "ConsumerProducts.CoffeeMaker.Status.BeverageCounterMilk"
-    BEVERAGE_COUNTER_POWDER_COFFEE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_MILK = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterMilk"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_POWDER_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterPowderCoffee"
     )
-    BEVERAGE_COUNTER_RISTRETTO_ESPRESSO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_RISTRETTO_ESPRESSO = (
         "ConsumerProducts.CoffeeMaker.Status.BeverageCounterRistrettoEspresso"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_DUST_BOX_INSERTED = (
+        "ConsumerProducts.CleaningRobot.Status.DustBoxInserted"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_LAST_SELECTED_MAP = (
+        "ConsumerProducts.CleaningRobot.Status.LastSelectedMap"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_LIFTED = (
+        "ConsumerProducts.CleaningRobot.Status.Lifted"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_LOST = "ConsumerProducts.CleaningRobot.Status.Lost"
+
+
+class SettingKey(StrEnum):
+    """Represent setting keys."""
+
+    BSH_COMMON_POWER_STATE = "BSH.Common.Setting.PowerState"
+    BSH_COMMON_TEMPERATURE_UNIT = "BSH.Common.Setting.TemperatureUnit"
+    BSH_COMMON_LIQUID_VOLUME_UNIT = "BSH.Common.Setting.LiquidVolumeUnit"
+    BSH_COMMON_CHILD_LOCK = "BSH.Common.Setting.ChildLock"
+    BSH_COMMON_ALARM_CLOCK = "BSH.Common.Setting.AlarmClock"
+    CONSUME_PRODUCTS_COFFEE_MAKER_CUP_WARMER = (
+        "ConsumerProducts.CoffeeMaker.Setting.CupWarmer"
+    )
+    REFRIGERATION_FRIDGE_FREEZER_SETPOINT_TEMPERATURE_REFRIGERATOR = (
+        "Refrigeration.FridgeFreezer.Setting.SetpointTemperatureRefrigerator"
+    )
+    REFRIGERATION_FRIDGE_FREEZER_SETPOINT_TEMPERATURE_FREEZER = (
+        "Refrigeration.FridgeFreezer.Setting.SetpointTemperatureFreezer"
+    )
+    REFRIGERATION_COMMON_BOTTLE_COOLER_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.BottleCooler.SetpointTemperature"
     )
 
 
-class StatusKeyConsumerProductsCleaningRobot(StatusKey):
-    """ConsumerProducts CleaningRobot Status keys."""
+class CommandKey(StrEnum):
+    """Represent command keys."""
 
-    DUST_BOX_INSERTED = "ConsumerProducts.CleaningRobot.Status.DustBoxInserted"
-    LAST_SELECTED_MAP = "ConsumerProducts.CleaningRobot.Status.LastSelectedMap"
-    LIFTED = "ConsumerProducts.CleaningRobot.Status.Lifted"
-    LOST = "ConsumerProducts.CleaningRobot.Status.Lost"
+    BSH_COMMON_ACKNOWLEDGE_EVENT = "BSH.Common.Command.AcknowledgeEvent"
+    BSH_COMMON_OPEN_DOOR = "BSH.Common.Command.OpenDoor"
+    BSH_COMMON_PARTLY_OPEN_DOOR = "BSH.Common.Command.PartlyOpenDoor"
+    BSH_COMMON_PAUSE_PROGRAM = "BSH.Common.Command.PauseProgram"
+    BSH_COMMON_RESUME_PROGRAM = "BSH.Common.Command.ResumeProgram"
+
+
+class EventKey(StrEnum):
+    """Represent event keys."""
+
+    BSH_COMMON_ROOT_SELECTED_PROGRAM = "BSH.Common.Root.SelectedProgram"
+    BSH_COMMON_ROOT_ACTIVE_PROGRAM = "BSH.Common.Root.ActiveProgram"
+    BSH_COMMON_OPTION_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
+    BSH_COMMON_OPTION_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
+    BSH_COMMON_OPTION_DURATION = "BSH.Common.Option.Duration"

@@ -23,12 +23,15 @@ from .model import (
     HomeAppliance,
     Language,
     Option,
+    OptionKey,
     Program,
     ProgramDefinition,
+    ProgramKey,
     PutCommand,
     PutCommands,
     PutSetting,
     PutSettings,
+    SettingKey,
     Status,
     StatusKey,
 )
@@ -130,7 +133,10 @@ class Client:
         return ArrayOfAvailablePrograms.from_dict(response.json()["data"])
 
     async def get_available_program(
-        self, ha_id: str, program_key: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        program_key: ProgramKey,
+        accept_language: Language | None = None,
     ) -> ProgramDefinition:
         """Get a specific available program."""
         response = await self._auth.request(
@@ -259,7 +265,7 @@ class Client:
         )
 
     async def get_active_program_option(
-        self, ha_id: str, option_key: str, accept_language: Language | None = None
+        self, ha_id: str, option_key: OptionKey, accept_language: Language | None = None
     ) -> Option:
         """Get a specific option of the active program."""
         response = await self._auth.request(
@@ -272,7 +278,7 @@ class Client:
     async def set_active_program_option(
         self,
         ha_id: str,
-        option_key: str,
+        option_key: OptionKey,
         option: Option,
         accept_language: Language | None = None,
     ) -> None:
@@ -358,7 +364,7 @@ class Client:
         )
 
     async def get_selected_program_option(
-        self, ha_id: str, option_key: str, accept_language: Language | None = None
+        self, ha_id: str, option_key: OptionKey, accept_language: Language | None = None
     ) -> Option:
         """Get a specific option of the selected program."""
         response = await self._auth.request(
@@ -371,7 +377,7 @@ class Client:
     async def set_selected_program_option(
         self,
         ha_id: str,
-        option_key: str,
+        option_key: OptionKey,
         option: Option,
         accept_language: Language | None = None,
     ) -> None:
@@ -434,7 +440,10 @@ class Client:
         )
 
     async def get_setting(
-        self, ha_id: str, setting_key: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        setting_key: SettingKey,
+        accept_language: Language | None = None,
     ) -> GetSetting:
         """Get a specific setting."""
         response = await self._auth.request(
@@ -447,7 +456,7 @@ class Client:
     async def set_setting(
         self,
         ha_id: str,
-        setting_key: str,
+        setting_key: SettingKey,
         put_setting: PutSetting,
         accept_language: Language | None = None,
     ) -> None:

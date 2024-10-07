@@ -7,7 +7,7 @@ from rich import print as rich_print
 import typer
 import uvicorn
 
-from aiohomeconnect.model import StatusKeyBSHCommon
+from aiohomeconnect.model import StatusKey
 
 from .client import CLIClient, TokenManager
 
@@ -88,7 +88,9 @@ def get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
 async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
     """Get the operation state of the device."""
     client = CLIClient(client_id, client_secret)
-    rich_print(await client.get_status_value(ha_id, StatusKeyBSHCommon.OPERATION_STATE))
+    rich_print(
+        await client.get_status_value(ha_id, StatusKey.BSH_COMMON_OPERATION_STATE)
+    )
 
 
 if __name__ == "__main__":
