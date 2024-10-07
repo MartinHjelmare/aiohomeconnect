@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.0 (2024-10-07)
+
+### Feature
+
+* Add swagger parser (#12) ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+
 ## v0.1.9 (2024-10-04)
 
 ### Fix
