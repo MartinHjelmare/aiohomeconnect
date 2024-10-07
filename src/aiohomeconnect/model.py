@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import StrEnum
-from numbers import Number
 from typing import Any
 
 from mashumaro import field_options
@@ -191,7 +190,7 @@ class Event(DataClassJSONMixin):
     timestamp: int
     level: str
     handling: str
-    value: str | Number | bool
+    value: str | float | bool
     display_value: str = field(metadata=field_options(alias="displayvalue"))
     unit: str
 

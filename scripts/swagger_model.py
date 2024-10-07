@@ -257,7 +257,7 @@ class DefinitionModelStringNumberBoolean(DefinitionModelBase):
 
     def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
         """Return the Python code as a string for this model."""
-        return "str | Number | bool"
+        return "str | float | bool"
 
 
 @dataclass(kw_only=True)
@@ -445,7 +445,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import StrEnum
-from numbers import Number
 from typing import Any
 
 from mashumaro.mixins.json import DataClassJSONMixin
