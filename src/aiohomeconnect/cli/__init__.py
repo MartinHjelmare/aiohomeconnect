@@ -7,6 +7,8 @@ from rich import print as rich_print
 import typer
 import uvicorn
 
+from aiohomeconnect.model import StatusKeysBSHCommon
+
 from .client import CLIClient, TokenManager
 
 cli = typer.Typer()
@@ -74,7 +76,7 @@ async def _get_appliances(
 ) -> None:
     """Get the appliances."""
     client = CLIClient(client_id, client_secret)
-    rich_print(await client.get_appliances())
+    rich_print(await client.get_home_appliances())
 
 
 @cli.command()
@@ -86,7 +88,9 @@ def get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
 async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
     """Get the operation state of the device."""
     client = CLIClient(client_id, client_secret)
-    rich_print(await client.get_operation_state(ha_id))
+    rich_print(
+        await client.get_status_value(ha_id, StatusKeysBSHCommon.OPERATION_STATE)
+    )
 
 
 if __name__ == "__main__":
