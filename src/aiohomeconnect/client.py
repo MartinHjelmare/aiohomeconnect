@@ -51,8 +51,9 @@ class AbstractAuth(ABC):
 
         The url parameter must start with a slash.
         """
-        headers = kwargs.get("headers")
+        headers = kwargs.pop("headers", None)
         headers = {} if headers is None else dict(headers)
+        headers = {key: val for key, val in headers.items() if val is not None}
 
         access_token = await self.async_get_access_token()
         headers["authorization"] = f"Bearer {access_token}"
