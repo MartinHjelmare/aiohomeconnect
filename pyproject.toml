@@ -30,6 +30,7 @@ version = "0.1.9"
 authlib = "^1.3.0"
 fastapi = "^0.115.0"
 httpx = "^0.27"
+mashumaro = "^3.13.1"
 python = "^3.11"
 rich = ">=10"
 typer = {extras = ["all"], version = "^0.12.0"}
@@ -140,6 +141,7 @@ known-first-party = ["aiohomeconnect", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "docs/conf.py" = ["D100"]
+"scripts/*" = ["ARG002", "ERA001", "PLR0911", "T201"]
 "setup.py" = ["D100"]
 "src/aiohomeconnect/cli/*" = ["T201"]
 "tests/**/*" = [
