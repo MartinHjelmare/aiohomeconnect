@@ -578,8 +578,86 @@ class SettingKey(StrEnum):
     BSH_COMMON_LIQUID_VOLUME_UNIT = "BSH.Common.Setting.LiquidVolumeUnit"
     BSH_COMMON_CHILD_LOCK = "BSH.Common.Setting.ChildLock"
     BSH_COMMON_ALARM_CLOCK = "BSH.Common.Setting.AlarmClock"
-    CONSUME_PRODUCTS_COFFEE_MAKER_CUP_WARMER = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_CUP_WARMER = (
         "ConsumerProducts.CoffeeMaker.Setting.CupWarmer"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_CURRENT_MAP = (
+        "ConsumerProducts.CleaningRobot.Setting.CurrentMap"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_1 = (
+        "ConsumerProducts.CleaningRobot.Setting.NameOfMap1"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_2 = (
+        "ConsumerProducts.CleaningRobot.Setting.NameOfMap2"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_3 = (
+        "ConsumerProducts.CleaningRobot.Setting.NameOfMap3"
+    )
+    COOKING_COMMON_LIGHTNING = "Cooking.Common.Setting.Lighting"
+    COOKING_OVEN_SABBATH_MODE = "Cooking.Oven.Setting.SabbathMode"
+    REFRIGERATION_COMMON_BOTTLE_COOLER_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.BottleCooler.SetpointTemperature"
+    )
+    REFRIGERATION_COMMON_CHILLER_LEFT_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.ChillerLeft.SetpointTemperature"
+    )
+    REFRIGERATION_COMMON_CHILLER_COMMON_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.ChillerCommon.SetpointTemperature"
+    )
+    REFRIGERATION_COMMON_CHILLER_RIGHT_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.ChillerRight.SetpointTemperature"
+    )
+    REFRIGERATION_COMMON_DISPENSER_ENABLED = (
+        "Refrigeration.Common.Setting.Dispenser.Enabled"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_FRIDGE = (
+        "Refrigeration.Common.Setting.Door.AssistantFridge"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_FREEZER = (
+        "Refrigeration.Common.Setting.Door.AssistantFreezer"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_FORCE_FRIDGE = (
+        "Refrigeration.Common.Setting.Door.AssistantForceFridge"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_FORCE_FREEZER = (
+        "Refrigeration.Common.Setting.Door.AssistantForceFreezer"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_TIMEOUT_FRIDGE = (
+        "Refrigeration.Common.Setting.Door.AssistantTimeoutFridge"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_TIMEOUT_FREEZER = (
+        "Refrigeration.Common.Setting.Door.AssistantTimeoutFreezer"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_TRIGGER_FRIDGE = (
+        "Refrigeration.Common.Setting.Door.AssistantTriggerFridge"
+    )
+    REFRIGERATION_COMMON_DOOR_ASSISTANT_TRIGGER_FREEZER = (
+        "Refrigeration.Common.Setting.Door.AssistantTriggerFreezer"
+    )
+    REFRIGERATION_COMMON_ECO_MODE = "Refrigeration.Common.Setting.EcoMode"
+    REFRIGERATION_COMMON_FRESH_MODE = "Refrigeration.Common.Setting.FreshMode"
+    REFRIGERATION_COMMON_LIGHT_EXTERNAL_BRIGHTNESS = (
+        "Refrigeration.Common.Setting.Light.External.Brightness"
+    )
+    REFRIGERATION_COMMON_LIGHT_INTERNAL_BRIGHTNESS = (
+        "Refrigeration.Common.Setting.Light.Internal.Brightness"
+    )
+    REFRIGERATION_COMMON_LIGHT_EXTERNAL_POWER = (
+        "Refrigeration.Common.Setting.Light.External.Power"
+    )
+    REFRIGERATION_COMMON_LIGHT_INTERNAL_POWER = (
+        "Refrigeration.Common.Setting.Light.Internal.Power"
+    )
+    REFRIGERATION_COMMON_SABBATH_MODE = "Refrigeration.Common.Setting.SabbathMode"
+    REFRIGERATION_COMMON_VACATION_MODE = "Refrigeration.Common.Setting.VacationMode"
+    REFRIGERATION_COMMON_WINE_COMPARTMENT_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.WineCompartment.SetpointTemperature"
+    )
+    REFRIGERATION_COMMON_WINE_COMPARTMENT_2_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.WineCompartment2.SetpointTemperature"
+    )
+    REFRIGERATION_COMMON_WINE_COMPARTMENT_3_SETPOINT_TEMPERATURE = (
+        "Refrigeration.Common.Setting.WineCompartment3.SetpointTemperature"
     )
     REFRIGERATION_FRIDGE_FREEZER_SETPOINT_TEMPERATURE_REFRIGERATOR = (
         "Refrigeration.FridgeFreezer.Setting.SetpointTemperatureRefrigerator"
@@ -587,8 +665,11 @@ class SettingKey(StrEnum):
     REFRIGERATION_FRIDGE_FREEZER_SETPOINT_TEMPERATURE_FREEZER = (
         "Refrigeration.FridgeFreezer.Setting.SetpointTemperatureFreezer"
     )
-    REFRIGERATION_COMMON_BOTTLE_COOLER_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.BottleCooler.SetpointTemperature"
+    REFRIGERATION_FRIDGE_FREEZER_SUPER_MODE_REFRIGERATOR = (
+        "Refrigeration.FridgeFreezer.Setting.SuperModeRefrigerator"
+    )
+    REFRIGERATION_FRIDGE_FREEZER_SUPER_MODE_FREEZER = (
+        "Refrigeration.FridgeFreezer.Setting.SuperModeFreezer"
     )
 
 
