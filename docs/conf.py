@@ -7,7 +7,7 @@
 project = "aiohomeconnect"
 project_copyright = "2024, Martin Hjelmare"
 author = "Martin Hjelmare"
-release = "0.2.1"
+release = "0.2.2"
 
 # General configuration
 extensions = [

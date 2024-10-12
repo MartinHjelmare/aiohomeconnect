@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.2 (2024-10-12)
+
+### Fixes
+
+* Update dependency fastapi to v0.115.2 ([`ccb61a0`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ccb61a0a0a2afbcf27d75bb0ba8f6d7ef4f743c5))
+
+### Chores
+
+* Update dependency sphinx to v8.1.1 ([`7b9f86b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/7b9f86b31579a842a41d97044f6e4fd1c73ea39e))
+* Update dependency sphinx to v8.1.0 ([`61ade9b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/61ade9b7eda485a093095af40db2e5b7dc441f56))
+* Update python-semantic-release/python-semantic-release action to v9.10.1 ([`7242c58`](https://github.com/MartinHjelmare/aiohomeconnect/commit/7242c58d38312a180632011063f0cddd9f8f31b1))
+
 ## v0.2.1 (2024-10-10)
 
 ### Fixes
