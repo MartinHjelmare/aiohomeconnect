@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.3 (2024-10-15)
+
+### Fixes
+
+* Update dependency uvicorn to ^0.32.0 ([`49d3f81`](https://github.com/MartinHjelmare/aiohomeconnect/commit/49d3f81b3e0e488105f7a7f5b8af9307b04311bf))
+
+### Chores
+
+* Update dependency copier to v9.4.0 ([`6a2496b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6a2496b551991a266fb46253c83d4eecfb3ce1a3))
+* Update python-semantic-release/python-semantic-release action to v9.11.1 ([`418cf71`](https://github.com/MartinHjelmare/aiohomeconnect/commit/418cf71033f8adb0dd542440e5ace8d85e7394bf))
+* Update dependency mypy to v1.12.0 ([`5f288af`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5f288af13a3a7fcf14d45613ef10b5458ca3a443))
+* Update pre-commit hook python-poetry/poetry to v1.8.4 ([`5fad5d8`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5fad5d8fbfe318802e86dce5784a4ffc65d2a24d))
+* Update dependency sphinx to v8.1.3 ([`6bebda6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6bebda660dd85b1b237cc974a4d4a757c73c891d))
+* Update python-semantic-release/python-semantic-release action to v9.11.0 ([`410afec`](https://github.com/MartinHjelmare/aiohomeconnect/commit/410afec9cbd50f4a61999fc44c3b98f2d8c45dc1))
+* Update dependency sphinx to v8.1.2 ([`8a7f0f9`](https://github.com/MartinHjelmare/aiohomeconnect/commit/8a7f0f96ef37d6111732a3d6306fa850bff7f212))
+
 ## v0.2.2 (2024-10-12)
 
 ### Fixes
