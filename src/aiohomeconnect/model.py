@@ -184,7 +184,7 @@ class ArrayOfEvents(DataClassJSONMixin):
 class Event(DataClassJSONMixin):
     """Represent Event."""
 
-    key: str
+    key: EventKey
     name: str | None
     uri: str | None
     timestamp: int
@@ -199,7 +199,7 @@ class Event(DataClassJSONMixin):
 class Program(DataClassJSONMixin):
     """Represent Program."""
 
-    key: str
+    key: ProgramKey
     name: str | None
     options: list[Option] | None
     constraints: ProgramConstraints | None
@@ -230,7 +230,7 @@ class EnumerateAvailableProgramConstraints(DataClassJSONMixin):
 class EnumerateAvailableProgram(DataClassJSONMixin):
     """Represent EnumerateAvailableProgram."""
 
-    key: str
+    key: ProgramKey
     name: str | None
     constraints: EnumerateAvailableProgramConstraints | None
 
@@ -256,7 +256,7 @@ class EnumerateProgramConstraints(DataClassJSONMixin):
 class EnumerateProgram(DataClassJSONMixin):
     """Represent EnumerateProgram."""
 
-    key: str
+    key: ProgramKey
     name: str | None
     constraints: EnumerateProgramConstraints | None
 
@@ -274,7 +274,7 @@ class Execution(StrEnum):
 class ProgramDefinition(DataClassJSONMixin):
     """Represent ProgramDefinition."""
 
-    key: str
+    key: ProgramKey
     name: str | None
     options: list[ProgramDefinitionOption] | None
 
@@ -300,7 +300,7 @@ class ProgramDefinitionConstraints(DataClassJSONMixin):
 class ProgramDefinitionOption(DataClassJSONMixin):
     """Represent ProgramDefinitionOption."""
 
-    key: str
+    key: OptionKey
     name: str | None
     type: str
     unit: str | None
@@ -311,7 +311,7 @@ class ProgramDefinitionOption(DataClassJSONMixin):
 class Option(DataClassJSONMixin):
     """Represent Option."""
 
-    key: str
+    key: OptionKey
     name: str | None
     value: Any
     display_value: str | None = field(metadata=field_options(alias="displayvalue"))
@@ -348,7 +348,7 @@ class Image(DataClassJSONMixin):
 class GetSetting(DataClassJSONMixin):
     """Specific setting of the home appliance."""
 
-    key: str
+    key: SettingKey
     name: str | None
     value: Any
     display_value: str | None = field(metadata=field_options(alias="displayvalue"))
@@ -385,7 +385,7 @@ class ArrayOfSettings(DataClassJSONMixin):
 class PutSetting(DataClassJSONMixin):
     """Specific setting of the home appliance."""
 
-    key: str
+    key: SettingKey
     value: Any
 
 
@@ -400,7 +400,7 @@ class PutSettings(DataClassJSONMixin):
 class Status(DataClassJSONMixin):
     """Represent Status."""
 
-    key: str
+    key: StatusKey
     name: str | None
     value: Any
     display_value: str | None = field(metadata=field_options(alias="displayvalue"))
@@ -444,7 +444,7 @@ class ArrayOfCommands(DataClassJSONMixin):
 class Command(DataClassJSONMixin):
     """Represent Command."""
 
-    key: str
+    key: CommandKey
     name: str | None
 
 
@@ -452,7 +452,7 @@ class Command(DataClassJSONMixin):
 class PutCommand(DataClassJSONMixin):
     """Represent PutCommand."""
 
-    key: str
+    key: CommandKey
     value: Any
 
 
