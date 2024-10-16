@@ -578,6 +578,10 @@ class SettingKey(StrEnum):
     BSH_COMMON_LIQUID_VOLUME_UNIT = "BSH.Common.Setting.LiquidVolumeUnit"
     BSH_COMMON_CHILD_LOCK = "BSH.Common.Setting.ChildLock"
     BSH_COMMON_ALARM_CLOCK = "BSH.Common.Setting.AlarmClock"
+    BSH_COMMON_AMBIENT_LIGHT_ENABLED = "BSH.Common.Setting.AmbientLightEnabled"
+    BSH_COMMON_AMBIENT_LIGHT_BRIGHTNESS = "BSH.Common.Setting.AmbientLightBrightness"
+    BSH_COMMON_AMBIENT_LIGHT_COLOR = "BSH.Common.Setting.AmbientLightColor"
+    BSH_COMMON_AMBIENT_LIGHT_CUSTOM_COLOR = "BSH.Common.Setting.AmbientLightCustomColor"
     CONSUMER_PRODUCTS_COFFEE_MAKER_CUP_WARMER = (
         "ConsumerProducts.CoffeeMaker.Setting.CupWarmer"
     )
@@ -593,8 +597,15 @@ class SettingKey(StrEnum):
     CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_3 = (
         "ConsumerProducts.CleaningRobot.Setting.NameOfMap3"
     )
-    COOKING_COMMON_LIGHTNING = "Cooking.Common.Setting.Lighting"
+    COOKING_COMMON_LIGHTING = "Cooking.Common.Setting.Lighting"
+    COOKING_COMMON_LIGHTING_BRIGHTNESS = "Cooking.Common.Setting.LightingBrightness"
+    COOKING_HOOD_COLOR_TEMPERATURE_PERCENT = (
+        "Cooking.Hood.Setting.ColorTemperaturePercent"
+    )
+    COOKING_HOOD_COLOR_TEMPERATURE = "Cooking.Hood.Setting.ColorTemperature"
     COOKING_OVEN_SABBATH_MODE = "Cooking.Oven.Setting.SabbathMode"
+    LAUNDRY_CARE_WASHER_I_DOS_1_BASE_LEVEL = "LaundryCare.Washer.Setting.IDos1BaseLevel"
+    LAUNDRY_CARE_WASHER_I_DOS_2_BASE_LEVEL = "LaundryCare.Washer.Setting.IDos2BaseLevel"
     REFRIGERATION_COMMON_BOTTLE_COOLER_SETPOINT_TEMPERATURE = (
         "Refrigeration.Common.Setting.BottleCooler.SetpointTemperature"
     )
