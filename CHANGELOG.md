@@ -1,8 +1,22 @@
 # Changelog
 
+## v0.2.4 (2024-10-22)
+
+### Bug fixes
+
+* Update dependency fastapi to v0.115.3 ([`f6a6283`](https://github.com/MartinHjelmare/aiohomeconnect/commit/f6a6283b22582e2e0e4556f032415b132f2a1794))
+
+### Chores
+
+* Update dependency mypy to v1.12.1 ([`df22023`](https://github.com/MartinHjelmare/aiohomeconnect/commit/df22023a7c80d43176b43fb4b088233b4eb816e4))
+* Update dependency copier to v9.4.1 ([`c17118c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c17118c2af8c2d372140ff06d5871c85bdfa09b2))
+* Update python-semantic-release/python-semantic-release action to v9.12.0 ([`88095ce`](https://github.com/MartinHjelmare/aiohomeconnect/commit/88095ce8c89e8dc72c498b1e5710a8b6022af0b4))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.7.0 ([`17206d5`](https://github.com/MartinHjelmare/aiohomeconnect/commit/17206d50f5b5cc38fe556aa6e6c579ae9f89cde1))
+* Update dependency ruff to ^0.7.0 ([`9d55d9d`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9d55d9d8677d21c226ab9e9460a637dc32c44fe5))
+
 ## v0.2.3 (2024-10-15)
 
-### Fixes
+### Bug fixes
 
 * Update dependency uvicorn to ^0.32.0 ([`49d3f81`](https://github.com/MartinHjelmare/aiohomeconnect/commit/49d3f81b3e0e488105f7a7f5b8af9307b04311bf))
 
@@ -18,7 +32,7 @@
 
 ## v0.2.2 (2024-10-12)
 
-### Fixes
+### Bug fixes
 
 * Update dependency fastapi to v0.115.2 ([`ccb61a0`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ccb61a0a0a2afbcf27d75bb0ba8f6d7ef4f743c5))
 
@@ -30,7 +44,7 @@
 
 ## v0.2.1 (2024-10-10)
 
-### Fixes
+### Bug fixes
 
 * Update dependency uvicorn to v0.31.1 ([`285c771`](https://github.com/MartinHjelmare/aiohomeconnect/commit/285c771dbc0c76f47a01dfd05c64b435a293ef1c))
 
@@ -60,13 +74,13 @@
 * Update dependency sphinx-autobuild to v2024.10.3 ([`15f403e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/15f403e34d41476e4c6380a85266027d2651190b))
 * Update dependency sphinx-autobuild to v2024.10.2 ([`ceefac4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ceefac4357966f54506e6c303b50b7c0d9db158e))
 
-### Fixes
+### Bug fixes
 
 * Update dependency rich to v13.9.2 ([`7513478`](https://github.com/MartinHjelmare/aiohomeconnect/commit/751347844d7e32996b6b8ffb7651502fd28f1144))
 
 ## v0.1.8 (2024-10-01)
 
-### Fixes
+### Bug fixes
 
 * Update dependency rich to v13.9.1 ([`7737f85`](https://github.com/MartinHjelmare/aiohomeconnect/commit/7737f85453212005bb9c55bffdd5a7d131763a7c))
 
@@ -76,7 +90,7 @@
 
 ## v0.1.7 (2024-09-28)
 
-### Fixes
+### Bug fixes
 
 * Update dependency uvicorn to ^0.31.0 ([`d42aafd`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d42aafdbee1c96658f520cec0a05a2a013750ce7))
 
@@ -99,7 +113,7 @@
 
 ## v0.1.6 (2024-09-18)
 
-### Fixes
+### Bug fixes
 
 * Update dependency fastapi to ^0.115.0 ([`ddfa69a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ddfa69a4a03ad2639815dc341637d88cea82d44a))
 
@@ -109,7 +123,7 @@
 
 ## v0.1.5 (2024-09-14)
 
-### Fixes
+### Bug fixes
 
 * Update dependency fastapi to v0.114.2 ([`d6696fc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d6696fc00c89a6948349f4102e5066242be8b3ab))
 
@@ -120,13 +134,13 @@
 
 ## v0.1.4 (2024-09-11)
 
-### Fixes
+### Bug fixes
 
 * Update dependency fastapi to v0.114.1 ([`aef28b9`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aef28b92e7ab2db460f9e181cee441c139429112))
 
 ## v0.1.3 (2024-09-10)
 
-### Fixes
+### Bug fixes
 
 * Update dependency rich to v13.8.1 ([`6a8e428`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6a8e4288887871d8c7ad844b08f5fc13d273b079))
 
@@ -137,7 +151,7 @@
 
 ## v0.1.2 (2024-09-07)
 
-### Fixes
+### Bug fixes
 
 * Update dependency fastapi to ^0.114.0 ([`867393c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/867393c0f36fcc581e487616f1d510118ff415a7))
 
@@ -153,7 +167,7 @@
 
 ## v0.1.1 (2024-08-29)
 
-### Fixes
+### Bug fixes
 
 * Update dependency typer to ^0.12.0 ([`b3f841d`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b3f841dabb1e6072d120b78219d16e8f8ae7a827))
 
