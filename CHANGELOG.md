@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.5 (2024-10-22)
+
+### Bug fixes
+
+* Update dependency rich to v13.9.3 ([`8bb77ee`](https://github.com/MartinHjelmare/aiohomeconnect/commit/8bb77ee3893eb6f1c7d246fbda161ac032dae762))
+
 ## v0.2.4 (2024-10-22)
 
 ### Bug fixes
