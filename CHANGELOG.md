@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.2.6 (2024-10-24)
+
+### Bug fixes
+
+* Update dependency mashumaro to v3.14 ([`0ee6d7f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/0ee6d7fe3e25ce6896b0783d03ef780aa82a555e))
+
+### Chores
+
+* Update pre-commit hook commitizen-tools/commitizen to v3.30.0 ([`88e9197`](https://github.com/MartinHjelmare/aiohomeconnect/commit/88e9197767ad566b9ec7e6a3310d40038ecaf919))
+* Update dependency mypy to v1.13.0 ([`2e7a4ca`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2e7a4ca4025032739b077e03b01f07438a001ddf))
+
 ## v0.2.5 (2024-10-22)
 
 ### Bug fixes
