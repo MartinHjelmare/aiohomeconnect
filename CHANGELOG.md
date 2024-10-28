@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.2.7 (2024-10-28)
+
+### Bug fixes
+
+* Update dependency fastapi to v0.115.4 ([`6e546d9`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6e546d9be4aa24c51d01194452f1121ed7f414a3))
+
+### Chores
+
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.7.1 ([`76facd6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/76facd6ddd11aea4746f971280178d23457ef43e))
+* Update dependency ruff to v0.7.1 ([`acd0867`](https://github.com/MartinHjelmare/aiohomeconnect/commit/acd086784f91461cb97a1c563e9aa303571e413a))
+
 ## v0.2.6 (2024-10-24)
 
 ### Bug fixes
