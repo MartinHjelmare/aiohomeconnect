@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.8 (2024-11-01)
+
+### Bug fixes
+
+* Update dependency rich to v13.9.4 ([`60bc03b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/60bc03b271a53df28fd37145f64846ea3d97640b))
+
+### Chores
+
+* Update dependency ruff to v0.7.2 ([`1c31577`](https://github.com/MartinHjelmare/aiohomeconnect/commit/1c31577a61e5e2d322364f918a2b078d7504ebb3))
+* Update dependency pytest-cov to v6 (#14) ([`9c633cb`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9c633cb4fd75e331a785ec6febc7a7b07baf0852))
+* Update dependency pytest-httpx to ^0.33.0 ([`b1dca5e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b1dca5e44e28d0a921f950803c24170b988f5507))
+
 ## v0.2.7 (2024-10-28)
 
 ### Bug fixes
