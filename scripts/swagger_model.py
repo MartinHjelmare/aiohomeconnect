@@ -1,4 +1,4 @@
-"""Provide a swagger model for mashumaru."""  # noqa: INP001
+"""Provide a swagger model for mashumaru."""
 # /// script
 # dependencies = [
 #   "camel-converter",
