@@ -25,6 +25,7 @@ from .model import (
     Option,
     OptionKey,
     Program,
+    ProgramConstraints,
     ProgramDefinition,
     ProgramKey,
     PutCommand,
@@ -93,7 +94,10 @@ class Client:
         )
         return ArrayOfHomeAppliances.from_dict(response.json()["data"])
 
-    async def get_specific_appliance(self, ha_id: str) -> HomeAppliance:
+    async def get_specific_appliance(
+        self,
+        ha_id: str,
+    ) -> HomeAppliance:
         """Get a specific paired home appliance.
 
         This endpoint returns a specific home appliance which is paired with the
@@ -111,7 +115,10 @@ class Client:
         return HomeAppliance.from_dict(response.json()["data"])
 
     async def get_all_programs(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfPrograms:
         """Get all programs of a given home appliance."""
         response = await self._auth.request(
@@ -122,7 +129,10 @@ class Client:
         return ArrayOfPrograms.from_dict(response.json()["data"])
 
     async def get_available_programs(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfAvailablePrograms:
         """Get all currently available programs on the given home appliance."""
         response = await self._auth.request(
@@ -135,6 +145,7 @@ class Client:
     async def get_available_program(
         self,
         ha_id: str,
+        *,
         program_key: ProgramKey,
         accept_language: Language | None = None,
     ) -> ProgramDefinition:
@@ -147,7 +158,10 @@ class Client:
         return ProgramDefinition.from_dict(response.json()["data"])
 
     async def get_active_program(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> Program:
         """Get the active program."""
         response = await self._auth.request(
@@ -158,7 +172,14 @@ class Client:
         return Program.from_dict(response.json()["data"])
 
     async def start_program(
-        self, ha_id: str, program: Program, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        program_key: ProgramKey,
+        name: str | None = None,
+        options: list[Option] | None = None,
+        constraints: ProgramConstraints | None = None,
+        accept_language: Language | None = None,
     ) -> None:
         """Start the given program.
 
@@ -196,6 +217,9 @@ class Client:
         There are no programs available for freezers, fridge freezers,
         refrigerators and wine coolers.
         """
+        program = Program(
+            key=program_key, name=name, options=options, constraints=constraints
+        )
         await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/active",
@@ -204,7 +228,10 @@ class Client:
         )
 
     async def stop_program(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> None:
         """Stop the active program."""
         await self._auth.request(
@@ -214,7 +241,10 @@ class Client:
         )
 
     async def get_active_program_options(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfOptions:
         """Get all options of the active program.
 
@@ -244,6 +274,7 @@ class Client:
     async def set_active_program_options(
         self,
         ha_id: str,
+        *,
         array_of_options: ArrayOfOptions,
         accept_language: Language | None = None,
     ) -> None:
@@ -265,7 +296,11 @@ class Client:
         )
 
     async def get_active_program_option(
-        self, ha_id: str, option_key: OptionKey, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        option_key: OptionKey,
+        accept_language: Language | None = None,
     ) -> Option:
         """Get a specific option of the active program."""
         response = await self._auth.request(
@@ -278,8 +313,12 @@ class Client:
     async def set_active_program_option(
         self,
         ha_id: str,
+        *,
         option_key: OptionKey,
-        option: Option,
+        value: Any,
+        name: str | None = None,
+        display_value: str | None = None,
+        unit: str | None = None,
         accept_language: Language | None = None,
     ) -> None:
         """Set a specific option of the active program.
@@ -291,6 +330,13 @@ class Client:
         Please note that changing options of the running program is currently only
         supported by ovens.
         """
+        option = Option(
+            key=option_key,
+            name=name,
+            value=value,
+            display_value=display_value,
+            unit=unit,
+        )
         await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/active/options/{option_key}",
@@ -299,7 +345,10 @@ class Client:
         )
 
     async def get_selected_program(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> Program:
         """Get the selected program.
 
@@ -315,7 +364,14 @@ class Client:
         return Program.from_dict(response.json()["data"])
 
     async def set_selected_program(
-        self, ha_id: str, program: Program, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        program_key: ProgramKey,
+        name: str | None = None,
+        options: list[Option] | None = None,
+        constraints: ProgramConstraints | None = None,
+        accept_language: Language | None = None,
     ) -> None:
         """Select the given program.
 
@@ -331,6 +387,9 @@ class Client:
         directly from the home appliance. Any changes to the available options
         due to the state of the appliance is only reflected in the selected program.
         """
+        program = Program(
+            key=program_key, name=name, options=options, constraints=constraints
+        )
         await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/selected",
@@ -339,7 +398,10 @@ class Client:
         )
 
     async def get_selected_program_options(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfOptions:
         """Get all options of the selected program."""
         response = await self._auth.request(
@@ -352,6 +414,7 @@ class Client:
     async def set_selected_program_options(
         self,
         ha_id: str,
+        *,
         array_of_options: ArrayOfOptions,
         accept_language: Language | None = None,
     ) -> None:
@@ -364,7 +427,11 @@ class Client:
         )
 
     async def get_selected_program_option(
-        self, ha_id: str, option_key: OptionKey, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        option_key: OptionKey,
+        accept_language: Language | None = None,
     ) -> Option:
         """Get a specific option of the selected program."""
         response = await self._auth.request(
@@ -377,11 +444,22 @@ class Client:
     async def set_selected_program_option(
         self,
         ha_id: str,
+        *,
         option_key: OptionKey,
-        option: Option,
+        value: Any,
+        name: str | None = None,
+        display_value: str | None = None,
+        unit: str | None = None,
         accept_language: Language | None = None,
     ) -> None:
         """Set a specific option of the selected program."""
+        option = Option(
+            key=option_key,
+            name=name,
+            value=value,
+            display_value=display_value,
+            unit=unit,
+        )
         await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/selected/options/{option_key}",
@@ -390,7 +468,10 @@ class Client:
         )
 
     async def get_images(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfImages:
         """Get a list of available images."""
         response = await self._auth.request(
@@ -400,7 +481,12 @@ class Client:
         )
         return ArrayOfImages.from_dict(response.json()["data"])
 
-    async def get_image(self, ha_id: str, image_key: str) -> None:
+    async def get_image(
+        self,
+        ha_id: str,
+        *,
+        image_key: str,
+    ) -> None:
         """Get a specific image."""
         await self._auth.request(
             "GET",
@@ -409,7 +495,10 @@ class Client:
         )
 
     async def get_settings(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfSettings:
         """Get a list of available settings.
 
@@ -428,6 +517,7 @@ class Client:
     async def set_settings(
         self,
         ha_id: str,
+        *,
         put_settings: PutSettings,
         accept_language: Language | None = None,
     ) -> None:
@@ -442,6 +532,7 @@ class Client:
     async def get_setting(
         self,
         ha_id: str,
+        *,
         setting_key: SettingKey,
         accept_language: Language | None = None,
     ) -> GetSetting:
@@ -456,11 +547,13 @@ class Client:
     async def set_setting(
         self,
         ha_id: str,
+        *,
         setting_key: SettingKey,
-        put_setting: PutSetting,
+        value: Any,
         accept_language: Language | None = None,
     ) -> None:
         """Set a specific setting."""
+        put_setting = PutSetting(key=setting_key, value=value)
         await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/settings/{setting_key}",
@@ -469,7 +562,10 @@ class Client:
         )
 
     async def get_status(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfStatus:
         """Get a list of available status.
 
@@ -484,7 +580,11 @@ class Client:
         return ArrayOfStatus.from_dict(response.json()["data"])
 
     async def get_status_value(
-        self, ha_id: str, status_key: StatusKey, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        status_key: StatusKey,
+        accept_language: Language | None = None,
     ) -> Status:
         """Get a specific status.
 
@@ -499,7 +599,10 @@ class Client:
         return Status.from_dict(response.json()["data"])
 
     async def get_available_commands(
-        self, ha_id: str, accept_language: Language | None = None
+        self,
+        ha_id: str,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfCommands:
         """Get a list of available and writable commands."""
         response = await self._auth.request(
@@ -512,6 +615,7 @@ class Client:
     async def put_commands(
         self,
         ha_id: str,
+        *,
         put_commands: PutCommands,
         accept_language: Language | None = None,
     ) -> None:
@@ -526,11 +630,13 @@ class Client:
     async def put_command(
         self,
         ha_id: str,
+        *,
         command_key: CommandKey,
-        put_command: PutCommand,
+        value: Any,
         accept_language: Language | None = None,
     ) -> None:
         """Execute a specific command."""
+        put_command = PutCommand(key=command_key, value=value)
         await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/commands/{command_key}",
@@ -539,7 +645,9 @@ class Client:
         )
 
     async def get_all_events(
-        self, accept_language: Language | None = None
+        self,
+        *,
+        accept_language: Language | None = None,
     ) -> ArrayOfEvents:
         """Get stream of events for all appliances - NOT WORKING WITH SWAGGER.
 
@@ -578,6 +686,7 @@ class Client:
     async def get_events(
         self,
         ha_id: str,
+        *,
         accept_language: Language | None = None,
         accept: ContentType | None = None,
     ) -> ArrayOfEvents:

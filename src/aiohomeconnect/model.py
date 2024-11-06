@@ -464,7 +464,7 @@ class PutCommands(DataClassJSONMixin):
 
 
 class ProgramKey(StrEnum):
-    """Represent program keys."""
+    """Represent a program key."""
 
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
@@ -478,7 +478,7 @@ class ProgramKey(StrEnum):
 
 
 class OptionKey(StrEnum):
-    """Represent option keys."""
+    """Represent an option key."""
 
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
@@ -489,7 +489,7 @@ class OptionKey(StrEnum):
 
 
 class StatusKey(StrEnum):
-    """Represent status keys."""
+    """Represent a status key."""
 
     BSH_COMMON_BATTERY_CHARGING_STATE = "BSH.Common.Status.BatteryChargingState"
     BSH_COMMON_BATTERY_LEVEL = "BSH.Common.Status.BatteryLevel"
@@ -571,7 +571,7 @@ class StatusKey(StrEnum):
 
 
 class SettingKey(StrEnum):
-    """Represent setting keys."""
+    """Represent a setting key."""
 
     BSH_COMMON_POWER_STATE = "BSH.Common.Setting.PowerState"
     BSH_COMMON_TEMPERATURE_UNIT = "BSH.Common.Setting.TemperatureUnit"
@@ -685,7 +685,7 @@ class SettingKey(StrEnum):
 
 
 class CommandKey(StrEnum):
-    """Represent command keys."""
+    """Represent a command key."""
 
     BSH_COMMON_ACKNOWLEDGE_EVENT = "BSH.Common.Command.AcknowledgeEvent"
     BSH_COMMON_OPEN_DOOR = "BSH.Common.Command.OpenDoor"
@@ -695,7 +695,7 @@ class CommandKey(StrEnum):
 
 
 class EventKey(StrEnum):
-    """Represent event keys."""
+    """Represent an event key."""
 
     BSH_COMMON_ROOT_SELECTED_PROGRAM = "BSH.Common.Root.SelectedProgram"
     BSH_COMMON_ROOT_ACTIVE_PROGRAM = "BSH.Common.Root.ActiveProgram"
