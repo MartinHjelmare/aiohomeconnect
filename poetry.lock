@@ -1986,4 +1986,4 @@ cli = ["authlib", "fastapi", "typer", "uvicorn"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6a1bb0e9cf52b8653bfe91fd3cac9adc640412d096e91d4820d07f25c55391d2"
+content-hash = "f46c83946c4439db54465bfbd25d09115aac72420c9e65e5bbdcd02ccb126cdc"
