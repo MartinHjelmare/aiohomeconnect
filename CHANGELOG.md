@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.9 (2024-11-08)
+
+### Bug fixes
+
+* Update dependency typer to ^0.13.0 ([`b450fda`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b450fda42a96b21c39b31e45798e04f822686d12))
+
+### Chores
+
+* Update python-semantic-release/python-semantic-release action to v9.12.2 ([`01b7772`](https://github.com/MartinHjelmare/aiohomeconnect/commit/01b7772ad4f29c7bbb647475a64f053bf53393ea))
+* Update python-semantic-release/python-semantic-release action to v9.12.1 ([`e301ce5`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e301ce54433b33a5bbb6fe283d30f5081250dea3))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.7.2 (#15) ([`217c40e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/217c40e17d2f7e15a3f26b1516f9ddbf531c03cc))
+
 ## v0.2.8 (2024-11-01)
 
 ### Bug fixes

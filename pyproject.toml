@@ -20,7 +20,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/MartinHjelmare/aiohomeconnect"
-version = "0.2.8"
+version = "0.2.9"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/MartinHjelmare/aiohomeconnect/issues"
