@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.2.10 (2024-11-12)
+
+### Bug fixes
+
+* Update dependency fastapi to v0.115.5 ([`c07099b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c07099b8797116ec6987fe1e5d97c8114018c7ba))
+
+### Chores
+
+* Update python-semantic-release/python-semantic-release action to v9.14.0 ([`3b53c0e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3b53c0e76bdb6e3e98cfafcaab510375b3ee0df8))
+* Update python-semantic-release/python-semantic-release action to v9.13.0 ([`30ec017`](https://github.com/MartinHjelmare/aiohomeconnect/commit/30ec0172389ecc80056f1c00cfa5f2755cf50111))
+* Update pre-commit hook commitizen-tools/commitizen to v3.30.1 ([`f98997e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/f98997e3cca18d7dddec3302b85d4658628de7be))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.7.3 ([`9a7579a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9a7579a73d5bfe514a477dbf2f63b95e23a74784))
+* Update dependency ruff to v0.7.3 ([`d15fd14`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d15fd1402b81b99edc0ded4259749d7ef3d30481))
+* Adjust typer deps (#16) ([`8704e1f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/8704e1fab551ba41e7f40fb315426074800227b7))
+
 ## v0.2.9 (2024-11-08)
 
 ### Bug fixes
