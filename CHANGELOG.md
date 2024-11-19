@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.2.11 (2024-11-19)
+
+### Bug fixes
+
+* Update dependency typer to v0.13.1 ([`1c96fba`](https://github.com/MartinHjelmare/aiohomeconnect/commit/1c96fbad25a86f3381d00a619ddb655a31d72ed1))
+
+### Chores
+
+* Update dependency pytest-httpx to ^0.34.0 ([`2b6fc43`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2b6fc432aa4a6d9272babb73b6dc8bf172e3dda1))
+* Update pre-commit hook commitizen-tools/commitizen to v3.31.0 ([`1d21e85`](https://github.com/MartinHjelmare/aiohomeconnect/commit/1d21e85cad2ac5ce18c7f33071f0460149451669))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.7.4 ([`921b415`](https://github.com/MartinHjelmare/aiohomeconnect/commit/921b4152a46c0be9ffef134f71bed07cf99c5d47))
+* Update dependency ruff to v0.7.4 ([`64d8c83`](https://github.com/MartinHjelmare/aiohomeconnect/commit/64d8c8352d4bbad8ed918a715ae241d12e7a5de2))
+* Update codecov/codecov-action action to v5 (#17) ([`2aaffe9`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2aaffe9bff97868ab6d4714c089964e3357ad933))
+
 ## v0.2.10 (2024-11-12)
 
 ### Bug fixes
