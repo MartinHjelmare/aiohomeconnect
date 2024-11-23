@@ -3,7 +3,7 @@
 import asyncio
 
 from fastapi import FastAPI, HTTPException
-from rich import print
+from rich import print as rich_print
 import typer
 import uvicorn
 
@@ -55,7 +55,7 @@ async def _authorize(client_id: str, client_secret: str) -> None:
         """Stop the server."""
         await token_manager.fetch_access_token(code)
 
-    print(f"Visit the following URL to authorize this client:\n{uri}")
+    rich_print(f"Visit the following URL to authorize this client:\n{uri}")
     await server.serve()
 
 
@@ -74,7 +74,7 @@ async def _get_appliances(
 ) -> None:
     """Get the appliances."""
     client = CLIClient(client_id, client_secret)
-    print(await client.get_appliances())
+    rich_print(await client.get_appliances())
 
 
 @cli.command()
@@ -86,7 +86,7 @@ def get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
 async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
     """Get the operation state of the device."""
     client = CLIClient(client_id, client_secret)
-    print(await client.get_operation_state(ha_id))
+    rich_print(await client.get_operation_state(ha_id))
 
 
 if __name__ == "__main__":
