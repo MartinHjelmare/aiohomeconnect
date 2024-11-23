@@ -115,7 +115,6 @@ target-version = "py311"
 
 [tool.ruff.lint]
 ignore = [
-  "ANN101", # missing-type-self
   "ANN401", # any-type
   "COM812", # missing-trailing-comma
   "D203", # 1 blank line required before class docstring
@@ -125,9 +124,9 @@ ignore = [
   "EM102", # f-string-in-exception
   "ISC001", # single-line-implicit-string-concatenation
   "PLR2004", # magic-value-comparison
-  "TCH001", # typing-only-first-party-import
-  "TCH002", # typing-only-third-party-import
-  "TCH003", # typing-only-stdlib-import
+  "TC001", # typing-only-first-party-import
+  "TC002", # typing-only-third-party-import
+  "TC003", # typing-only-stdlib-import
   "TRY003", # raise-vanilla-args
 ]
 select = [
