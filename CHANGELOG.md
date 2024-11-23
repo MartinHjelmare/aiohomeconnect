@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.2.13 (2024-11-23)
+
+### Bug fixes
+
+* Update dependency mashumaro to v3.15 ([`6720330`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6720330a0127ae4315e697c3a0354246c1e31bea))
+
+### Chores
+
+* Add dev deps (#20) ([`c34be68`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c34be68a31d52c2a87d73e2eacd01bc88eea43cd))
+* Update pre-commit stages (#19) ([`b116296`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b1162968425a858ab80119f7bede09af554e0e1f))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.0 (#18) ([`1a47670`](https://github.com/MartinHjelmare/aiohomeconnect/commit/1a47670cd3a91b39e98c7fd13cff574de2d624d7))
+* Update dependency ruff to ^0.8.0 ([`594fcdb`](https://github.com/MartinHjelmare/aiohomeconnect/commit/594fcdbd83f09ae264af2c3f1ceef9b95ce7073e))
+
 ## v0.2.12 (2024-11-21)
 
 ### Bug fixes
