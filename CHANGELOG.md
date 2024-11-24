@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.0 (2024-11-24)
+
+### Features
+
+* Finish event keys (#25) ([`3b2d74c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3b2d74cc32571d8462be7a14e2eda65bc7f0f256))
+
 ## v0.3.0 (2024-11-24)
 
 ### Features
