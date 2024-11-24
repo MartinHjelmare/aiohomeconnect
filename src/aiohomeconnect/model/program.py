@@ -169,3 +169,99 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_CLEAN_MAP = (
         "ConsumerProducts.CleaningRobot.Program.Cleaning.CleanMap"
     )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_CAFFE_GRANDE = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.CaffeGrande"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_CAFFE_LATTE = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.CaffeLatte"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_CAPPUCCINO = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.Cappuccino"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_COFFEE = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.Coffee"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_ESPRESSO = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.Espresso"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_ESPRESSO_DOPPIO = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.EspressoDoppio"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_ESPRESSO_MACCHIATO = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.EspressoMacchiato"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_HOT_WATER = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.HotWater"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_LATTE_MACCHIATO = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.LatteMacchiato"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_MILK_FROTH = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.MilkFroth"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_RISTRETTO = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.Ristretto"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_WARM_MILK = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.WarmMilk"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_XL_COFFEE = (
+        "ConsumerProducts.CoffeeMaker.Program.Beverage.XLCoffee"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_AMERICANO = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Americano"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_BLACK_EYE = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.BlackEye"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CAFE_AU_LAIT = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeAuLait"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CAFE_CONLECHE = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeConLeche"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CAFE_CORTADO = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeCortado"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CORTADO = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Cortado"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_DEAD_EYE = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.DeadEye"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_DOPPIO = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Doppio"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_FLAT_WHITE = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.FlatWhite"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_GALAO = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Galao"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_GAROTO = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Garoto"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_GROSSER_BRAUNER = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.GrosserBrauner"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_KAAPI = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Kaapi"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_KLEINER_BRAUNER = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.KleinerBrauner"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_KOFFIE_VERKEERD = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.KoffieVerkeerd"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_RED_EYE = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.RedEye"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_VERLAENGERTER = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Verlaengerter"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_VERLAENGERTER_BRAUN = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.VerlaengerterBraun"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_WIENER_MELANGE = (
+        "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.WienerMelange"
+    )
