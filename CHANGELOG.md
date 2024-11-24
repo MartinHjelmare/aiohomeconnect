@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.0 (2024-11-24)
+
+### Features
+
+* Add model foundation (#24) ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+
 ## v0.2.13 (2024-11-23)
 
 ### Bug fixes
