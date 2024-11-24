@@ -20,7 +20,7 @@ async def test_abstract_auth(httpx_client: AsyncClient, httpx_mock: HTTPXMock) -
     """Test the abstract auth."""
     url_query = "key1=value1&key2=value2"
     httpx_mock.add_response(
-        url=f"https://example.com/test?{url_query}",
+        url=f"https://example.com/api/test?{url_query}",
         json={"test": "test_result"},
     )
 

@@ -25,6 +25,7 @@ DEFINITION_NESTED_MAP = {
     ("ArrayOfHomeAppliances", "homeappliances"): "HomeAppliance",
     ("ArrayOfEvents", "items"): "Event",
     ("Program", "options"): "Option",
+    ("Program", "constraints"): "ProgramConstraints",
     ("ArrayOfAvailablePrograms", "programs"): "EnumerateAvailableProgram",
     (
         "EnumerateAvailableProgram",
@@ -32,6 +33,8 @@ DEFINITION_NESTED_MAP = {
     ): "EnumerateAvailableProgramConstraints",
     ("EnumerateAvailableProgramConstraints", "execution"): "Execution",
     ("ArrayOfPrograms", "programs"): "EnumerateProgram",
+    ("ArrayOfPrograms", "active"): "Program",
+    ("ArrayOfPrograms", "selected"): "Program",
     ("EnumerateProgram", "constraints"): "EnumerateProgramConstraints",
     ("EnumerateProgramConstraints", "execution"): "Execution",
     ("ProgramDefinition", "options"): "ProgramDefinitionOption",
@@ -43,6 +46,8 @@ DEFINITION_NESTED_MAP = {
     ("PutSettings", "data"): "PutSetting",
     ("ArrayOfStatus", "status"): "Status",
     ("Status", "constraints"): "StatusConstraints",
+    ("ArrayOfCommands", "commands"): "Command",
+    ("PutCommands", "data"): "PutCommand",
 }
 PARAMETER_ENUM_MAP = {
     "Accept": "ContentType",
@@ -171,9 +176,12 @@ class DefinitionModelBase(ABC):
     definition: str
     all_definitions: list[str]
     description: str | None = None
+    generated_classes: set[str] = field(default_factory=set)
 
     @abstractmethod
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
 
     @staticmethod
@@ -192,18 +200,24 @@ class {definition}(DataClassJSONMixin):
 class DefinitionModelUnknown(DefinitionModelBase):
     """Represent a string type model."""
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
-        return "Any"
+        suffix = "" if required else " | None"
+        return f"Any{suffix}"
 
 
 @dataclass(kw_only=True)
 class DefinitionModelString(DefinitionModelBase):
     """Represent a string type model."""
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
-        return "str"
+        suffix = "" if required else " | None"
+        return f"str{suffix}"
 
 
 @dataclass(kw_only=True)
@@ -212,16 +226,18 @@ class DefinitionModelStringEnum(DefinitionModelBase):
 
     enum: list[str]
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
         if (description := self.description) is None:
             raise ValueError("Missing description")
-        suffix = ""
+        suffix = "" if required else " | None"
         if generate_class:
             code_enum = "\n    ".join(
                 f'{enum.upper()} = "{enum}"' for enum in self.enum
             )
-            suffix = (
+            self.generated_classes.add(
                 "\n\n"
                 f"class {definition.capitalize()}(StrEnum):\n"
                 f'    """{description.strip()}."""\n\n    '
@@ -237,27 +253,36 @@ class DefinitionModelInteger(DefinitionModelBase):
 
     format_: str | None = None
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
-        return "int"
+        suffix = "" if required else " | None"
+        return f"int{suffix}"
 
 
 @dataclass(kw_only=True)
 class DefinitionModelBoolean(DefinitionModelBase):
     """Represent a boolean type model."""
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
-        return "bool"
+        suffix = "" if required else " | None"
+        return f"bool{suffix}"
 
 
 @dataclass(kw_only=True)
 class DefinitionModelStringNumberBoolean(DefinitionModelBase):
     """Represent a union of string number and boolean type model."""
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
-        return "str | Number | bool"
+        suffix = "" if required else " | None"
+        return f"str | float | bool{suffix}"
 
 
 @dataclass(kw_only=True)
@@ -275,13 +300,15 @@ class DefinitionModelArray(DefinitionModelBase):
             data=self.raw_items,
         )
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = ""
+        suffix = "" if required else " | None"
         if definition != self.definition and generate_class:
             item = definition
             if definition not in self.all_definitions:
-                suffix = (
+                self.generated_classes.add(
                     "\n\n"
                     f"{self.generate_class(definition)}    "
                     f"{self.items.generate_code(definition)}"
@@ -289,6 +316,9 @@ class DefinitionModelArray(DefinitionModelBase):
                 )
         else:
             item = self.items.generate_code(definition)
+
+        self.generated_classes.update(self.items.generated_classes)
+        self.items.generated_classes.clear()
         return f"list[{item}]{suffix}"
 
 
@@ -312,12 +342,14 @@ class DefinitionModelObject(DefinitionModelBase):
 
         self.properties = properties
 
-    def generate_code(self, definition: str, *, generate_class: bool = False) -> str:
+    def generate_code(
+        self, definition: str, *, generate_class: bool = False, required: bool = False
+    ) -> str:
         """Return the Python code as a string for this model."""
         if definition != self.definition and generate_class:
-            suffix = ""
+            suffix = "" if required else " | None"
             if definition not in self.all_definitions:
-                suffix = (
+                self.generated_classes.add(
                     "\n\n"
                     f"{self.generate_class(definition)}    "
                     f"{self.generate_code(definition)}"
@@ -326,32 +358,44 @@ class DefinitionModelObject(DefinitionModelBase):
             return f"{definition}{suffix}"
         properties = ""
         sorted_properties = {}
-        if required := self.required:
-            for prop in required:
+        if required_properties := self.required:
+            for prop in required_properties:
                 sorted_properties[prop] = self.properties[prop]
         sorted_properties.update(self.properties)
 
         generate_class = False
         original_definition = definition
         for prop, model in self.properties.items():
+            required_property = bool(
+                required_properties and prop in required_properties
+            )
             if nested_definition := DEFINITION_NESTED_MAP.get((definition, prop)):
                 definition = nested_definition
                 generate_class = True
             if prop in ("data", "error") and definition == self.definition:
-                properties += f"    {model.generate_code(definition)}\n"
+                model_code = model.generate_code(definition, required=required_property)
+                properties += f"    {model_code}\n"
             else:
                 prop_code = model.generate_code(
-                    definition, generate_class=generate_class
+                    definition,
+                    generate_class=generate_class,
+                    required=required_property,
                 )
                 properties += f"    {prop}: {prop_code}\n"
             definition = original_definition
+            self.generated_classes.update(model.generated_classes)
+            model.generated_classes.clear()
+        suffix = (
+            "".join(self.generated_classes)
+            if self.definition == original_definition
+            else ""
+        )
+        return f"{properties}{suffix}".strip()
 
-        return f"{properties}".strip()
 
-
-def load_yaml() -> dict[str, Any]:
+def load_yaml(path: str = "hcsdk-production.yaml") -> dict[str, Any]:
     """Load yaml."""
-    raw = Path("hcsdk.yaml").read_text(encoding="utf-8")
+    raw = Path(path).read_text(encoding="utf-8")
     return load(raw, Loader=SafeLoader)
 
 
@@ -445,7 +489,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import StrEnum
-from numbers import Number
 from typing import Any
 
 from mashumaro.mixins.json import DataClassJSONMixin
