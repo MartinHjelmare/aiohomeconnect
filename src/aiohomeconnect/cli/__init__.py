@@ -89,7 +89,9 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
     """Get the operation state of the device."""
     client = CLIClient(client_id, client_secret)
     rich_print(
-        await client.get_status_value(ha_id, StatusKey.BSH_COMMON_OPERATION_STATE)
+        await client.get_status_value(
+            ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
+        )
     )
 
 
