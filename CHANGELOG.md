@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.5.0 (2024-11-25)
+
+### Features
+
+* Add coffee machine keys (#26) ([`d002752`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d00275212d5662f6f1b50c5e10ed370d2a90e8ea))
+
 ## v0.4.0 (2024-11-24)
 
 ### Features
