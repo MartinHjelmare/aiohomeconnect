@@ -152,6 +152,30 @@ class OptionKey(StrEnum):
     CONSUMER_PRODUCTS_CLEANING_ROBOT_REFERENCE_MAP_ID = (
         "ConsumerProducts.CleaningRobot.Option.ReferenceMapId"
     )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_BEAN_AMOUNT = (
+        "ConsumerProducts.CoffeeMaker.Option.BeanAmount"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_BEAN_CONTAINER_SELECTION = (
+        "ConsumerProducts.CoffeeMaker.Option.BeanContainerSelection"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_COFFEE_MILK_RATIO = (
+        "ConsumerProducts.CoffeeMaker.Option.CoffeeMilkRatio"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_COFFEE_TEMPERATURE = (
+        "ConsumerProducts.CoffeeMaker.Option.CoffeeTemperature"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_FILL_QUANTITY = (
+        "ConsumerProducts.CoffeeMaker.Option.FillQuantity"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_FLOW_RATE = (
+        "ConsumerProducts.CoffeeMaker.Option.FlowRate"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_HOT_WATER_TEMPERATURE = (
+        "ConsumerProducts.CoffeeMaker.Option.HotWaterTemperature"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_MULTIPLE_BEVERAGES = (
+        "ConsumerProducts.CoffeeMaker.Option.MultipleBeverages"
+    )
 
 
 class ProgramKey(StrEnum):
