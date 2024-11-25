@@ -145,6 +145,8 @@ class OptionKey(StrEnum):
 
     # TODO(Martin Hjelmare): Add all option keys  # noqa: FIX002
     # https://github.com/MartinHjelmare/aiohomeconnect/issues/22
+    # Missing option categories still to be added 20241125:
+    # Dishwasher, Dryer, Hood, Oven, Warming Drawer, Washer
 
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
@@ -183,6 +185,8 @@ class ProgramKey(StrEnum):
 
     # TODO(Martin Hjelmare): Add all program keys  # noqa: FIX002
     # https://github.com/MartinHjelmare/aiohomeconnect/issues/23
+    # Missing program categories still to be added 20241125:
+    # Dishwasher, Dryer, Hood, Oven, Warming Drawer, Washer, Washer Dryer
 
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
