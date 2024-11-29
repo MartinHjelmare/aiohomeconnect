@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.5.2 (2024-11-29)
+
+### Bug fixes
+
+* Update httpx ([`a3cc541`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a3cc541b5e1bbfad93f72c7d1633d0d05c908c32))
+
+### Chores
+
+* Add httpx renovate group (#30) ([`1b94f22`](https://github.com/MartinHjelmare/aiohomeconnect/commit/1b94f22136321530a3b857005360915ba281444e))
+* Update dependency ruff to v0.8.1 ([`bb22973`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb229732a862642cdc4a20f22d541fa26be6412a))
+
 ## v0.5.1 (2024-11-29)
 
 ### Bug fixes
