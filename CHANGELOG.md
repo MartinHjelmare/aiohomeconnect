@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.5.1 (2024-11-29)
+
+### Bug fixes
+
+* Update dependency typer to ^0.14.0 ([`f1fd272`](https://github.com/MartinHjelmare/aiohomeconnect/commit/f1fd272aceab684fd1bdee711077108cbcc0df3f))
+
+### Chores
+
+* Update pre-commit hook commitizen-tools/commitizen to v4 (#27) ([`c308a23`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c308a233af16c5d4c0cf95cfbd4382bdc97dca1e))
+
 ## v0.5.0 (2024-11-25)
 
 ### Features
