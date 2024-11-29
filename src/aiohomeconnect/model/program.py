@@ -293,3 +293,35 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_WIENER_MELANGE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.WienerMelange"
     )
+    DISHCARE_DISHWASHER_PROGRAM_AUTO_1 = "Dishcare.Dishwasher.Program.Auto1"
+    DISHCARE_DISHWASHER_PROGRAM_AUTO_2 = "Dishcare.Dishwasher.Program.Auto2"
+    DISHCARE_DISHWASHER_PROGRAM_AUTO_3 = "Dishcare.Dishwasher.Program.Auto3"
+    DISHCARE_DISHWASHER_PROGRAM_AUTO_HALF_LOAD = (
+        "Dishcare.Dishwasher.Program.AutoHalfLoad"
+    )
+    DISHCARE_DISHWASHER_PROGRAM_ECO_50 = "Dishcare.Dishwasher.Program.Eco50"
+    DISHCARE_DISHWASHER_PROGRAM_EXPRESS_SPARKLE_65 = (
+        "Dishcare.Dishwasher.Program.ExpressSparkle65"
+    )
+    DISHCARE_DISHWASHER_PROGRAM_GLAS_40 = "Dishcare.Dishwasher.Program.Glas40"
+    DISHCARE_DISHWASHER_PROGRAM_GLASS_CARE = "Dishcare.Dishwasher.Program.GlassCare"
+    DISHCARE_DISHWASHER_PROGRAM_INTENSIV_45 = "Dishcare.Dishwasher.Program.Intensiv45"
+    DISHCARE_DISHWASHER_PROGRAM_INTENSIV_70 = "Dishcare.Dishwasher.Program.Intensiv70"
+    DISHCARE_DISHWASHER_PROGRAM_INTENSIV_POWER = (
+        "Dishcare.Dishwasher.Program.IntensivPower"
+    )
+    DISHCARE_DISHWASHER_PROGRAM_KURZ_60 = "Dishcare.Dishwasher.Program.Kurz60"
+    DISHCARE_DISHWASHER_PROGRAM_MACHINE_CARE = "Dishcare.Dishwasher.Program.MachineCare"
+    DISHCARE_DISHWASHER_PROGRAM_MAGIC_DAILY = "Dishcare.Dishwasher.Program.MagicDaily"
+    DISHCARE_DISHWASHER_PROGRAM_MAXIMUM_CLEANING = (
+        "Dishcare.Dishwasher.Program.MaximumCleaning"
+    )
+    DISHCARE_DISHWASHER_PROGRAM_MIXED_LOAD = "Dishcare.Dishwasher.Program.MixedLoad"
+    DISHCARE_DISHWASHER_PROGRAM_NIGHT_WASH = "Dishcare.Dishwasher.Program.NightWash"
+    DISHCARE_DISHWASHER_PROGRAM_NORMAL_45 = "Dishcare.Dishwasher.Program.Normal45"
+    DISHCARE_DISHWASHER_PROGRAM_NORMAL_65 = "Dishcare.Dishwasher.Program.Normal65"
+    DISHCARE_DISHWASHER_PROGRAM_PRE_RINSE = "Dishcare.Dishwasher.Program.PreRinse"
+    DISHCARE_DISHWASHER_PROGRAM_QUICK_45 = "Dishcare.Dishwasher.Program.Quick45"
+    DISHCARE_DISHWASHER_PROGRAM_QUICK_65 = "Dishcare.Dishwasher.Program.Quick65"
+    DISHCARE_DISHWASHER_PROGRAM_STEAM_FRESH = "Dishcare.Dishwasher.Program.SteamFresh"
+    DISHCARE_DISHWASHER_PROGRAM_SUPER_60 = "Dishcare.Dishwasher.Program.Super60"
