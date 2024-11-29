@@ -148,6 +148,7 @@ class OptionKey(StrEnum):
     # Missing option categories still to be added 20241125:
     # Dishwasher, Dryer, Hood, Oven, Warming Drawer, Washer
 
+    BSH_COMMON_OPTION_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
     )
@@ -178,6 +179,21 @@ class OptionKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_MULTIPLE_BEVERAGES = (
         "ConsumerProducts.CoffeeMaker.Option.MultipleBeverages"
     )
+    DISHCARE_DISHWASHER_OPTION_BRILLIANCE_DRY = (
+        "Dishcare.Dishwasher.Option.BrillianceDry"
+    )
+    DISHCARE_DISHWASHER_OPTION_ECO_DRY = "Dishcare.Dishwasher.Option.EcoDry"
+    DISHCARE_DISHWASHER_OPTION_EXTRA_DRY = "Dishcare.Dishwasher.Option.ExtraDry"
+    DISHCARE_DISHWASHER_OPTION_HALF_LOAD = "Dishcare.Dishwasher.Option.HalfLoad"
+    DISHCARE_DISHWASHER_OPTION_HYGIENE_PLUS = "Dishcare.Dishwasher.Option.HygienePlus"
+    DISHCARE_DISHWASHER_OPTION_INTENSIV_ZONE = "Dishcare.Dishwasher.Option.IntensivZone"
+    DISHCARE_DISHWASHER_OPTION_SILENCE_ON_DEMAND = (
+        "Dishcare.Dishwasher.Option.SilenceOnDemand"
+    )
+    DISHCARE_DISHWASHER_OPTION_VARIO_SPEED_PLUS = (
+        "Dishcare.Dishwasher.Option.VarioSpeedPlus"
+    )
+    DISHCARE_DISHWASHER_OPTION_ZEOLITE_DRY = "Dishcare.Dishwasher.Option.ZeoliteDry"
 
 
 class ProgramKey(StrEnum):
