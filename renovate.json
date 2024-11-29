@@ -1,4 +1,10 @@
 {
   "extends": ["github>browniebroke/renovate-configs:python"],
-  "automergeType": "branch"
+  "automergeType": "branch",
+  "packageRules": [
+    {
+      "groupName": "httpx",
+      "matchPackageNames": ["*httpx*"]
+    }
+  ]
 }
