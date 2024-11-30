@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.6.0 (2024-11-30)
+
+### Features
+
+* Add dishwasher keys (#31) ([`496079f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/496079fa4cc6a5e7e6d207710cc24d9a94e6c960))
+
+### Chores
+
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.1 ([`ed33502`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ed3350208e9000b8bbb3e413c5f9a0faa2290697))
+
 ## v0.5.2 (2024-11-29)
 
 ### Bug fixes
