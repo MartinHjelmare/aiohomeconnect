@@ -145,39 +145,49 @@ class OptionKey(StrEnum):
 
     # TODO(Martin Hjelmare): Add all option keys  # noqa: FIX002
     # https://github.com/MartinHjelmare/aiohomeconnect/issues/22
-    # Missing option categories still to be added 20241125:
-    # Dishwasher, Dryer, Hood, Oven, Warming Drawer, Washer
+    # Missing option categories still to be added 20241129:
+    # Dryer, Hood, Oven, Warming Drawer, Washer
 
+    BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_REFERENCE_MAP_ID = (
         "ConsumerProducts.CleaningRobot.Option.ReferenceMapId"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_BEAN_AMOUNT = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEAN_AMOUNT = (
         "ConsumerProducts.CoffeeMaker.Option.BeanAmount"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_BEAN_CONTAINER_SELECTION = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEAN_CONTAINER_SELECTION = (
         "ConsumerProducts.CoffeeMaker.Option.BeanContainerSelection"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_COFFEE_MILK_RATIO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_MILK_RATIO = (
         "ConsumerProducts.CoffeeMaker.Option.CoffeeMilkRatio"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_COFFEE_TEMPERATURE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_TEMPERATURE = (
         "ConsumerProducts.CoffeeMaker.Option.CoffeeTemperature"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_FILL_QUANTITY = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_FILL_QUANTITY = (
         "ConsumerProducts.CoffeeMaker.Option.FillQuantity"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_FLOW_RATE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_FLOW_RATE = (
         "ConsumerProducts.CoffeeMaker.Option.FlowRate"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_HOT_WATER_TEMPERATURE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_HOT_WATER_TEMPERATURE = (
         "ConsumerProducts.CoffeeMaker.Option.HotWaterTemperature"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_MULTIPLE_BEVERAGES = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_MULTIPLE_BEVERAGES = (
         "ConsumerProducts.CoffeeMaker.Option.MultipleBeverages"
     )
+    DISHCARE_DISHWASHER_BRILLIANCE_DRY = "Dishcare.Dishwasher.Option.BrillianceDry"
+    DISHCARE_DISHWASHER_ECO_DRY = "Dishcare.Dishwasher.Option.EcoDry"
+    DISHCARE_DISHWASHER_EXTRA_DRY = "Dishcare.Dishwasher.Option.ExtraDry"
+    DISHCARE_DISHWASHER_HALF_LOAD = "Dishcare.Dishwasher.Option.HalfLoad"
+    DISHCARE_DISHWASHER_HYGIENE_PLUS = "Dishcare.Dishwasher.Option.HygienePlus"
+    DISHCARE_DISHWASHER_INTENSIV_ZONE = "Dishcare.Dishwasher.Option.IntensivZone"
+    DISHCARE_DISHWASHER_SILENCE_ON_DEMAND = "Dishcare.Dishwasher.Option.SilenceOnDemand"
+    DISHCARE_DISHWASHER_VARIO_SPEED_PLUS = "Dishcare.Dishwasher.Option.VarioSpeedPlus"
+    DISHCARE_DISHWASHER_ZEOLITE_DRY = "Dishcare.Dishwasher.Option.ZeoliteDry"
 
 
 class ProgramKey(StrEnum):
@@ -185,8 +195,8 @@ class ProgramKey(StrEnum):
 
     # TODO(Martin Hjelmare): Add all program keys  # noqa: FIX002
     # https://github.com/MartinHjelmare/aiohomeconnect/issues/23
-    # Missing program categories still to be added 20241125:
-    # Dishwasher, Dryer, Hood, Oven, Warming Drawer, Washer, Washer Dryer
+    # Missing program categories still to be added 20241129:
+    # Dryer, Hood, Oven, Warming Drawer, Washer, Washer Dryer
 
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
@@ -197,99 +207,125 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_CLEAN_MAP = (
         "ConsumerProducts.CleaningRobot.Program.Cleaning.CleanMap"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_CAFFE_GRANDE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_CAFFE_GRANDE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.CaffeGrande"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_CAFFE_LATTE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_CAFFE_LATTE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.CaffeLatte"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_CAPPUCCINO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_CAPPUCCINO = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.Cappuccino"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_COFFEE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.Coffee"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_ESPRESSO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_ESPRESSO = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.Espresso"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_ESPRESSO_DOPPIO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_ESPRESSO_DOPPIO = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.EspressoDoppio"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_ESPRESSO_MACCHIATO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_ESPRESSO_MACCHIATO = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.EspressoMacchiato"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_HOT_WATER = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_HOT_WATER = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.HotWater"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_LATTE_MACCHIATO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_LATTE_MACCHIATO = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.LatteMacchiato"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_MILK_FROTH = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_MILK_FROTH = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.MilkFroth"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_RISTRETTO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_RISTRETTO = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.Ristretto"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_WARM_MILK = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_WARM_MILK = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.WarmMilk"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_BEVERAGE_XL_COFFEE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_XL_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.XLCoffee"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_AMERICANO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_AMERICANO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Americano"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_BLACK_EYE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_BLACK_EYE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.BlackEye"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CAFE_AU_LAIT = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_AU_LAIT = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeAuLait"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CAFE_CONLECHE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_CONLECHE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeConLeche"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CAFE_CORTADO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_CORTADO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeCortado"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_CORTADO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CORTADO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Cortado"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_DEAD_EYE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_DEAD_EYE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.DeadEye"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_DOPPIO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_DOPPIO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Doppio"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_FLAT_WHITE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_FLAT_WHITE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.FlatWhite"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_GALAO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_GALAO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Galao"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_GAROTO = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_GAROTO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Garoto"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_GROSSER_BRAUNER = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_GROSSER_BRAUNER = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.GrosserBrauner"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_KAAPI = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_KAAPI = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Kaapi"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_KLEINER_BRAUNER = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_KLEINER_BRAUNER = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.KleinerBrauner"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_KOFFIE_VERKEERD = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_KOFFIE_VERKEERD = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.KoffieVerkeerd"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_RED_EYE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_RED_EYE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.RedEye"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_VERLAENGERTER = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_VERLAENGERTER = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Verlaengerter"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_VERLAENGERTER_BRAUN = (
+    CONSUMER_PRODUCTS_COFFEE_MAKE_COFFEE_WORLD_VERLAENGERTER_BRAUN = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.VerlaengerterBraun"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_PROGRAM_COFFEE_WORLD_WIENER_MELANGE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_WIENER_MELANGE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.WienerMelange"
     )
+    DISHCARE_DISHWASHER_AUTO_1 = "Dishcare.Dishwasher.Program.Auto1"
+    DISHCARE_DISHWASHER_AUTO_2 = "Dishcare.Dishwasher.Program.Auto2"
+    DISHCARE_DISHWASHER_AUTO_3 = "Dishcare.Dishwasher.Program.Auto3"
+    DISHCARE_DISHWASHER_AUTO_HALF_LOAD = "Dishcare.Dishwasher.Program.AutoHalfLoad"
+    DISHCARE_DISHWASHER_ECO_50 = "Dishcare.Dishwasher.Program.Eco50"
+    DISHCARE_DISHWASHER_EXPRESS_SPARKLE_65 = (
+        "Dishcare.Dishwasher.Program.ExpressSparkle65"
+    )
+    DISHCARE_DISHWASHER_GLAS_40 = "Dishcare.Dishwasher.Program.Glas40"
+    DISHCARE_DISHWASHER_GLASS_CARE = "Dishcare.Dishwasher.Program.GlassCare"
+    DISHCARE_DISHWASHER_INTENSIV_45 = "Dishcare.Dishwasher.Program.Intensiv45"
+    DISHCARE_DISHWASHER_INTENSIV_70 = "Dishcare.Dishwasher.Program.Intensiv70"
+    DISHCARE_DISHWASHER_INTENSIV_POWER = "Dishcare.Dishwasher.Program.IntensivPower"
+    DISHCARE_DISHWASHER_KURZ_60 = "Dishcare.Dishwasher.Program.Kurz60"
+    DISHCARE_DISHWASHER_MACHINE_CARE = "Dishcare.Dishwasher.Program.MachineCare"
+    DISHCARE_DISHWASHER_MAGIC_DAILY = "Dishcare.Dishwasher.Program.MagicDaily"
+    DISHCARE_DISHWASHER_MAXIMUM_CLEANING = "Dishcare.Dishwasher.Program.MaximumCleaning"
+    DISHCARE_DISHWASHER_MIXED_LOAD = "Dishcare.Dishwasher.Program.MixedLoad"
+    DISHCARE_DISHWASHER_NIGHT_WASH = "Dishcare.Dishwasher.Program.NightWash"
+    DISHCARE_DISHWASHER_NORMAL_45 = "Dishcare.Dishwasher.Program.Normal45"
+    DISHCARE_DISHWASHER_NORMAL_65 = "Dishcare.Dishwasher.Program.Normal65"
+    DISHCARE_DISHWASHER_PRE_RINSE = "Dishcare.Dishwasher.Program.PreRinse"
+    DISHCARE_DISHWASHER_QUICK_45 = "Dishcare.Dishwasher.Program.Quick45"
+    DISHCARE_DISHWASHER_QUICK_65 = "Dishcare.Dishwasher.Program.Quick65"
+    DISHCARE_DISHWASHER_STEAM_FRESH = "Dishcare.Dishwasher.Program.SteamFresh"
+    DISHCARE_DISHWASHER_SUPER_60 = "Dishcare.Dishwasher.Program.Super60"
