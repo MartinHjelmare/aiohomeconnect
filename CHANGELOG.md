@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.6.1 (2024-12-03)
+
+### Bug fixes
+
+* Update dependency typer to ^0.15.0 ([`ff03685`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ff03685e24742ee80cfd085b761bd0d5102d2beb))
+
+### Chores
+
+* Update python-semantic-release/python-semantic-release action to v9.15.1 ([`9180351`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9180351ee274b76984219aa4a15aed4f20700e59))
+* Update dependency python-semantic-release to v9.15.1 ([`fb7adcd`](https://github.com/MartinHjelmare/aiohomeconnect/commit/fb7adcdf1fdf4b7dbfef56710f87e7d3049d5ae2))
+* Update python-semantic-release/python-semantic-release action to v9.15.0 ([`34df80b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/34df80b88e2fdea9cdf4eca158f418244454f61b))
+* Update dependency python-semantic-release to v9.15.0 ([`e3b1677`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e3b1677ce3fbf17418ba1017c2ce135a2285f4c6))
+* Update dependency pytest to v8.3.4 ([`061fe78`](https://github.com/MartinHjelmare/aiohomeconnect/commit/061fe78e252f98b2fb0138a87385c1dd0275b732))
+
 ## v0.6.0 (2024-11-30)
 
 ### Features
