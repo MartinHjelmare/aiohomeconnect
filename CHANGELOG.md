@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.6.3 (2024-12-04)
+
+### Bug fixes
+
+* Update dependency typer to v0.15.1 ([`5fd604d`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5fd604d740bea69d2c7166033795471ac6507b2d))
+
+### Chores
+
+* Update actions/attest-build-provenance action to v2 (#32) ([`e2a2a57`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e2a2a575fb99c684ec7e57c39e040679c064a200))
+
 ## v0.6.2 (2024-12-04)
 
 ### Bug fixes
