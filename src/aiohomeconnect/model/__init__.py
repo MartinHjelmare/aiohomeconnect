@@ -14,7 +14,9 @@ from .command import (
 )
 from .event import (
     ArrayOfEvents,
+    Event,
     EventKey,
+    EventTypes,
 )
 from .image import (
     ArrayOfImages,
@@ -54,7 +56,9 @@ __all__ = [
     "ArrayOfSettings",
     "ArrayOfStatus",
     "CommandKey",
+    "Event",
     "EventKey",
+    "EventTypes",
     "GetSetting",
     "HomeAppliance",
     "Option",
@@ -71,13 +75,6 @@ __all__ = [
     "Status",
     "StatusKey",
 ]
-
-
-class ContentType(StrEnum):
-    """Represent the content type for the response."""
-
-    APPLICATION_JSON = "application/vnd.bsh.sdk.v1+json"
-    EVENT_STREAM = "text/event-stream"
 
 
 class Language(StrEnum):

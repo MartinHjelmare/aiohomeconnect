@@ -21,14 +21,16 @@ class Event(DataClassJSONMixin):
     """Represent Event."""
 
     key: EventKey
-    name: str | None
-    uri: str | None
     timestamp: int
     level: str
     handling: str
-    value: str | float | bool
-    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
-    unit: str | None
+    value: str | int | float | bool
+    name: str | None = field(default=None)
+    uri: str | None = field(default=None)
+    display_value: str | None = field(
+        default=None, metadata=field_options(alias="displayvalue")
+    )
+    unit: str | None = field(default=None)
 
 
 class EventKey(StrEnum):
@@ -430,3 +432,16 @@ class EventKey(StrEnum):
     REFRIGERATION_FRIDGE_FREEZER_SETTING_SUPER_MODE_REFRIGERATOR = (
         "Refrigeration.FridgeFreezer.Setting.SuperModeRefrigerator"
     )
+
+
+class EventTypes(StrEnum):
+    """Represent an event type."""
+
+    KEEP_ALIVE = "KEEP-ALIVE"
+    STATUS = "STATUS"
+    EVENT = "EVENT"
+    NOTIFY = "NOTIFY"
+    CONNECTED = "CONNECTED"
+    DISCONNECTED = "DISCONNECTED"
+    PAIRED = "PAIRED"
+    DEPAIRED = "DEPAIRED"

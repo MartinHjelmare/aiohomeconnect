@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from typing import Any
 
 from httpx import AsyncClient, Response
+
+from aiohomeconnect.sse_client import SSEClient
 
 from .model import (
     ArrayOfAvailablePrograms,
@@ -18,7 +22,6 @@ from .model import (
     ArrayOfSettings,
     ArrayOfStatus,
     CommandKey,
-    ContentType,
     GetSetting,
     HomeAppliance,
     Language,
@@ -69,6 +72,29 @@ class AbstractAuth(ABC):
             headers=headers,
         )
 
+    @asynccontextmanager
+    async def stream(
+        self, method: str, url: str, **kwargs: Any
+    ) -> AsyncIterator[Response]:
+        """Make a stream request.
+
+        The url parameter must start with a slash.
+        """
+        headers = kwargs.pop("headers", None)
+        headers = {} if headers is None else dict(headers)
+        headers = {key: val for key, val in headers.items() if val is not None}
+
+        access_token = await self.async_get_access_token()
+        headers["authorization"] = f"Bearer {access_token}"
+
+        async with self.client.stream(
+            method,
+            f"{self.host}/api{url}",
+            **kwargs,
+            headers=headers,
+        ) as response:
+            yield response
+
 
 class Client:
     """Represent a client for the Home Connect API."""
@@ -76,6 +102,12 @@ class Client:
     def __init__(self, auth: AbstractAuth) -> None:
         """Initialize the client."""
         self._auth = auth
+        self._sse = SSEClient(auth)
+
+    @property
+    def sse(self) -> SSEClient:
+        """Return the SSE client."""
+        return self._sse
 
     async def get_home_appliances(self) -> ArrayOfHomeAppliances:
         """Get all home appliances which are paired with the logged-in user account.
@@ -688,7 +720,6 @@ class Client:
         ha_id: str,
         *,
         accept_language: Language | None = None,
-        accept: ContentType | None = None,
     ) -> ArrayOfEvents:
         """Get stream of events for one appliance - NOT WORKING WITH SWAGGER.
 
@@ -727,6 +758,6 @@ class Client:
         response = await self._auth.request(
             "GET",
             f"/homeappliances/{ha_id}/events",
-            headers={"Accept-Language": accept_language, "Accept": accept},
+            headers={"Accept-Language": accept_language},
         )
         return ArrayOfEvents.from_dict(response.json()["data"])
