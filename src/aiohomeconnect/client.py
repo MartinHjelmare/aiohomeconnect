@@ -672,52 +672,13 @@ class Client:
             data=put_command.to_dict(),
         )
 
-    async def get_all_events(
-        self,
-        *,
-        accept_language: Language | None = None,
-    ) -> ArrayOfEvents:
-        """Get stream of events for all appliances - NOT WORKING WITH SWAGGER.
-
-        Server Sent Events are available as Eventsource API in JavaScript
-        and are implemented by various HTTP client libraries and tools
-        including curl.
-
-        Unfortunately, SSE is not compatible to OpenAPI specs and can therefore
-        not be properly specified within this API description.
-
-        An SSE event contains three parts separated by linebreaks: event, data and id.
-        Different events are separated by empty lines.
-
-        The event field can be one of these types:
-        KEEP-ALIVE, STATUS, EVENT, NOTIFY, CONNECTED, DISCONNECTED, PAIRED, DEPAIRED.
-
-        In case of all event types (except KEEP-ALIVE),
-        the "data" field is populated with the JSON object defined below.
-
-        The id contains the home appliance ID. (except for KEEP-ALIVE event type)
-
-        Further documentation can be found here:
-        * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
-        * [Program changes](https://api-docs.home-connect.com/events#program-changes)
-        * [Option changes](https://api-docs.home-connect.com/events#option-changes)
-        * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
-        * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
-        """
-        response = await self._auth.request(
-            "GET",
-            "/homeappliances/events",
-            headers={"Accept-Language": accept_language},
-        )
-        return ArrayOfEvents.from_dict(response.json()["data"])
-
     async def get_events(
         self,
         ha_id: str,
         *,
         accept_language: Language | None = None,
     ) -> ArrayOfEvents:
-        """Get stream of events for one appliance - NOT WORKING WITH SWAGGER.
+        """Get a list of events for one appliance.
 
         If you want to do a one-time query of the current status, you can ask for
         the content-type `application/vnd.bsh.sdk.v1+json` and get the status
@@ -754,7 +715,10 @@ class Client:
         response = await self._auth.request(
             "GET",
             f"/homeappliances/{ha_id}/events",
-            headers={"Accept-Language": accept_language},
+            headers={
+                "Accept-Language": accept_language,
+                "Accept": "application/vnd.bsh.sdk.v1+json",
+            },
         )
         return ArrayOfEvents.from_dict(response.json()["data"])
 
@@ -764,7 +728,33 @@ class Client:
         *,
         accept_language: Language | None = None,
     ) -> AsyncIterator[EventSource]:
-        """Stream all events from all the appliances."""
+        """Get stream of events for all appliances.
+
+        Server Sent Events are available as Eventsource API in JavaScript
+        and are implemented by various HTTP client libraries and tools
+        including curl.
+
+        Unfortunately, SSE is not compatible to OpenAPI specs and can therefore
+        not be properly specified within this API description.
+
+        An SSE event contains three parts separated by linebreaks: event, data and id.
+        Different events are separated by empty lines.
+
+        The event field can be one of these types:
+        KEEP-ALIVE, STATUS, EVENT, NOTIFY, CONNECTED, DISCONNECTED, PAIRED, DEPAIRED.
+
+        In case of all event types (except KEEP-ALIVE),
+        the "data" field is populated with the JSON object defined below.
+
+        The id contains the home appliance ID. (except for KEEP-ALIVE event type)
+
+        Further documentation can be found here:
+        * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
+        * [Program changes](https://api-docs.home-connect.com/events#program-changes)
+        * [Option changes](https://api-docs.home-connect.com/events#option-changes)
+        * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
+        * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
+        """
         # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
         # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
         async with self._auth.connect_sse(
@@ -784,7 +774,7 @@ class Client:
         *,
         accept_language: Language | None = None,
     ) -> AsyncIterator[EventSource]:
-        """Stream events from one appliance."""
+        """Get stream of events for one appliance."""
         # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
         # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
         async with self._auth.connect_sse(
