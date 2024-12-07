@@ -25,12 +25,12 @@ class Event(DataClassJSONMixin):
     level: str
     handling: str
     value: str | int | float | bool
-    name: str | None = field(default=None)
-    uri: str | None = field(default=None)
+    name: str | None = None
+    uri: str | None = None
     display_value: str | None = field(
         default=None, metadata=field_options(alias="displayvalue")
     )
-    unit: str | None = field(default=None)
+    unit: str | None = None
 
 
 class EventKey(StrEnum):
@@ -434,7 +434,7 @@ class EventKey(StrEnum):
     )
 
 
-class EventTypes(StrEnum):
+class EventType(StrEnum):
     """Represent an event type."""
 
     KEEP_ALIVE = "KEEP-ALIVE"

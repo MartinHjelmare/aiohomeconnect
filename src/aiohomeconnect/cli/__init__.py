@@ -11,7 +11,7 @@ from rich import print as rich_print
 import typer
 import uvicorn
 
-from aiohomeconnect.model import EventTypes, StatusKey
+from aiohomeconnect.model import EventType, StatusKey
 from aiohomeconnect.model.event import ArrayOfEvents
 
 from .client import CLIClient, TokenManager
@@ -146,11 +146,11 @@ async def _subscribe_to_one_applicance_events(
 
 def _message_handler(message_event: ServerSentEvent) -> None:
     """Handle the message event."""
-    event_type = EventTypes(message_event.event)
+    event_type = EventType(message_event.event)
     ha_id = message_event.id
     print(f"\nEvent type: {event_type}, Home appliance ID: {ha_id}")
     match event_type:
-        case EventTypes.STATUS | EventTypes.EVENT | EventTypes.NOTIFY:
+        case EventType.STATUS | EventType.EVENT | EventType.NOTIFY:
             try:
                 events = ArrayOfEvents.from_json(message_event.data)
             except JSONDecodeError as err:
