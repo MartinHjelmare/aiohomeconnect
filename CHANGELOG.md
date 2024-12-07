@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.6.4 (2024-12-07)
+
+### Bug fixes
+
+* Update dependency httpx to v0.28.1 ([`8939e1c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/8939e1c7324683a520c79b2f34227875825bd697))
+
+### Chores
+
+* Update pre-commit hook commitizen-tools/commitizen to v4.1.0 ([`3d56bbd`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3d56bbd01cc16a6c32b929cb0773a0004eb19fd9))
+* Update pre-commit hook python-poetry/poetry to v1.8.5 ([`ae327a8`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ae327a8adf546a7cdb69dcb425bc2a1045cea640))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.2 ([`422fd30`](https://github.com/MartinHjelmare/aiohomeconnect/commit/422fd3004a0c0e5ab00022140e09fa8de6e957f2))
+* Update dependency ruff to v0.8.2 ([`a531dbd`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a531dbdfe321aea3b9fb8f74e56a7cee2e807798))
+
 ## v0.6.3 (2024-12-04)
 
 ### Bug fixes
