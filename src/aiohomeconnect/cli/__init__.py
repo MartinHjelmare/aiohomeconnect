@@ -1,13 +1,18 @@
 """Provide a CLI for Home Connect API."""
 
 import asyncio
+from json import JSONDecodeError
 
 from fastapi import FastAPI, HTTPException
+from httpx import ReadTimeout
+from httpx_sse import ServerSentEvent
+from mashumaro.exceptions import InvalidFieldValue
 from rich import print as rich_print
 import typer
 import uvicorn
 
-from aiohomeconnect.model import Event, EventKey, EventTypes, StatusKey
+from aiohomeconnect.model import EventTypes, StatusKey
+from aiohomeconnect.model.event import ArrayOfEvents
 
 from .client import CLIClient, TokenManager
 
@@ -96,99 +101,64 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
 
 
 @cli.command()
-def subscribe_to_home_appliance_changes(client_id: str, client_secret: str) -> None:
-    """Subscribe to events for home appliances.
-
-    The events types handled are:
-    - CONNECTED
-    - DISCONNECTED
-    - PAIRED
-    - DEPAIRED
-    """
-    asyncio.run(_subscribe_to_home_appliance_changes(client_id, client_secret))
+def subscribe_to_all_applicances_events(client_id: str, client_secret: str) -> None:
+    """Subscribe and print events from all the appliances."""
+    asyncio.run(_subscribe_to_all_applicances_events(client_id, client_secret))
 
 
-async def _subscribe_to_home_appliance_changes(
+async def _subscribe_to_all_applicances_events(
     client_id: str, client_secret: str
 ) -> None:
-    """Subscribe to events."""
+    """Subscribe and print events from all the appliances."""
     client = CLIClient(client_id, client_secret)
-    client.sse.home_appliances_changes_callback = _receive_applicance_changes
-    await client.sse.stream_all_events()
-
-
-async def _receive_applicance_changes(event_type: EventTypes, ha_id: str) -> None:
-    """Receive events."""
-    print("Home appliance ID:", ha_id)
-    rich_print(event_type)
+    async with client.stream_all_events() as event_source:
+        try:
+            async for event in event_source.aiter_sse():
+                _message_handler(event)
+        except ReadTimeout:
+            print("Connection timed out")
+        else:
+            print("Connection closed cleanly")
 
 
 @cli.command()
-def subscribe_to_status_events(
-    client_id: str, client_secret: str, ha_id: str, keys: list[str]
+def subscribe_to_one_applicance_events(
+    client_id: str, client_secret: str, ha_id: str
 ) -> None:
-    """Subscribe to events with the STATUS event type."""
-    asyncio.run(_subscribe_to_status_events(client_id, client_secret, ha_id, keys))
+    """Subscribe and print events from one appliance."""
+    asyncio.run(_subscribe_to_one_applicance_events(client_id, client_secret, ha_id))
 
 
-async def _subscribe_to_status_events(
-    client_id: str,
-    client_secret: str,
-    ha_id: str,
-    keys: list[str],
+async def _subscribe_to_one_applicance_events(
+    client_id: str, client_secret: str, ha_id: str
 ) -> None:
-    """Subscribe to status events."""
+    """Subscribe and print events from one appliance."""
     client = CLIClient(client_id, client_secret)
-    for key in keys:
-        client.sse.register_status_callback(ha_id, EventKey(key), _receive_event)
-    await client.sse.stream_all_events()
+    async with client.stream_events(ha_id) as event_source:
+        try:
+            async for event in event_source.aiter_sse():
+                _message_handler(event)
+        except ReadTimeout:
+            print("Connection timed out")
+        else:
+            print("Connection closed cleanly")
 
 
-@cli.command()
-def subscribe_to_events(
-    client_id: str, client_secret: str, ha_id: str, keys: list[str]
-) -> None:
-    """Subscribe to events with the EVENT event type."""
-    asyncio.run(_subscribe_to_events(client_id, client_secret, ha_id, keys))
-
-
-async def _subscribe_to_events(
-    client_id: str,
-    client_secret: str,
-    ha_id: str,
-    keys: list[str],
-) -> None:
-    """Subscribe to events."""
-    client = CLIClient(client_id, client_secret)
-    for key in keys:
-        client.sse.register_event_callback(ha_id, EventKey(key), _receive_event)
-    await client.sse.stream_all_events()
-
-
-@cli.command()
-def subscribe_to_notify_events(
-    client_id: str, client_secret: str, ha_id: str, keys: list[str]
-) -> None:
-    """Subscribe to events with the NOTIFY event type."""
-    asyncio.run(_subscribe_to_notify_events(client_id, client_secret, ha_id, keys))
-
-
-async def _subscribe_to_notify_events(
-    client_id: str,
-    client_secret: str,
-    ha_id: str,
-    keys: list[str],
-) -> None:
-    """Subscribe to events."""
-    client = CLIClient(client_id, client_secret)
-    for key in keys:
-        client.sse.register_notify_callback(ha_id, EventKey(key), _receive_event)
-    await client.sse.stream_all_events()
-
-
-async def _receive_event(event: Event) -> None:
-    """Receive events."""
-    rich_print(event)
+def _message_handler(message_event: ServerSentEvent) -> None:
+    """Handle the message event."""
+    event_type = EventTypes(message_event.event)
+    ha_id = message_event.id
+    print(f"\nEvent type: {event_type}, Home appliance ID: {ha_id}")
+    match event_type:
+        case EventTypes.STATUS | EventTypes.EVENT | EventTypes.NOTIFY:
+            try:
+                events = ArrayOfEvents.from_json(message_event.data)
+            except JSONDecodeError as err:
+                print(f"Error decoding event: {err}")
+            except InvalidFieldValue as err:
+                print(f"Error parsing event: {err}")
+            else:
+                rich_print(events)
 
 
 if __name__ == "__main__":
