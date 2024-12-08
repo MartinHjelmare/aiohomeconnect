@@ -1,18 +1,13 @@
 """Provide a CLI for Home Connect API."""
 
 import asyncio
-from json import JSONDecodeError
 
 from fastapi import FastAPI, HTTPException
-from httpx import ReadTimeout
-from httpx_sse import ServerSentEvent
-from mashumaro.exceptions import InvalidFieldValue
 from rich import print as rich_print
 import typer
 import uvicorn
 
-from aiohomeconnect.model import EventType, StatusKey
-from aiohomeconnect.model.event import ArrayOfEvents
+from aiohomeconnect.model import StatusKey
 
 from .client import CLIClient, TokenManager
 
@@ -111,14 +106,8 @@ async def _subscribe_to_all_applicances_events(
 ) -> None:
     """Subscribe and print events from all the appliances."""
     client = CLIClient(client_id, client_secret)
-    async with client.stream_all_events() as event_source:
-        try:
-            async for event in event_source.aiter_sse():
-                _message_handler(event)
-        except ReadTimeout:
-            print("Connection timed out")
-        else:
-            print("Connection closed cleanly")
+    async for event in client.stream_all_events():
+        rich_print(event)
 
 
 @cli.command()
@@ -134,31 +123,8 @@ async def _subscribe_to_one_applicance_events(
 ) -> None:
     """Subscribe and print events from one appliance."""
     client = CLIClient(client_id, client_secret)
-    async with client.stream_events(ha_id) as event_source:
-        try:
-            async for event in event_source.aiter_sse():
-                _message_handler(event)
-        except ReadTimeout:
-            print("Connection timed out")
-        else:
-            print("Connection closed cleanly")
-
-
-def _message_handler(message_event: ServerSentEvent) -> None:
-    """Handle the message event."""
-    event_type = EventType(message_event.event)
-    ha_id = message_event.id
-    print(f"\nEvent type: {event_type}, Home appliance ID: {ha_id}")
-    match event_type:
-        case EventType.STATUS | EventType.EVENT | EventType.NOTIFY:
-            try:
-                events = ArrayOfEvents.from_json(message_event.data)
-            except JSONDecodeError as err:
-                print(f"Error decoding event: {err}")
-            except InvalidFieldValue as err:
-                print(f"Error parsing event: {err}")
-            else:
-                rich_print(events)
+    async for event in client.stream_events(ha_id):
+        rich_print(event)
 
 
 if __name__ == "__main__":

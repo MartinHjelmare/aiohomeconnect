@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator, AsyncIterator
 from contextlib import asynccontextmanager
 import logging
 from typing import Any
 
 from httpx import AsyncClient, Response, Timeout
 from httpx_sse import EventSource, aconnect_sse
+
+from aiohomeconnect.model.event import EventMessage
 
 from .model import (
     ArrayOfAvailablePrograms,
@@ -722,12 +724,11 @@ class Client:
         )
         return ArrayOfEvents.from_dict(response.json()["data"])
 
-    @asynccontextmanager
     async def stream_all_events(
         self,
         *,
         accept_language: Language | None = None,
-    ) -> AsyncIterator[EventSource]:
+    ) -> AsyncGenerator[EventMessage]:
         """Get stream of events for all appliances.
 
         Server Sent Events are available as Eventsource API in JavaScript
@@ -765,15 +766,15 @@ class Client:
                 "Accept-Language": accept_language,
             },
         ) as event_source:
-            yield event_source
+            async for event in event_source.aiter_sse():
+                yield EventMessage.from_server_sent_event(event)
 
-    @asynccontextmanager
     async def stream_events(
         self,
         ha_id: str,
         *,
         accept_language: Language | None = None,
-    ) -> AsyncIterator[EventSource]:
+    ) -> AsyncGenerator[EventMessage]:
         """Get stream of events for one appliance."""
         # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
         # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
@@ -785,4 +786,5 @@ class Client:
                 "Accept-Language": accept_language,
             },
         ) as event_source:
-            yield event_source
+            async for event in event_source.aiter_sse():
+                yield EventMessage.from_server_sent_event(event)

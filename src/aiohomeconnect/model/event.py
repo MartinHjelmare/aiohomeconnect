@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from httpx_sse import ServerSentEvent
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
@@ -31,6 +32,39 @@ class Event(DataClassJSONMixin):
         default=None, metadata=field_options(alias="displayvalue")
     )
     unit: str | None = None
+
+
+@dataclass
+class EventMessage:
+    """Represent a server sent event message sent from the Home Connect API."""
+
+    id: str
+    type: EventType
+    data: ArrayOfEvents | Event | None = None
+
+    @staticmethod
+    def from_server_sent_event(event: ServerSentEvent) -> EventMessage:
+        """Create an EventMessage instance from a dictionary."""
+        event_type = EventType(event.event)
+        data: ArrayOfEvents | Event | None
+        match event_type:
+            case EventType.KEEP_ALIVE:
+                data = None
+            case (
+                EventType.CONNECTED
+                | EventType.DISCONNECTED
+                | EventType.PAIRED
+                | EventType.DEPAIRED
+            ):
+                data = Event.from_json(event.data)
+            case EventType.STATUS | EventType.EVENT | EventType.NOTIFY:
+                data = ArrayOfEvents.from_json(event.data)
+
+        return EventMessage(
+            id=event.id,
+            type=event_type,
+            data=data,
+        )
 
 
 class EventKey(StrEnum):
