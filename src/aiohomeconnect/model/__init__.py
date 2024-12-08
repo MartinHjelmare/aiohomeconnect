@@ -16,6 +16,7 @@ from .event import (
     ArrayOfEvents,
     Event,
     EventKey,
+    EventMessage,
     EventType,
 )
 from .image import (
@@ -58,6 +59,7 @@ __all__ = [
     "CommandKey",
     "Event",
     "EventKey",
+    "EventMessage",
     "EventType",
     "GetSetting",
     "HomeAppliance",

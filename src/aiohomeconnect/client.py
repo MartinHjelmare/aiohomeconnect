@@ -5,18 +5,16 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from collections.abc import AsyncGenerator, AsyncIterator
 from contextlib import asynccontextmanager
-import logging
 from typing import Any
 
 from httpx import AsyncClient, Response, Timeout
 from httpx_sse import EventSource, aconnect_sse
 
-from aiohomeconnect.model.event import EventMessage
+from aiohomeconnect.model import EventMessage
 
 from .model import (
     ArrayOfAvailablePrograms,
     ArrayOfCommands,
-    ArrayOfEvents,
     ArrayOfHomeAppliances,
     ArrayOfImages,
     ArrayOfOptions,
@@ -41,8 +39,6 @@ from .model import (
     Status,
     StatusKey,
 )
-
-_LOGGER = logging.getLogger(__name__)
 
 
 class AbstractAuth(ABC):
@@ -674,56 +670,6 @@ class Client:
             data=put_command.to_dict(),
         )
 
-    async def get_events(
-        self,
-        ha_id: str,
-        *,
-        accept_language: Language | None = None,
-    ) -> ArrayOfEvents:
-        """Get a list of events for one appliance.
-
-        If you want to do a one-time query of the current status, you can ask for
-        the content-type `application/vnd.bsh.sdk.v1+json` and get the status
-        as normal HTTP response.
-
-        If you want an ongoing stream of events in real time, ask for the content
-        type `text/event-stream` and you'll get a stream as Server Sent Events.
-
-        Server Sent Events are available as Eventsource API in JavaScript
-        and are implemented by various HTTP client libraries and tools
-        including curl.
-
-        Unfortunately, SSE is not compatible to OpenAPI specs and can therefore
-        not be properly specified within this API description.
-
-        An SSE event contains three parts separated by linebreaks: event, data and id.
-        Different events are separated by empty lines.
-
-        The event field can be one of these types:
-        KEEP-ALIVE, STATUS, EVENT, NOTIFY, CONNECTED, DISCONNECTED.
-
-        In case of all event types (except KEEP-ALIVE),
-        the "data" field is populated with the JSON object defined below.
-
-        The id contains the home appliance ID.
-
-        Further documentation can be found here:
-        * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
-        * [Program changes](https://api-docs.home-connect.com/events#program-changes)
-        * [Option changes](https://api-docs.home-connect.com/events#option-changes)
-        * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
-        * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
-        """
-        response = await self._auth.request(
-            "GET",
-            f"/homeappliances/{ha_id}/events",
-            headers={
-                "Accept-Language": accept_language,
-                "Accept": "application/vnd.bsh.sdk.v1+json",
-            },
-        )
-        return ArrayOfEvents.from_dict(response.json()["data"])
-
     async def stream_all_events(
         self,
         *,
@@ -775,7 +721,40 @@ class Client:
         *,
         accept_language: Language | None = None,
     ) -> AsyncGenerator[EventMessage]:
-        """Get stream of events for one appliance."""
+        """Get stream of events for one appliance.
+
+        If you want to do a one-time query of the current status, you can ask for
+        the content-type `application/vnd.bsh.sdk.v1+json` and get the status
+        as normal HTTP response.
+
+        If you want an ongoing stream of events in real time, ask for the content
+        type `text/event-stream` and you'll get a stream as Server Sent Events.
+
+        Server Sent Events are available as Eventsource API in JavaScript
+        and are implemented by various HTTP client libraries and tools
+        including curl.
+
+        Unfortunately, SSE is not compatible to OpenAPI specs and can therefore
+        not be properly specified within this API description.
+
+        An SSE event contains three parts separated by linebreaks: event, data and id.
+        Different events are separated by empty lines.
+
+        The event field can be one of these types:
+        KEEP-ALIVE, STATUS, EVENT, NOTIFY, CONNECTED, DISCONNECTED.
+
+        In case of all event types (except KEEP-ALIVE),
+        the "data" field is populated with the JSON object defined below.
+
+        The id contains the home appliance ID.
+
+        Further documentation can be found here:
+        * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
+        * [Program changes](https://api-docs.home-connect.com/events#program-changes)
+        * [Option changes](https://api-docs.home-connect.com/events#option-changes)
+        * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
+        * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
+        """
         # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
         # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
         async with self._auth.connect_sse(
