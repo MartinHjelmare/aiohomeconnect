@@ -95,5 +95,37 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
     )
 
 
+@cli.command()
+def subscribe_to_all_applicances_events(client_id: str, client_secret: str) -> None:
+    """Subscribe and print events from all the appliances."""
+    asyncio.run(_subscribe_to_all_applicances_events(client_id, client_secret))
+
+
+async def _subscribe_to_all_applicances_events(
+    client_id: str, client_secret: str
+) -> None:
+    """Subscribe and print events from all the appliances."""
+    client = CLIClient(client_id, client_secret)
+    async for event in client.stream_all_events():
+        rich_print(event)
+
+
+@cli.command()
+def subscribe_to_one_applicance_events(
+    client_id: str, client_secret: str, ha_id: str
+) -> None:
+    """Subscribe and print events from one appliance."""
+    asyncio.run(_subscribe_to_one_applicance_events(client_id, client_secret, ha_id))
+
+
+async def _subscribe_to_one_applicance_events(
+    client_id: str, client_secret: str, ha_id: str
+) -> None:
+    """Subscribe and print events from one appliance."""
+    client = CLIClient(client_id, client_secret)
+    async for event in client.stream_events(ha_id):
+        rich_print(event)
+
+
 if __name__ == "__main__":
     cli()
