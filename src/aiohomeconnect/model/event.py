@@ -26,6 +26,7 @@ class Event(DataClassJSONMixin):
     level: str
     handling: str
     value: str | int | float | bool
+    ha_id: str = field(metadata=field_options(alias="haId"))
     name: str | None = None
     uri: str | None = None
     display_value: str | None = field(
@@ -40,30 +41,15 @@ class EventMessage:
 
     id: str
     type: EventType
-    data: ArrayOfEvents | Event | None = None
+    data: Event
 
-    @staticmethod
-    def from_server_sent_event(event: ServerSentEvent) -> EventMessage:
-        """Create an EventMessage instance from a dictionary."""
-        event_type = EventType(event.event)
-        data: ArrayOfEvents | Event | None
-        match event_type:
-            case EventType.KEEP_ALIVE:
-                data = None
-            case (
-                EventType.CONNECTED
-                | EventType.DISCONNECTED
-                | EventType.PAIRED
-                | EventType.DEPAIRED
-            ):
-                data = Event.from_json(event.data)
-            case EventType.STATUS | EventType.EVENT | EventType.NOTIFY:
-                data = ArrayOfEvents.from_json(event.data)
-
-        return EventMessage(
-            id=event.id,
-            type=event_type,
-            data=data,
+    @classmethod
+    def from_server_sent_event(cls, sse: ServerSentEvent, event: Event) -> EventMessage:
+        """Create an EventMessage instance from a server sent event."""
+        return cls(
+            id=sse.id,
+            type=EventType(sse.event),
+            data=event,
         )
 
 
