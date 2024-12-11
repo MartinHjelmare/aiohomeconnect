@@ -714,17 +714,20 @@ class Client:
             },
         ) as event_source:
             async for sse in event_source.aiter_sse():
-                if sse.event == EventType.KEEP_ALIVE:
+                if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
+                    continue
+                if not sse.data:
+                    yield EventMessage.from_server_sent_event(sse)
                     continue
                 data = json.loads(sse.data)
                 if "items" in data:
                     for item in data["items"]:
-                        item["haId"] = data["haId"]
+                        item["haId"] = data.get("haId")
                         event = Event.from_dict(item)
                         yield EventMessage.from_server_sent_event(sse, event)
                 else:
                     event = Event.from_dict(data)
-                    yield EventMessage.from_server_sent_event(sse, data)
+                    yield EventMessage.from_server_sent_event(sse, event)
 
     async def stream_events(
         self,
@@ -777,14 +780,17 @@ class Client:
             },
         ) as event_source:
             async for sse in event_source.aiter_sse():
-                if sse.event == EventType.KEEP_ALIVE:
+                if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
+                    continue
+                if not sse.data:
+                    yield EventMessage.from_server_sent_event(sse)
                     continue
                 data = json.loads(sse.data)
                 if "items" in data:
                     for item in data["items"]:
-                        item["haId"] = data["haId"]
+                        item["haId"] = data.get("haId")
                         event = Event.from_dict(item)
                         yield EventMessage.from_server_sent_event(sse, event)
                 else:
                     event = Event.from_dict(data)
-                    yield EventMessage.from_server_sent_event(sse, data)
+                    yield EventMessage.from_server_sent_event(sse, event)

@@ -26,7 +26,7 @@ class Event(DataClassJSONMixin):
     level: str
     handling: str
     value: str | int | float | bool
-    ha_id: str = field(metadata=field_options(alias="haId"))
+    ha_id: str | None = field(default=None, metadata=field_options(alias="haId"))
     name: str | None = None
     uri: str | None = None
     display_value: str | None = field(
@@ -41,10 +41,12 @@ class EventMessage:
 
     id: str
     type: EventType
-    data: Event
+    data: Event | None
 
     @classmethod
-    def from_server_sent_event(cls, sse: ServerSentEvent, event: Event) -> EventMessage:
+    def from_server_sent_event(
+        cls, sse: ServerSentEvent, event: Event | None = None
+    ) -> EventMessage:
         """Create an EventMessage instance from a server sent event."""
         return cls(
             id=sse.id,
