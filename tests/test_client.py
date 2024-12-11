@@ -9,9 +9,118 @@ import pytest
 from pytest_httpx import HTTPXMock, IteratorStream
 
 from aiohomeconnect.client import AbstractAuth, Client
-from aiohomeconnect.model import EventKey, EventType
+from aiohomeconnect.model import ArrayOfEvents, Event, EventKey, EventMessage, EventType
 
 TEST_ACCESS_TOKEN = "1234"
+TEST_HA_ID = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
+TEST_EVENT_TYPE = EventType.NOTIFY
+
+STREAM_EVENT_CASES = [
+    (
+        {
+            "items": [
+                {
+                    "handling": "none",
+                    "key": EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD.value,
+                    "level": "hint",
+                    "timestamp": 1733611453,
+                    "uri": "/a/random/relative/uri",
+                    "value": True,
+                },
+                {
+                    "handling": "none",
+                    "key": EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME.value,
+                    "level": "hint",
+                    "timestamp": 1733611453,
+                    "unit": "seconds",
+                    "uri": "/a/random/relative/uri",
+                    "value": 13800,
+                },
+            ]
+        },
+        EventMessage(
+            TEST_HA_ID,
+            TEST_EVENT_TYPE,
+            ArrayOfEvents(
+                [
+                    Event(
+                        handling="none",
+                        key=EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD,
+                        level="hint",
+                        timestamp=1733611453,
+                        uri="/a/random/relative/uri",
+                        value=True,
+                    ),
+                    Event(
+                        handling="none",
+                        key=EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME,
+                        level="hint",
+                        timestamp=1733611453,
+                        unit="seconds",
+                        uri="/a/random/relative/uri",
+                        value=13800,
+                    ),
+                ]
+            ),
+        ),
+    ),
+    (
+        {
+            "items": [
+                {
+                    "handling": "acknowledge",
+                    "key": EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED.value,
+                    "level": "hint",
+                    "timestamp": 1733616930,
+                    "value": "BSH.Common.EnumType.EventPresentState.Present",
+                }
+            ],
+        },
+        EventMessage(
+            TEST_HA_ID,
+            TEST_EVENT_TYPE,
+            ArrayOfEvents(
+                [
+                    Event(
+                        handling="acknowledge",
+                        key=EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED,
+                        level="hint",
+                        timestamp=1733616930,
+                        value="BSH.Common.EnumType.EventPresentState.Present",
+                    )
+                ]
+            ),
+        ),
+    ),
+    (
+        {
+            "handling": "none",
+            "key": "BSH.Common.Appliance.Disconnected",
+            "level": "hint",
+            "timestamp": 1733611817,
+            "value": True,
+        },
+        EventMessage(
+            TEST_HA_ID,
+            TEST_EVENT_TYPE,
+            ArrayOfEvents(
+                [
+                    Event(
+                        handling="none",
+                        key=EventKey("BSH.Common.Appliance.Disconnected"),
+                        level="hint",
+                        timestamp=1733611817,
+                        value=True,
+                    )
+                ]
+            ),
+        ),
+    ),
+    (
+        None,
+        EventMessage(TEST_HA_ID, TEST_EVENT_TYPE, ArrayOfEvents([])),
+    ),
+]
 
 
 class AuthClient(AbstractAuth):
@@ -78,65 +187,25 @@ async def test_abstract_auth_sse(
 
 
 @pytest.mark.parametrize(
-    "event_data",
-    [
-        {
-            "items": [
-                {
-                    "handling": "none",
-                    "key": EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD.value,
-                    "level": "hint",
-                    "timestamp": 1733611453,
-                    "uri": "/a/random/relative/uri",
-                    "value": True,
-                },
-                {
-                    "handling": "none",
-                    "key": EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME.value,
-                    "level": "hint",
-                    "timestamp": 1733611453,
-                    "unit": "seconds",
-                    "uri": "/a/random/relative/uri",
-                    "value": 13800,
-                },
-            ]
-        },
-        {
-            "items": [
-                {
-                    "handling": "acknowledge",
-                    "key": EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED.value,
-                    "level": "hint",
-                    "timestamp": 1733616930,
-                    "value": "BSH.Common.EnumType.EventPresentState.Present",
-                }
-            ],
-        },
-        {
-            "handling": "none",
-            "key": "BSH.Common.Appliance.Disconnected",
-            "level": "hint",
-            "timestamp": 1733611817,
-            "value": True,
-        },
-        None,
-    ],
+    ("event_data", "event_message"),
+    STREAM_EVENT_CASES,
 )
 async def test_stream_all_events(
-    httpx_client: AsyncClient, httpx_mock: HTTPXMock, event_data: dict[str, Any] | None
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    event_data: dict[str, Any] | None,
+    event_message: EventMessage,
 ) -> None:
     """Test stream all events."""
-    ha_id = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
-    event_type = EventType.NOTIFY
     httpx_mock.add_response(
         url="https://example.com/api/homeappliances/events",
         stream=IteratorStream(
             [
                 "\n".join(
                     [
-                        f"id: {ha_id}",
+                        f"id: {TEST_HA_ID}",
                         f"data: {json.dumps(event_data) if event_data else ""}",
-                        f"event: {event_type}",
+                        f"event: {TEST_EVENT_TYPE}",
                         "\n",
                     ]
                 ).encode()
@@ -147,15 +216,7 @@ async def test_stream_all_events(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    async for event_message in client.stream_all_events():
-        assert event_message.ha_id == ha_id
-        assert event_message.type == event_type
-        if not event_data:
-            assert len(event_message.data.items) == 0
-        elif items := event_data.get("items"):
-            assert len(event_message.data.items) == len(items)
-        else:
-            assert len(event_message.data.items) == 1
+    assert await anext(client.stream_all_events()) == event_message
 
 
 async def test_stream_all_events_http_error(
@@ -174,65 +235,25 @@ async def test_stream_all_events_http_error(
 
 
 @pytest.mark.parametrize(
-    "event_data",
-    [
-        {
-            "items": [
-                {
-                    "handling": "none",
-                    "key": EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD.value,
-                    "level": "hint",
-                    "timestamp": 1733611453,
-                    "uri": "/a/random/relative/uri",
-                    "value": True,
-                },
-                {
-                    "handling": "none",
-                    "key": EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME.value,
-                    "level": "hint",
-                    "timestamp": 1733611453,
-                    "unit": "seconds",
-                    "uri": "/a/random/relative/uri",
-                    "value": 13800,
-                },
-            ]
-        },
-        {
-            "items": [
-                {
-                    "handling": "acknowledge",
-                    "key": EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED.value,
-                    "level": "hint",
-                    "timestamp": 1733616930,
-                    "value": "BSH.Common.EnumType.EventPresentState.Present",
-                }
-            ],
-        },
-        {
-            "handling": "none",
-            "key": "BSH.Common.Appliance.Disconnected",
-            "level": "hint",
-            "timestamp": 1733611817,
-            "value": True,
-        },
-        None,
-    ],
+    ("event_data", "event_message"),
+    STREAM_EVENT_CASES,
 )
 async def test_stream_events(
-    httpx_client: AsyncClient, httpx_mock: HTTPXMock, event_data: dict[str, Any] | None
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    event_data: dict[str, Any] | None,
+    event_message: EventMessage,
 ) -> None:
     """Test stream events from a specific home appliance."""
-    ha_id = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
-    event_type = EventType.NOTIFY
     httpx_mock.add_response(
-        url=f"https://example.com/api/homeappliances/{ha_id}/events",
+        url=f"https://example.com/api/homeappliances/{TEST_HA_ID}/events",
         stream=IteratorStream(
             [
                 "\n".join(
                     [
-                        f"id: {ha_id}",
+                        f"id: {TEST_HA_ID}",
                         f"data: {json.dumps(event_data) if event_data else ""}",
-                        f"event: {event_type}",
+                        f"event: {TEST_EVENT_TYPE}",
                         "\n",
                     ]
                 ).encode()
@@ -243,28 +264,19 @@ async def test_stream_events(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    async for event_message in client.stream_events(ha_id):
-        assert event_message.ha_id == ha_id
-        assert event_message.type == event_type
-        if not event_data:
-            assert len(event_message.data.items) == 0
-        elif items := event_data.get("items"):
-            assert len(event_message.data.items) == len(items)
-        else:
-            assert len(event_message.data.items) == 1
+    assert await anext(client.stream_events(TEST_HA_ID)) == event_message
 
 
 async def test_stream_events_http_error(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock
 ) -> None:
     """Test stream events from a specific home appliance http error."""
-    ha_id = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
     httpx_mock.add_response(
-        url=f"https://example.com/api/homeappliances/{ha_id}/events",
+        url=f"https://example.com/api/homeappliances/{TEST_HA_ID}/events",
         status_code=500,
     )
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
     with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):
-        await anext(client.stream_events(ha_id))
+        await anext(client.stream_events(TEST_HA_ID))
