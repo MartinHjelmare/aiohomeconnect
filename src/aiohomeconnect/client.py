@@ -712,6 +712,7 @@ class Client:
                 "Accept-Language": accept_language,
             },
         ) as event_source:
+            event_source.response.raise_for_status()
             async for sse in event_source.aiter_sse():
                 if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
                     continue
@@ -767,6 +768,7 @@ class Client:
                 "Accept-Language": accept_language,
             },
         ) as event_source:
+            event_source.response.raise_for_status()
             async for sse in event_source.aiter_sse():
                 if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
                     continue
