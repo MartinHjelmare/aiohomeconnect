@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import StrEnum
+import json
 
 from httpx_sse import ServerSentEvent
 from mashumaro import field_options
@@ -40,17 +41,26 @@ class EventMessage:
 
     ha_id: str
     type: EventType
-    data: Event | None
+    data: ArrayOfEvents
 
     @classmethod
-    def from_server_sent_event(
-        cls, sse: ServerSentEvent, event: Event | None = None
-    ) -> EventMessage:
+    def from_server_sent_event(cls, sse: ServerSentEvent) -> EventMessage:
         """Create an EventMessage instance from a server sent event."""
+        if not sse.data:
+            return cls(
+                ha_id=sse.id,
+                type=EventType(sse.event),
+                data=ArrayOfEvents([]),
+            )
+        data = json.loads(sse.data)
+        if "items" in data:
+            events = ArrayOfEvents.from_dict(data)
+        else:
+            events = ArrayOfEvents([Event.from_dict(data)])
         return cls(
             ha_id=sse.id,
             type=EventType(sse.event),
-            data=event,
+            data=events,
         )
 
 

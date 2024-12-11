@@ -5,13 +5,12 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from collections.abc import AsyncGenerator, AsyncIterator
 from contextlib import asynccontextmanager
-import json
 from typing import Any
 
 from httpx import AsyncClient, Response, Timeout
 from httpx_sse import EventSource, aconnect_sse
 
-from aiohomeconnect.model import Event, EventMessage, EventType
+from aiohomeconnect.model import EventMessage, EventType
 
 from .model import (
     ArrayOfAvailablePrograms,
@@ -716,17 +715,7 @@ class Client:
             async for sse in event_source.aiter_sse():
                 if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
                     continue
-                if not sse.data:
-                    yield EventMessage.from_server_sent_event(sse)
-                    continue
-                data = json.loads(sse.data)
-                if "items" in data:
-                    for item in data["items"]:
-                        event = Event.from_dict(item)
-                        yield EventMessage.from_server_sent_event(sse, event)
-                else:
-                    event = Event.from_dict(data)
-                    yield EventMessage.from_server_sent_event(sse, event)
+                yield EventMessage.from_server_sent_event(sse)
 
     async def stream_events(
         self,
@@ -781,14 +770,4 @@ class Client:
             async for sse in event_source.aiter_sse():
                 if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
                     continue
-                if not sse.data:
-                    yield EventMessage.from_server_sent_event(sse)
-                    continue
-                data = json.loads(sse.data)
-                if "items" in data:
-                    for item in data["items"]:
-                        event = Event.from_dict(item)
-                        yield EventMessage.from_server_sent_event(sse, event)
-                else:
-                    event = Event.from_dict(data)
-                    yield EventMessage.from_server_sent_event(sse, event)
+                yield EventMessage.from_server_sent_event(sse)
