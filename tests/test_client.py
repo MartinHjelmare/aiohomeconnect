@@ -125,7 +125,7 @@ async def test_abstract_auth_sse(
 async def test_stream_all_events(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock, event_data: dict[str, Any] | None
 ) -> None:
-    """Test the abstract auth sse."""
+    """Test stream all events."""
     ha_id = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
     event_type = EventType.NOTIFY
     httpx_mock.add_response(
@@ -161,7 +161,7 @@ async def test_stream_all_events(
 async def test_stream_all_events_http_error(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock
 ) -> None:
-    """Test the abstract auth sse."""
+    """Test stream all events http error."""
     httpx_mock.add_response(
         url="https://example.com/api/homeappliances/events",
         status_code=500,
@@ -169,9 +169,8 @@ async def test_stream_all_events_http_error(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):  # noqa: PT012
-        async for _ in client.stream_all_events():
-            pass
+    with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):
+        await anext(client.stream_all_events())
 
 
 @pytest.mark.parametrize(
@@ -222,7 +221,7 @@ async def test_stream_all_events_http_error(
 async def test_stream_events(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock, event_data: dict[str, Any] | None
 ) -> None:
-    """Test the abstract auth sse."""
+    """Test stream events from a specific home appliance."""
     ha_id = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
     event_type = EventType.NOTIFY
     httpx_mock.add_response(
@@ -258,7 +257,7 @@ async def test_stream_events(
 async def test_stream_events_http_error(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock
 ) -> None:
-    """Test the abstract auth sse."""
+    """Test stream events from a specific home appliance http error."""
     ha_id = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
     httpx_mock.add_response(
         url=f"https://example.com/api/homeappliances/{ha_id}/events",
@@ -267,6 +266,5 @@ async def test_stream_events_http_error(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):  # noqa: PT012
-        async for _ in client.stream_events(ha_id):
-            pass
+    with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):
+        await anext(client.stream_events(ha_id))
