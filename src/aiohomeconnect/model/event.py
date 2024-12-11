@@ -26,7 +26,6 @@ class Event(DataClassJSONMixin):
     level: str
     handling: str
     value: str | int | float | bool
-    ha_id: str | None = field(default=None, metadata=field_options(alias="haId"))
     name: str | None = None
     uri: str | None = None
     display_value: str | None = field(
@@ -39,7 +38,7 @@ class Event(DataClassJSONMixin):
 class EventMessage:
     """Represent a server sent event message sent from the Home Connect API."""
 
-    id: str
+    ha_id: str
     type: EventType
     data: Event | None
 
@@ -49,7 +48,7 @@ class EventMessage:
     ) -> EventMessage:
         """Create an EventMessage instance from a server sent event."""
         return cls(
-            id=sse.id,
+            ha_id=sse.id,
             type=EventType(sse.event),
             data=event,
         )

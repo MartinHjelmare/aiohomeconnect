@@ -722,7 +722,6 @@ class Client:
                 data = json.loads(sse.data)
                 if "items" in data:
                     for item in data["items"]:
-                        item["haId"] = data.get("haId")
                         event = Event.from_dict(item)
                         yield EventMessage.from_server_sent_event(sse, event)
                 else:
@@ -788,7 +787,6 @@ class Client:
                 data = json.loads(sse.data)
                 if "items" in data:
                     for item in data["items"]:
-                        item["haId"] = data.get("haId")
                         event = Event.from_dict(item)
                         yield EventMessage.from_server_sent_event(sse, event)
                 else:
