@@ -96,14 +96,12 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
 
 
 @cli.command()
-def subscribe_to_all_applicances_events(client_id: str, client_secret: str) -> None:
+def subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
     """Subscribe and print events from all the appliances."""
-    asyncio.run(_subscribe_to_all_applicances_events(client_id, client_secret))
+    asyncio.run(_subscribe_all_appliances_events(client_id, client_secret))
 
 
-async def _subscribe_to_all_applicances_events(
-    client_id: str, client_secret: str
-) -> None:
+async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
     """Subscribe and print events from all the appliances."""
     client = CLIClient(client_id, client_secret)
     async for event in client.stream_all_events():
@@ -111,14 +109,12 @@ async def _subscribe_to_all_applicances_events(
 
 
 @cli.command()
-def subscribe_to_one_applicance_events(
-    client_id: str, client_secret: str, ha_id: str
-) -> None:
+def subscribe_appliance_events(client_id: str, client_secret: str, ha_id: str) -> None:
     """Subscribe and print events from one appliance."""
-    asyncio.run(_subscribe_to_one_applicance_events(client_id, client_secret, ha_id))
+    asyncio.run(_subscribe_appliance_events(client_id, client_secret, ha_id))
 
 
-async def _subscribe_to_one_applicance_events(
+async def _subscribe_appliance_events(
     client_id: str, client_secret: str, ha_id: str
 ) -> None:
     """Subscribe and print events from one appliance."""

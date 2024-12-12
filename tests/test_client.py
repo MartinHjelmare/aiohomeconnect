@@ -1,7 +1,6 @@
 """Test the client."""
 
 import json
-from typing import Any
 
 import httpx
 from httpx import AsyncClient
@@ -17,27 +16,29 @@ TEST_EVENT_TYPE = EventType.NOTIFY
 
 STREAM_EVENT_CASES = [
     (
-        {
-            "items": [
-                {
-                    "handling": "none",
-                    "key": EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD.value,
-                    "level": "hint",
-                    "timestamp": 1733611453,
-                    "uri": "/a/random/relative/uri",
-                    "value": True,
-                },
-                {
-                    "handling": "none",
-                    "key": EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME.value,
-                    "level": "hint",
-                    "timestamp": 1733611453,
-                    "unit": "seconds",
-                    "uri": "/a/random/relative/uri",
-                    "value": 13800,
-                },
-            ]
-        },
+        json.dumps(
+            {
+                "items": [
+                    {
+                        "handling": "none",
+                        "key": EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD.value,
+                        "level": "hint",
+                        "timestamp": 1733611453,
+                        "uri": "/a/random/relative/uri",
+                        "value": True,
+                    },
+                    {
+                        "handling": "none",
+                        "key": EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME.value,
+                        "level": "hint",
+                        "timestamp": 1733611453,
+                        "unit": "seconds",
+                        "uri": "/a/random/relative/uri",
+                        "value": 13800,
+                    },
+                ]
+            }
+        ),
         EventMessage(
             TEST_HA_ID,
             TEST_EVENT_TYPE,
@@ -65,17 +66,19 @@ STREAM_EVENT_CASES = [
         ),
     ),
     (
-        {
-            "items": [
-                {
-                    "handling": "acknowledge",
-                    "key": EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED.value,
-                    "level": "hint",
-                    "timestamp": 1733616930,
-                    "value": "BSH.Common.EnumType.EventPresentState.Present",
-                }
-            ],
-        },
+        json.dumps(
+            {
+                "items": [
+                    {
+                        "handling": "acknowledge",
+                        "key": EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED.value,
+                        "level": "hint",
+                        "timestamp": 1733616930,
+                        "value": "BSH.Common.EnumType.EventPresentState.Present",
+                    }
+                ],
+            }
+        ),
         EventMessage(
             TEST_HA_ID,
             TEST_EVENT_TYPE,
@@ -93,13 +96,15 @@ STREAM_EVENT_CASES = [
         ),
     ),
     (
-        {
-            "handling": "none",
-            "key": "BSH.Common.Appliance.Disconnected",
-            "level": "hint",
-            "timestamp": 1733611817,
-            "value": True,
-        },
+        json.dumps(
+            {
+                "handling": "none",
+                "key": "BSH.Common.Appliance.Disconnected",
+                "level": "hint",
+                "timestamp": 1733611817,
+                "value": True,
+            }
+        ),
         EventMessage(
             TEST_HA_ID,
             TEST_EVENT_TYPE,
@@ -117,7 +122,7 @@ STREAM_EVENT_CASES = [
         ),
     ),
     (
-        None,
+        "",
         EventMessage(TEST_HA_ID, TEST_EVENT_TYPE, ArrayOfEvents([])),
     ),
 ]
@@ -193,7 +198,7 @@ async def test_abstract_auth_sse(
 async def test_stream_all_events(
     httpx_client: AsyncClient,
     httpx_mock: HTTPXMock,
-    event_data: dict[str, Any] | None,
+    event_data: str,
     event_message: EventMessage,
 ) -> None:
     """Test stream all events."""
@@ -204,7 +209,7 @@ async def test_stream_all_events(
                 "\n".join(
                     [
                         f"id: {TEST_HA_ID}",
-                        f"data: {json.dumps(event_data) if event_data else ""}",
+                        f"data: {event_data}",
                         f"event: {TEST_EVENT_TYPE}",
                         "\n",
                     ]
@@ -241,7 +246,7 @@ async def test_stream_all_events_http_error(
 async def test_stream_events(
     httpx_client: AsyncClient,
     httpx_mock: HTTPXMock,
-    event_data: dict[str, Any] | None,
+    event_data: str,
     event_message: EventMessage,
 ) -> None:
     """Test stream events from a specific home appliance."""
@@ -252,7 +257,7 @@ async def test_stream_events(
                 "\n".join(
                     [
                         f"id: {TEST_HA_ID}",
-                        f"data: {json.dumps(event_data) if event_data else ""}",
+                        f"data: {event_data}",
                         f"event: {TEST_EVENT_TYPE}",
                         "\n",
                     ]
