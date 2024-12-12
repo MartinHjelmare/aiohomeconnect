@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.0 (2024-12-12)
+
+### Features
+
+* Add sse streams (#34) ([`36a53a4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/36a53a4eedac701b359857f1f75475fcec5547c3))
+
 ## v0.6.4 (2024-12-07)
 
 ### Bug fixes
