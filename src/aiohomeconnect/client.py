@@ -714,7 +714,12 @@ class Client:
         ) as event_source:
             event_source.response.raise_for_status()
             async for sse in event_source.aiter_sse():
-                if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
+                if (
+                    # _value2member_map_ is required for Python 3.11,
+                    # remove after dropping support for it.
+                    sse.event not in EventType._value2member_map_
+                    or sse.event == EventType.KEEP_ALIVE
+                ):
                     continue
                 yield EventMessage.from_server_sent_event(sse)
 
@@ -770,6 +775,11 @@ class Client:
         ) as event_source:
             event_source.response.raise_for_status()
             async for sse in event_source.aiter_sse():
-                if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
+                if (
+                    # _value2member_map_ is required for Python 3.11,
+                    # remove after dropping support for it.
+                    sse.event not in EventType._value2member_map_
+                    or sse.event == EventType.KEEP_ALIVE
+                ):
                     continue
                 yield EventMessage.from_server_sent_event(sse)
