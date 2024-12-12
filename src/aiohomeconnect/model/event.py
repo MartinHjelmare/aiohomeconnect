@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import StrEnum
+import json
 
+from httpx_sse import ServerSentEvent
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
@@ -21,14 +23,45 @@ class Event(DataClassJSONMixin):
     """Represent Event."""
 
     key: EventKey
-    name: str | None
-    uri: str | None
     timestamp: int
     level: str
     handling: str
-    value: str | float | bool
-    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
-    unit: str | None
+    value: str | int | float | bool
+    name: str | None = None
+    uri: str | None = None
+    display_value: str | None = field(
+        default=None, metadata=field_options(alias="displayvalue")
+    )
+    unit: str | None = None
+
+
+@dataclass
+class EventMessage:
+    """Represent a server sent event message sent from the Home Connect API."""
+
+    ha_id: str
+    type: EventType
+    data: ArrayOfEvents
+
+    @classmethod
+    def from_server_sent_event(cls, sse: ServerSentEvent) -> EventMessage:
+        """Create an EventMessage instance from a server sent event."""
+        if not sse.data:
+            return cls(
+                ha_id=sse.id,
+                type=EventType(sse.event),
+                data=ArrayOfEvents([]),
+            )
+        data = json.loads(sse.data)
+        if "items" in data:
+            events = ArrayOfEvents.from_dict(data)
+        else:
+            events = ArrayOfEvents([Event.from_dict(data)])
+        return cls(
+            ha_id=sse.id,
+            type=EventType(sse.event),
+            data=events,
+        )
 
 
 class EventKey(StrEnum):
@@ -430,3 +463,16 @@ class EventKey(StrEnum):
     REFRIGERATION_FRIDGE_FREEZER_SETTING_SUPER_MODE_REFRIGERATOR = (
         "Refrigeration.FridgeFreezer.Setting.SuperModeRefrigerator"
     )
+
+
+class EventType(StrEnum):
+    """Represent an event type."""
+
+    KEEP_ALIVE = "KEEP-ALIVE"
+    STATUS = "STATUS"
+    EVENT = "EVENT"
+    NOTIFY = "NOTIFY"
+    CONNECTED = "CONNECTED"
+    DISCONNECTED = "DISCONNECTED"
+    PAIRED = "PAIRED"
+    DEPAIRED = "DEPAIRED"

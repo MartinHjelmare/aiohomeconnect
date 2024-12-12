@@ -3,14 +3,18 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import AsyncGenerator, AsyncIterator
+from contextlib import asynccontextmanager
 from typing import Any
 
-from httpx import AsyncClient, Response
+from httpx import AsyncClient, Response, Timeout
+from httpx_sse import EventSource, aconnect_sse
+
+from aiohomeconnect.model import EventMessage, EventType
 
 from .model import (
     ArrayOfAvailablePrograms,
     ArrayOfCommands,
-    ArrayOfEvents,
     ArrayOfHomeAppliances,
     ArrayOfImages,
     ArrayOfOptions,
@@ -18,7 +22,6 @@ from .model import (
     ArrayOfSettings,
     ArrayOfStatus,
     CommandKey,
-    ContentType,
     GetSetting,
     HomeAppliance,
     Language,
@@ -50,17 +53,21 @@ class AbstractAuth(ABC):
     async def async_get_access_token(self) -> str:
         """Return a valid access token."""
 
-    async def request(self, method: str, url: str, **kwargs: Any) -> Response:
-        """Make a request.
-
-        The url parameter must start with a slash.
-        """
-        headers = kwargs.pop("headers", None)
+    async def _get_headers(self, headers: dict[str, str] | None) -> dict[str, str]:
+        """Return the headers for the request."""
         headers = {} if headers is None else dict(headers)
         headers = {key: val for key, val in headers.items() if val is not None}
 
         access_token = await self.async_get_access_token()
         headers["authorization"] = f"Bearer {access_token}"
+        return headers
+
+    async def request(self, method: str, url: str, **kwargs: Any) -> Response:
+        """Make a request.
+
+        The url parameter must start with a slash.
+        """
+        headers = await self._get_headers(kwargs.pop("headers", None))
 
         return await self.client.request(
             method,
@@ -68,6 +75,25 @@ class AbstractAuth(ABC):
             **kwargs,
             headers=headers,
         )
+
+    @asynccontextmanager
+    async def connect_sse(
+        self,
+        method: str,
+        url: str,
+        **kwargs: Any,
+    ) -> AsyncIterator[EventSource]:
+        """Create a SSE connection."""
+        headers = await self._get_headers(kwargs.pop("headers", None))
+
+        async with aconnect_sse(
+            self.client,
+            method,
+            f"{self.host}/api{url}",
+            **kwargs,
+            headers=headers,
+        ) as event_source:
+            yield event_source
 
 
 class Client:
@@ -644,12 +670,12 @@ class Client:
             data=put_command.to_dict(),
         )
 
-    async def get_all_events(
+    async def stream_all_events(
         self,
         *,
         accept_language: Language | None = None,
-    ) -> ArrayOfEvents:
-        """Get stream of events for all appliances - NOT WORKING WITH SWAGGER.
+    ) -> AsyncGenerator[EventMessage]:
+        """Get stream of events for all appliances.
 
         Server Sent Events are available as Eventsource API in JavaScript
         and are implemented by various HTTP client libraries and tools
@@ -676,21 +702,34 @@ class Client:
         * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
         * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
         """
-        response = await self._auth.request(
+        # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
+        # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
+        async with self._auth.connect_sse(
             "GET",
             "/homeappliances/events",
-            headers={"Accept-Language": accept_language},
-        )
-        return ArrayOfEvents.from_dict(response.json()["data"])
+            timeout=Timeout(60),
+            headers={
+                "Accept-Language": accept_language,
+            },
+        ) as event_source:
+            event_source.response.raise_for_status()
+            async for sse in event_source.aiter_sse():
+                if (
+                    # _value2member_map_ is required for Python 3.11,
+                    # remove after dropping support for it.
+                    sse.event not in EventType._value2member_map_
+                    or sse.event == EventType.KEEP_ALIVE
+                ):
+                    continue
+                yield EventMessage.from_server_sent_event(sse)
 
-    async def get_events(
+    async def stream_events(
         self,
         ha_id: str,
         *,
         accept_language: Language | None = None,
-        accept: ContentType | None = None,
-    ) -> ArrayOfEvents:
-        """Get stream of events for one appliance - NOT WORKING WITH SWAGGER.
+    ) -> AsyncGenerator[EventMessage]:
+        """Get stream of events for one appliance.
 
         If you want to do a one-time query of the current status, you can ask for
         the content-type `application/vnd.bsh.sdk.v1+json` and get the status
@@ -724,9 +763,23 @@ class Client:
         * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
         * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
         """
-        response = await self._auth.request(
+        # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
+        # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
+        async with self._auth.connect_sse(
             "GET",
             f"/homeappliances/{ha_id}/events",
-            headers={"Accept-Language": accept_language, "Accept": accept},
-        )
-        return ArrayOfEvents.from_dict(response.json()["data"])
+            timeout=Timeout(60),
+            headers={
+                "Accept-Language": accept_language,
+            },
+        ) as event_source:
+            event_source.response.raise_for_status()
+            async for sse in event_source.aiter_sse():
+                if (
+                    # _value2member_map_ is required for Python 3.11,
+                    # remove after dropping support for it.
+                    sse.event not in EventType._value2member_map_
+                    or sse.event == EventType.KEEP_ALIVE
+                ):
+                    continue
+                yield EventMessage.from_server_sent_event(sse)
