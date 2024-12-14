@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.7.1 (2024-12-14)
+
+### Bug fixes
+
+* Update dependency uvicorn to ^0.33.0 ([`0f91cc5`](https://github.com/MartinHjelmare/aiohomeconnect/commit/0f91cc5f8c37027469fd7b0ded6e35489a825698))
+
+### Chores
+
+* Update dependency pytest-asyncio to ^0.25.0 ([`94b4cbc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/94b4cbcfdc3ebc8095b22e26f9a867def4bd4394))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.3 ([`46ae9e2`](https://github.com/MartinHjelmare/aiohomeconnect/commit/46ae9e217f29df0259ca5738d8aec23eee91dc5c))
+* Update dependency ruff to v0.8.3 ([`15c7b6e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/15c7b6ec8d2fec72038bb1e7f3c462285cc77204))
+
 ## v0.7.0 (2024-12-12)
 
 ### Features
