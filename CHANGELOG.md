@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.2 (2024-12-15)
+
+### Bug fixes
+
+* Update dependency uvicorn to ^0.34.0 ([`a36533c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a36533c29baa1786c98e8d00cb145ad4be1c131f))
+
 ## v0.7.1 (2024-12-14)
 
 ### Bug fixes
