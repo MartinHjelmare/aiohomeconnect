@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.7.3 (2024-12-20)
+
+### Bug fixes
+
+* Update dependency authlib to v1.4.0 ([`be1d018`](https://github.com/MartinHjelmare/aiohomeconnect/commit/be1d018b1b21d10ef91d438ec65663da7bad9447))
+
+### Chores
+
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.4 ([`df362f2`](https://github.com/MartinHjelmare/aiohomeconnect/commit/df362f2415eb7564fbd0300f9e08a490bf224cec))
+* Update dependency ruff to v0.8.4 ([`272602a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/272602a153cae7cae123296962b5678ec2ca11c7))
+* Update wagoid/commitlint-github-action action to v6.2.0 ([`7e07707`](https://github.com/MartinHjelmare/aiohomeconnect/commit/7e077072a47e4f198bebeb990a8f5c2cba88924c))
+* Update python-semantic-release/python-semantic-release action to v9.15.2 ([`c342360`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c342360d645f9011c6a927217379b3d63d3ffc9c))
+* Update dependency python-semantic-release to v9.15.2 ([`415d88d`](https://github.com/MartinHjelmare/aiohomeconnect/commit/415d88d4c0fc725b8cacbfb453f2483105430a03))
+
 ## v0.7.2 (2024-12-15)
 
 ### Bug fixes
