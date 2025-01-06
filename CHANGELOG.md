@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.7.4 (2025-01-06)
+
+### Bug fixes
+
+* Home appliance model (#36) ([`5cd6e06`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5cd6e064673bff8df9c9fc5ec4f8259682d2b58e))
+
+### Chores
+
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.6 ([`14726f3`](https://github.com/MartinHjelmare/aiohomeconnect/commit/14726f30d01dc80195f6176c76a365e52b48c5f5))
+* Update dependency ruff to v0.8.6 ([`da2e644`](https://github.com/MartinHjelmare/aiohomeconnect/commit/da2e6449100d96a988bc98855aa678a993a188f8))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.8.5 ([`ea11e0e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ea11e0e7671be32830a110f227d6926fb2de1884))
+* Update dependency ruff to v0.8.5 ([`3f08d0f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3f08d0f23d117af9644c9b8cf2ebe843d02ea1a6))
+* Update dependency pytest-asyncio to v0.25.1 ([`abce45b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/abce45b406c4de0e445bcb6b44a27a0cb3d3304a))
+* Update dependency mypy to v1.14.1 ([`94db878`](https://github.com/MartinHjelmare/aiohomeconnect/commit/94db87891aa63851967e2c0c107e95c25c4e92f6))
+* Update dependency mypy to v1.14.0 ([`4bd28fc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/4bd28fcedaba29caf288de2446417ed65d26f9bc))
+
 ## v0.7.3 (2024-12-20)
 
 ### Bug fixes
