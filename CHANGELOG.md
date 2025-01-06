@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.5 (2025-01-06)
+
+### Bug fixes
+
+* Set default values for optional model attributes (#37) ([`bb2744a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb2744a165fbcab5e0de9a4c58e10e7d5f6a0a66))
+
 ## v0.7.4 (2025-01-06)
 
 ### Bug fixes
