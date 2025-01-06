@@ -15,16 +15,16 @@ class Program(DataClassJSONMixin):
     """Represent Program."""
 
     key: ProgramKey
-    name: str | None
-    options: list[Option] | None
-    constraints: ProgramConstraints | None
+    name: str | None = None
+    options: list[Option] | None = None
+    constraints: ProgramConstraints | None = None
 
 
 @dataclass
 class ProgramConstraints(DataClassJSONMixin):
     """Represent ProgramConstraints."""
 
-    access: str | None
+    access: str | None = None
 
 
 @dataclass
@@ -38,7 +38,7 @@ class ArrayOfAvailablePrograms(DataClassJSONMixin):
 class EnumerateAvailableProgramConstraints(DataClassJSONMixin):
     """Represent EnumerateAvailableProgramConstraints."""
 
-    execution: Execution | None
+    execution: Execution | None = None
 
 
 @dataclass
@@ -46,8 +46,8 @@ class EnumerateAvailableProgram(DataClassJSONMixin):
     """Represent EnumerateAvailableProgram."""
 
     key: ProgramKey
-    name: str | None
-    constraints: EnumerateAvailableProgramConstraints | None
+    name: str | None = None
+    constraints: EnumerateAvailableProgramConstraints | None = None
 
 
 @dataclass
@@ -55,16 +55,16 @@ class ArrayOfPrograms(DataClassJSONMixin):
     """Represent ArrayOfPrograms."""
 
     programs: list[EnumerateProgram]
-    active: Program | None
-    selected: Program | None
+    active: Program | None = None
+    selected: Program | None = None
 
 
 @dataclass
 class EnumerateProgramConstraints(DataClassJSONMixin):
     """Represent EnumerateProgramConstraints."""
 
-    available: bool | None
-    execution: Execution | None
+    available: bool | None = None
+    execution: Execution | None = None
 
 
 @dataclass
@@ -72,8 +72,8 @@ class EnumerateProgram(DataClassJSONMixin):
     """Represent EnumerateProgram."""
 
     key: ProgramKey
-    name: str | None
-    constraints: EnumerateProgramConstraints | None
+    name: str | None = None
+    constraints: EnumerateProgramConstraints | None = None
 
 
 class Execution(StrEnum):
@@ -90,25 +90,29 @@ class ProgramDefinition(DataClassJSONMixin):
     """Represent ProgramDefinition."""
 
     key: ProgramKey
-    name: str | None
-    options: list[ProgramDefinitionOption] | None
+    name: str | None = None
+    options: list[ProgramDefinitionOption] | None = None
 
 
 @dataclass
 class ProgramDefinitionConstraints(DataClassJSONMixin):
     """Represent ProgramDefinitionConstraints."""
 
-    min: int | None
-    max: int | None
-    step_size: int | None = field(metadata=field_options(alias="stepsize"))
+    min: int | None = None
+    max: int | None = None
+    step_size: int | None = field(
+        default=None, metadata=field_options(alias="stepsize")
+    )
     allowed_values: list[str | None] | None = field(
-        metadata=field_options(alias="allowedvalues")
+        default=None, metadata=field_options(alias="allowedvalues")
     )
     display_values: list[str | None] | None = field(
-        metadata=field_options(alias="displayvalues")
+        default=None, metadata=field_options(alias="displayvalues")
     )
-    default: Any | None
-    live_update: bool | None = field(metadata=field_options(alias="liveupdate"))
+    default: Any | None = None
+    live_update: bool | None = field(
+        default=None, metadata=field_options(alias="liveupdate")
+    )
 
 
 @dataclass
@@ -116,10 +120,10 @@ class ProgramDefinitionOption(DataClassJSONMixin):
     """Represent ProgramDefinitionOption."""
 
     key: OptionKey
-    name: str | None
     type: str
-    unit: str | None
-    constraints: ProgramDefinitionConstraints | None
+    name: str | None = None
+    unit: str | None = None
+    constraints: ProgramDefinitionConstraints | None = None
 
 
 @dataclass
@@ -127,10 +131,12 @@ class Option(DataClassJSONMixin):
     """Represent Option."""
 
     key: OptionKey
-    name: str | None
     value: Any
-    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
-    unit: str | None
+    name: str | None = None
+    display_value: str | None = field(
+        default=None, metadata=field_options(alias="displayvalue")
+    )
+    unit: str | None = None
 
 
 @dataclass

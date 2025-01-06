@@ -21,7 +21,7 @@ class Command(DataClassJSONMixin):
     """Represent Command."""
 
     key: CommandKey
-    name: str | None
+    name: str | None = None
 
 
 @dataclass

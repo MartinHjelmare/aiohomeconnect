@@ -204,7 +204,7 @@ class DefinitionModelUnknown(DefinitionModelBase):
         self, definition: str, *, generate_class: bool = False, required: bool = False
     ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         return f"Any{suffix}"
 
 
@@ -216,7 +216,7 @@ class DefinitionModelString(DefinitionModelBase):
         self, definition: str, *, generate_class: bool = False, required: bool = False
     ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         return f"str{suffix}"
 
 
@@ -232,7 +232,7 @@ class DefinitionModelStringEnum(DefinitionModelBase):
         """Return the Python code as a string for this model."""
         if (description := self.description) is None:
             raise ValueError("Missing description")
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         if generate_class:
             code_enum = "\n    ".join(
                 f'{enum.upper()} = "{enum}"' for enum in self.enum
@@ -257,7 +257,7 @@ class DefinitionModelInteger(DefinitionModelBase):
         self, definition: str, *, generate_class: bool = False, required: bool = False
     ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         return f"int{suffix}"
 
 
@@ -269,7 +269,7 @@ class DefinitionModelBoolean(DefinitionModelBase):
         self, definition: str, *, generate_class: bool = False, required: bool = False
     ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         return f"bool{suffix}"
 
 
@@ -281,7 +281,7 @@ class DefinitionModelStringNumberBoolean(DefinitionModelBase):
         self, definition: str, *, generate_class: bool = False, required: bool = False
     ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         return f"str | float | bool{suffix}"
 
 
@@ -304,7 +304,7 @@ class DefinitionModelArray(DefinitionModelBase):
         self, definition: str, *, generate_class: bool = False, required: bool = False
     ) -> str:
         """Return the Python code as a string for this model."""
-        suffix = "" if required else " | None"
+        suffix = "" if required else " | None = None"
         if definition != self.definition and generate_class:
             item = definition
             if definition not in self.all_definitions:
@@ -315,7 +315,7 @@ class DefinitionModelArray(DefinitionModelBase):
                     "\n\n"
                 )
         else:
-            item = self.items.generate_code(definition)
+            item = self.items.generate_code(definition, required=True)
 
         self.generated_classes.update(self.items.generated_classes)
         self.items.generated_classes.clear()
@@ -347,7 +347,7 @@ class DefinitionModelObject(DefinitionModelBase):
     ) -> str:
         """Return the Python code as a string for this model."""
         if definition != self.definition and generate_class:
-            suffix = "" if required else " | None"
+            suffix = "" if required else " | None = None"
             if definition not in self.all_definitions:
                 self.generated_classes.add(
                     "\n\n"
@@ -365,7 +365,7 @@ class DefinitionModelObject(DefinitionModelBase):
 
         generate_class = False
         original_definition = definition
-        for prop, model in self.properties.items():
+        for prop, model in sorted_properties.items():
             required_property = bool(
                 required_properties and prop in required_properties
             )
