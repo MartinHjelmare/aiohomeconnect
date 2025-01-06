@@ -365,7 +365,7 @@ class DefinitionModelObject(DefinitionModelBase):
 
         generate_class = False
         original_definition = definition
-        for prop, model in self.properties.items():
+        for prop, model in sorted_properties.items():
             required_property = bool(
                 required_properties and prop in required_properties
             )
