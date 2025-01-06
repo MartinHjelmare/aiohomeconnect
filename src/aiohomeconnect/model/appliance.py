@@ -12,13 +12,13 @@ from mashumaro.mixins.json import DataClassJSONMixin
 class HomeAppliance(DataClassJSONMixin):
     """Represent HomeAppliance."""
 
-    ha_id: str | None = field(metadata=field_options(alias="haId"))
-    name: str | None
-    type: str | None
-    brand: str | None
-    vib: str | None
-    e_number: str | None = field(metadata=field_options(alias="enumber"))
-    connected: bool | None
+    ha_id: str = field(metadata=field_options(alias="haId"))
+    name: str
+    type: str
+    brand: str
+    vib: str
+    e_number: str = field(metadata=field_options(alias="enumber"))
+    connected: bool
 
 
 @dataclass
