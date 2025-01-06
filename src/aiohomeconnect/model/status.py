@@ -15,29 +15,33 @@ class Status(DataClassJSONMixin):
     """Represent Status."""
 
     key: StatusKey
-    name: str | None
     value: Any
-    display_value: str | None = field(metadata=field_options(alias="displayvalue"))
-    unit: str | None
-    type: str | None
-    constraints: StatusConstraints | None
+    name: str | None = None
+    display_value: str | None = field(
+        default=None, metadata=field_options(alias="displayvalue")
+    )
+    unit: str | None = None
+    type: str | None = None
+    constraints: StatusConstraints | None = None
 
 
 @dataclass
 class StatusConstraints(DataClassJSONMixin):
     """Represent StatusConstraints."""
 
-    min: int | None
-    max: int | None
-    step_size: int | None = field(metadata=field_options(alias="stepsize"))
+    min: int | None = None
+    max: int | None = None
+    step_size: int | None = field(
+        default=None, metadata=field_options(alias="stepsize")
+    )
     allowed_values: list[str | None] | None = field(
-        metadata=field_options(alias="allowedvalues")
+        default=None, metadata=field_options(alias="allowedvalues")
     )
     display_values: list[str | None] | None = field(
-        metadata=field_options(alias="displayvalues")
+        default=None, metadata=field_options(alias="displayvalues")
     )
-    default: Any | None
-    access: str | None
+    default: Any | None = None
+    access: str | None = None
 
 
 @dataclass
