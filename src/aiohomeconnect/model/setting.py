@@ -93,6 +93,12 @@ class SettingKey(StrEnum):
     CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_3 = (
         "ConsumerProducts.CleaningRobot.Setting.NameOfMap3"
     )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_4 = (
+        "ConsumerProducts.CleaningRobot.Setting.NameOfMap4"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_5 = (
+        "ConsumerProducts.CleaningRobot.Setting.NameOfMap5"
+    )
     COOKING_COMMON_LIGHTING = "Cooking.Common.Setting.Lighting"
     COOKING_COMMON_LIGHTING_BRIGHTNESS = "Cooking.Common.Setting.LightingBrightness"
     COOKING_HOOD_COLOR_TEMPERATURE_PERCENT = (

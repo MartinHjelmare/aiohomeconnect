@@ -149,11 +149,8 @@ class ArrayOfOptions(DataClassJSONMixin):
 class OptionKey(StrEnum):
     """Represent an option key."""
 
-    # TODO(Martin Hjelmare): Add all option keys  # noqa: FIX002
-    # https://github.com/MartinHjelmare/aiohomeconnect/issues/22
-    # Missing option categories still to be added 20241129:
-    # Dryer, Hood, Oven, Warming Drawer, Washer
-
+    BSH_COMMON_DURATION = "BSH.Common.Option.Duration"
+    BSH_COMMON_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
     BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
@@ -185,6 +182,11 @@ class OptionKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_MULTIPLE_BEVERAGES = (
         "ConsumerProducts.CoffeeMaker.Option.MultipleBeverages"
     )
+    COOKING_COMMON_HOOD_INTENSIVE_LEVEL = "Cooking.Common.Option.Hood.IntensiveLevel"
+    COOKING_COMMON_HOOD_VENTING_LEVEL = "Cooking.Common.Option.Hood.VentingLevel"
+    COOKING_OVEN_FAST_PRE_HEAT = "Cooking.Oven.Option.FastPreHeat"
+    COOKING_OVEN_SETPOINT_TEMPERATURE = "Cooking.Oven.Option.SetpointTemperature"
+    COOKING_OVEN_WARMING_LEVEL = "Cooking.Oven.Option.WarmingLevel"
     DISHCARE_DISHWASHER_BRILLIANCE_DRY = "Dishcare.Dishwasher.Option.BrillianceDry"
     DISHCARE_DISHWASHER_ECO_DRY = "Dishcare.Dishwasher.Option.EcoDry"
     DISHCARE_DISHWASHER_EXTRA_DRY = "Dishcare.Dishwasher.Option.ExtraDry"
@@ -194,15 +196,16 @@ class OptionKey(StrEnum):
     DISHCARE_DISHWASHER_SILENCE_ON_DEMAND = "Dishcare.Dishwasher.Option.SilenceOnDemand"
     DISHCARE_DISHWASHER_VARIO_SPEED_PLUS = "Dishcare.Dishwasher.Option.VarioSpeedPlus"
     DISHCARE_DISHWASHER_ZEOLITE_DRY = "Dishcare.Dishwasher.Option.ZeoliteDry"
+    LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
+    LAUNDRY_CARE_DRYER_DRYING_TARGET = "LaundryCare.Dryer.Option.DryingTarget"
+    LAUNDRY_CARE_WASHER_I_DOS_1_ACTIVE = "LaundryCare.Washer.Option.IDos1Active"
+    LAUNDRY_CARE_WASHER_I_DOS_2_ACTIVE = "LaundryCare.Washer.Option.IDos2Active"
+    LAUNDRY_CARE_WASHER_SPIN_SPEED = "LaundryCare.Washer.Option.SpinSpeed"
+    LAUNDRY_CARE_WASHER_TEMPERATURE = "LaundryCare.Washer.Option.Temperature"
 
 
 class ProgramKey(StrEnum):
     """Represent a program key."""
-
-    # TODO(Martin Hjelmare): Add all program keys  # noqa: FIX002
-    # https://github.com/MartinHjelmare/aiohomeconnect/issues/23
-    # Missing program categories still to be added 20241129:
-    # Dryer, Hood, Oven, Warming Drawer, Washer, Washer Dryer
 
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
@@ -249,7 +252,7 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_WARM_MILK = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.WarmMilk"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_XL_COFFEE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_X_L_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.XLCoffee"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_AMERICANO = (
@@ -261,7 +264,7 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_AU_LAIT = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeAuLait"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_CONLECHE = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_CON_LECHE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.CafeConLeche"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_CAFE_CORTADO = (
@@ -303,12 +306,76 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_VERLAENGERTER = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Verlaengerter"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKE_COFFEE_WORLD_VERLAENGERTER_BRAUN = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_VERLAENGERTER_BRAUN = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.VerlaengerterBraun"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_WIENER_MELANGE = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.WienerMelange"
     )
+    COOKING_COMMON_HOOD_AUTOMATIC = "Cooking.Common.Program.Hood.Automatic"
+    COOKING_COMMON_HOOD_DELAYED_SHUT_OFF = "Cooking.Common.Program.Hood.DelayedShutOff"
+    COOKING_COMMON_HOOD_VENTING = "Cooking.Common.Program.Hood.Venting"
+    COOKING_OVEN_HEATING_MODE_BOTTOM_HEATING = (
+        "Cooking.Oven.Program.HeatingMode.BottomHeating"
+    )
+    COOKING_OVEN_HEATING_MODE_DEFROST = "Cooking.Oven.Program.HeatingMode.Defrost"
+    COOKING_OVEN_HEATING_MODE_DESICCATION = (
+        "Cooking.Oven.Program.HeatingMode.Desiccation"
+    )
+    COOKING_OVEN_HEATING_MODE_FROZEN_HEATUP_SPECIAL = (
+        "Cooking.Oven.Program.HeatingMode.FrozenHeatupSpecial"
+    )
+    COOKING_OVEN_HEATING_MODE_HOT_AIR = "Cooking.Oven.Program.HeatingMode.HotAir"
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_100_STEAM = (
+        "Cooking.Oven.Program.HeatingMode.HotAir100Steam"
+    )
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_30_STEAM = (
+        "Cooking.Oven.Program.HeatingMode.HotAir30Steam"
+    )
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_60_STEAM = (
+        "Cooking.Oven.Program.HeatingMode.HotAir60Steam"
+    )
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_80_STEAM = (
+        "Cooking.Oven.Program.HeatingMode.HotAir80Steam"
+    )
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_ECO = "Cooking.Oven.Program.HeatingMode.HotAirEco"
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_GRILLING = (
+        "Cooking.Oven.Program.HeatingMode.HotAirGrilling"
+    )
+    COOKING_OVEN_HEATING_MODE_INTENSIVE_HEAT = (
+        "Cooking.Oven.Program.HeatingMode.IntensiveHeat"
+    )
+    COOKING_OVEN_HEATING_MODE_KEEP_WARM = "Cooking.Oven.Program.HeatingMode.KeepWarm"
+    COOKING_OVEN_HEATING_MODE_PIZZA_SETTING = (
+        "Cooking.Oven.Program.HeatingMode.PizzaSetting"
+    )
+    COOKING_OVEN_HEATING_MODE_PRE_HEATING = (
+        "Cooking.Oven.Program.HeatingMode.PreHeating"
+    )
+    COOKING_OVEN_HEATING_MODE_PREHEAT_OVENWARE = (
+        "Cooking.Oven.Program.HeatingMode.PreheatOvenware"
+    )
+    COOKING_OVEN_HEATING_MODE_PROOF = "Cooking.Oven.Program.HeatingMode.Proof"
+    COOKING_OVEN_HEATING_MODE_SABBATH_PROGRAMME = (
+        "Cooking.Oven.Program.HeatingMode.SabbathProgramme"
+    )
+    COOKING_OVEN_HEATING_MODE_SLOW_COOK = "Cooking.Oven.Program.HeatingMode.SlowCook"
+    COOKING_OVEN_HEATING_MODE_TOP_BOTTOM_HEATING = (
+        "Cooking.Oven.Program.HeatingMode.TopBottomHeating"
+    )
+    COOKING_OVEN_HEATING_MODE_TOP_BOTTOM_HEATING_ECO = (
+        "Cooking.Oven.Program.HeatingMode.TopBottomHeatingEco"
+    )
+    COOKING_OVEN_HEATING_MODE_WARMING_DRAWER = (
+        "Cooking.Oven.Program.HeatingMode.WarmingDrawer"
+    )
+    COOKING_OVEN_MICROWAVE_1000_WATT = "Cooking.Oven.Program.Microwave.1000Watt"
+    COOKING_OVEN_MICROWAVE_180_WATT = "Cooking.Oven.Program.Microwave.180Watt"
+    COOKING_OVEN_MICROWAVE_360_WATT = "Cooking.Oven.Program.Microwave.360Watt"
+    COOKING_OVEN_MICROWAVE_600_WATT = "Cooking.Oven.Program.Microwave.600Watt"
+    COOKING_OVEN_MICROWAVE_900_WATT = "Cooking.Oven.Program.Microwave.900Watt"
+    COOKING_OVEN_MICROWAVE_90_WATT = "Cooking.Oven.Program.Microwave.90Watt"
+    COOKING_OVEN_MICROWAVE_MAX = "Cooking.Oven.Program.Microwave.Max"
     DISHCARE_DISHWASHER_AUTO_1 = "Dishcare.Dishwasher.Program.Auto1"
     DISHCARE_DISHWASHER_AUTO_2 = "Dishcare.Dishwasher.Program.Auto2"
     DISHCARE_DISHWASHER_AUTO_3 = "Dishcare.Dishwasher.Program.Auto3"
@@ -335,3 +402,94 @@ class ProgramKey(StrEnum):
     DISHCARE_DISHWASHER_QUICK_65 = "Dishcare.Dishwasher.Program.Quick65"
     DISHCARE_DISHWASHER_STEAM_FRESH = "Dishcare.Dishwasher.Program.SteamFresh"
     DISHCARE_DISHWASHER_SUPER_60 = "Dishcare.Dishwasher.Program.Super60"
+    LAUNDRY_CARE_DRYER_ANTI_SHRINK = "LaundryCare.Dryer.Program.AntiShrink"
+    LAUNDRY_CARE_DRYER_BLANKETS = "LaundryCare.Dryer.Program.Blankets"
+    LAUNDRY_CARE_DRYER_BUSINESS_SHIRTS = "LaundryCare.Dryer.Program.BusinessShirts"
+    LAUNDRY_CARE_DRYER_COTTON = "LaundryCare.Dryer.Program.Cotton"
+    LAUNDRY_CARE_DRYER_DELICATES = "LaundryCare.Dryer.Program.Delicates"
+    LAUNDRY_CARE_DRYER_DESSOUS = "LaundryCare.Dryer.Program.Dessous"
+    LAUNDRY_CARE_DRYER_DOWN_FEATHERS = "LaundryCare.Dryer.Program.DownFeathers"
+    LAUNDRY_CARE_DRYER_HYGIENE = "LaundryCare.Dryer.Program.Hygiene"
+    LAUNDRY_CARE_DRYER_IN_BASKET = "LaundryCare.Dryer.Program.InBasket"
+    LAUNDRY_CARE_DRYER_JEANS = "LaundryCare.Dryer.Program.Jeans"
+    LAUNDRY_CARE_DRYER_MIX = "LaundryCare.Dryer.Program.Mix"
+    LAUNDRY_CARE_DRYER_MY_TIME_MY_DRYING_TIME = (
+        "LaundryCare.Dryer.Program.MyTime.MyDryingTime"
+    )
+    LAUNDRY_CARE_DRYER_OUTDOOR = "LaundryCare.Dryer.Program.Outdoor"
+    LAUNDRY_CARE_DRYER_PILLOW = "LaundryCare.Dryer.Program.Pillow"
+    LAUNDRY_CARE_DRYER_SHIRTS_15 = "LaundryCare.Dryer.Program.Shirts15"
+    LAUNDRY_CARE_DRYER_SUPER_40 = "LaundryCare.Dryer.Program.Super40"
+    LAUNDRY_CARE_DRYER_SYNTHETIC = "LaundryCare.Dryer.Program.Synthetic"
+    LAUNDRY_CARE_DRYER_SYNTHETIC_REFRESH = "LaundryCare.Dryer.Program.SyntheticRefresh"
+    LAUNDRY_CARE_DRYER_TIME_COLD = "LaundryCare.Dryer.Program.TimeCold"
+    LAUNDRY_CARE_DRYER_TIME_COLD_FIX_TIME_COLD_20 = (
+        "LaundryCare.Dryer.Program.TimeColdFix.TimeCold20"
+    )
+    LAUNDRY_CARE_DRYER_TIME_COLD_FIX_TIME_COLD_30 = (
+        "LaundryCare.Dryer.Program.TimeColdFix.TimeCold30"
+    )
+    LAUNDRY_CARE_DRYER_TIME_COLD_FIX_TIME_COLD_60 = (
+        "LaundryCare.Dryer.Program.TimeColdFix.TimeCold60"
+    )
+    LAUNDRY_CARE_DRYER_TIME_WARM = "LaundryCare.Dryer.Program.TimeWarm"
+    LAUNDRY_CARE_DRYER_TIME_WARM_FIX_TIME_WARM_30 = (
+        "LaundryCare.Dryer.Program.TimeWarmFix.TimeWarm30"
+    )
+    LAUNDRY_CARE_DRYER_TIME_WARM_FIX_TIME_WARM_40 = (
+        "LaundryCare.Dryer.Program.TimeWarmFix.TimeWarm40"
+    )
+    LAUNDRY_CARE_DRYER_TIME_WARM_FIX_TIME_WARM_60 = (
+        "LaundryCare.Dryer.Program.TimeWarmFix.TimeWarm60"
+    )
+    LAUNDRY_CARE_DRYER_TOWELS = "LaundryCare.Dryer.Program.Towels"
+    LAUNDRY_CARE_WASHER_AUTO_30 = "LaundryCare.Washer.Program.Auto30"
+    LAUNDRY_CARE_WASHER_AUTO_40 = "LaundryCare.Washer.Program.Auto40"
+    LAUNDRY_CARE_WASHER_AUTO_60 = "LaundryCare.Washer.Program.Auto60"
+    LAUNDRY_CARE_WASHER_CHIFFON = "LaundryCare.Washer.Program.Chiffon"
+    LAUNDRY_CARE_WASHER_COTTON = "LaundryCare.Washer.Program.Cotton"
+    LAUNDRY_CARE_WASHER_COTTON_COLOUR = "LaundryCare.Washer.Program.Cotton.Colour"
+    LAUNDRY_CARE_WASHER_COTTON_COTTON_ECO = (
+        "LaundryCare.Washer.Program.Cotton.CottonEco"
+    )
+    LAUNDRY_CARE_WASHER_COTTON_ECO_4060 = "LaundryCare.Washer.Program.Cotton.Eco4060"
+    LAUNDRY_CARE_WASHER_CURTAINS = "LaundryCare.Washer.Program.Curtains"
+    LAUNDRY_CARE_WASHER_DARK_WASH = "LaundryCare.Washer.Program.DarkWash"
+    LAUNDRY_CARE_WASHER_DELICATES_SILK = "LaundryCare.Washer.Program.DelicatesSilk"
+    LAUNDRY_CARE_WASHER_DESSOUS = "LaundryCare.Washer.Program.Dessous"
+    LAUNDRY_CARE_WASHER_DOWN_DUVET_DUVET = "LaundryCare.Washer.Program.DownDuvet.Duvet"
+    LAUNDRY_CARE_WASHER_DRUM_CLEAN = "LaundryCare.Washer.Program.DrumClean"
+    LAUNDRY_CARE_WASHER_EASY_CARE = "LaundryCare.Washer.Program.EasyCare"
+    LAUNDRY_CARE_WASHER_MIX = "LaundryCare.Washer.Program.Mix"
+    LAUNDRY_CARE_WASHER_MIX_NIGHT_WASH = "LaundryCare.Washer.Program.Mix.NightWash"
+    LAUNDRY_CARE_WASHER_MONSOON = "LaundryCare.Washer.Program.Monsoon"
+    LAUNDRY_CARE_WASHER_OUTDOOR = "LaundryCare.Washer.Program.Outdoor"
+    LAUNDRY_CARE_WASHER_PLUSH_TOY = "LaundryCare.Washer.Program.PlushToy"
+    LAUNDRY_CARE_WASHER_POWER_SPEED_59 = "LaundryCare.Washer.Program.PowerSpeed59"
+    LAUNDRY_CARE_WASHER_RINSE_RINSE_SPIN_DRAIN = (
+        "LaundryCare.Washer.Program.Rinse.RinseSpinDrain"
+    )
+    LAUNDRY_CARE_WASHER_SENSITIVE = "LaundryCare.Washer.Program.Sensitive"
+    LAUNDRY_CARE_WASHER_SHIRTS_BLOUSES = "LaundryCare.Washer.Program.ShirtsBlouses"
+    LAUNDRY_CARE_WASHER_SPORT_FITNESS = "LaundryCare.Washer.Program.SportFitness"
+    LAUNDRY_CARE_WASHER_SUPER_153045_SUPER_15 = (
+        "LaundryCare.Washer.Program.Super153045.Super15"
+    )
+    LAUNDRY_CARE_WASHER_SUPER_153045_SUPER_1530 = (
+        "LaundryCare.Washer.Program.Super153045.Super1530"
+    )
+    LAUNDRY_CARE_WASHER_TOWELS = "LaundryCare.Washer.Program.Towels"
+    LAUNDRY_CARE_WASHER_WATER_PROOF = "LaundryCare.Washer.Program.WaterProof"
+    LAUNDRY_CARE_WASHER_WOOL = "LaundryCare.Washer.Program.Wool"
+    LAUNDRY_CARE_WASHER_DRYER_COTTON = "LaundryCare.WasherDryer.Program.Cotton"
+    LAUNDRY_CARE_WASHER_DRYER_COTTON_ECO_4060 = (
+        "LaundryCare.WasherDryer.Program.Cotton.Eco4060"
+    )
+    LAUNDRY_CARE_WASHER_DRYER_EASY_CARE = "LaundryCare.WasherDryer.Program.EasyCare"
+    LAUNDRY_CARE_WASHER_DRYER_MIX = "LaundryCare.WasherDryer.Program.Mix"
+    LAUNDRY_CARE_WASHER_DRYER_WASH_AND_DRY_60 = (
+        "LaundryCare.WasherDryer.Program.WashAndDry.60"
+    )
+    LAUNDRY_CARE_WASHER_DRYER_WASH_AND_DRY_90 = (
+        "LaundryCare.WasherDryer.Program.WashAndDry.90"
+    )
