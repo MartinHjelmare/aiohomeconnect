@@ -54,6 +54,12 @@ class ArrayOfStatus(DataClassJSONMixin):
 class StatusKey(StrEnum):
     """Represent a status key."""
 
+    @classmethod
+    def _missing_(cls, _: object) -> StatusKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     BSH_COMMON_BATTERY_CHARGING_STATE = "BSH.Common.Status.BatteryChargingState"
     BSH_COMMON_BATTERY_LEVEL = "BSH.Common.Status.BatteryLevel"
     BSH_COMMON_CHARGING_CONNECTION = "BSH.Common.Status.ChargingConnection"

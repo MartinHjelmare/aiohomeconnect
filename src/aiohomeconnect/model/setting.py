@@ -69,6 +69,12 @@ class PutSettings(DataClassJSONMixin):
 class SettingKey(StrEnum):
     """Represent a setting key."""
 
+    @classmethod
+    def _missing_(cls, _: object) -> SettingKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     BSH_COMMON_POWER_STATE = "BSH.Common.Setting.PowerState"
     BSH_COMMON_TEMPERATURE_UNIT = "BSH.Common.Setting.TemperatureUnit"
     BSH_COMMON_LIQUID_VOLUME_UNIT = "BSH.Common.Setting.LiquidVolumeUnit"

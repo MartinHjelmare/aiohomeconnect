@@ -154,6 +154,12 @@ class OptionKey(StrEnum):
     # Missing option categories still to be added 20241129:
     # Dryer, Hood, Oven, Warming Drawer, Washer
 
+    @classmethod
+    def _missing_(cls, _: object) -> OptionKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
@@ -204,6 +210,12 @@ class ProgramKey(StrEnum):
     # Missing program categories still to be added 20241129:
     # Dryer, Hood, Oven, Warming Drawer, Washer, Washer Dryer
 
+    @classmethod
+    def _missing_(cls, _: object) -> ProgramKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
     )
