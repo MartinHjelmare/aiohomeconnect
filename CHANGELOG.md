@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.8.0 (2025-01-09)
+
+### Chores
+
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.9.0 (#42) ([`edaca49`](https://github.com/MartinHjelmare/aiohomeconnect/commit/edaca49ac00e64a11924d41b998f7ca1d5f18975))
+* Update dependency ruff to ^0.9.0 ([`100c5a2`](https://github.com/MartinHjelmare/aiohomeconnect/commit/100c5a2c0df4a5140ab0aace60d512b37878c201))
+* Update dependency pytest-asyncio to v0.25.2 ([`58b57ea`](https://github.com/MartinHjelmare/aiohomeconnect/commit/58b57ea933a8e730a2adc10f420a5e18146fc4f7))
+
+### Features
+
+* Complete string enumerations and fix names (#40) ([`b92e281`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b92e2818623a4d72539eb362cbe5721d14d43e31))
+
 ## v0.7.5 (2025-01-06)
 
 ### Bug fixes

@@ -327,6 +327,7 @@ class EventKey(StrEnum):
         "Dishcare.Dishwasher.Option.VarioSpeedPlus"
     )
     DISHCARE_DISHWASHER_OPTION_ZEOLITE_DRY = "Dishcare.Dishwasher.Option.ZeoliteDry"
+    LAUNDRY_CARE_COMMON_OPTION_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
     LAUNDRY_CARE_DRYER_EVENT_DRYING_PROCESS_FINISHED = (
         "LaundryCare.Dryer.Event.DryingProcessFinished"
     )
