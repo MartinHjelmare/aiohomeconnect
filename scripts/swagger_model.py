@@ -161,9 +161,9 @@ class SwaggerPathModel:
         return f"""
     async def {self.operation_id}({self.signature}) -> {self.return_type}:
         \"""{self.docstring}\"""
-        {'response = ' if self.return_value != '' else ''}await self._auth.request(
+        {"response = " if self.return_value != "" else ""}await self._auth.request(
             "{PATH_METHOD_MAP[self.method]}",
-            f"{self.path.replace('haId', 'ha_id')}",
+            f"{self.path.replace("haId", "ha_id")}",
             headers={self.headers},{self.data_parameter}
         ){self.return_value}
 """
