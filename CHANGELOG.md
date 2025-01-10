@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.9.0 (2025-01-10)
+
+### Features
+
+* Support unknown enum values (#41) ([`efced94`](https://github.com/MartinHjelmare/aiohomeconnect/commit/efced94961f56e1f6621c587113f18d067231158))
+
 ## v0.8.0 (2025-01-09)
 
 ### Chores
