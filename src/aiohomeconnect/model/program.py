@@ -149,6 +149,12 @@ class ArrayOfOptions(DataClassJSONMixin):
 class OptionKey(StrEnum):
     """Represent an option key."""
 
+    @classmethod
+    def _missing_(cls, _: object) -> OptionKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     BSH_COMMON_DURATION = "BSH.Common.Option.Duration"
     BSH_COMMON_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
     BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
@@ -207,6 +213,12 @@ class OptionKey(StrEnum):
 class ProgramKey(StrEnum):
     """Represent a program key."""
 
+    @classmethod
+    def _missing_(cls, _: object) -> ProgramKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
     )

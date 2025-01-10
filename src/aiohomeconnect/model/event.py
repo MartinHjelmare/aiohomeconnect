@@ -67,6 +67,12 @@ class EventMessage:
 class EventKey(StrEnum):
     """Represent an event key."""
 
+    @classmethod
+    def _missing_(cls, _: object) -> EventKey:
+        """Return UNKNOWN for missing keys."""
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     BSH_COMMON_APPLIANCE_CONNECTED = "BSH.Common.Appliance.Connected"
     BSH_COMMON_APPLIANCE_DEPAIRED = "BSH.Common.Appliance.Depaired"
     BSH_COMMON_APPLIANCE_DISCONNECTED = "BSH.Common.Appliance.Disconnected"
