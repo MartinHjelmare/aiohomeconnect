@@ -8,128 +8,96 @@ from mashumaro.mixins.json import DataClassJSONMixin
 
 
 @dataclass
-class UnauthorizedError(DataClassJSONMixin):
+class HomeConnectError(Exception, DataClassJSONMixin):
     """Represent UnauthorizedError."""
 
     key: str
     description: str | None = None
 
+    def __str__(self) -> str:
+        """Return the string representation of the error."""
+        return f"{self.description} ({self.key})"
+
+    def __repr__(self) -> str:
+        """Return the representation of the error."""
+        return f"{self.description} ({self.key})"
+
 
 @dataclass
-class ForbiddenError(DataClassJSONMixin):
+class UnauthorizedError(HomeConnectError):
+    """Represent UnauthorizedError."""
+
+
+@dataclass
+class ForbiddenError(HomeConnectError):
     """Represent ForbiddenError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NotFoundError(DataClassJSONMixin):
+class NotFoundError(HomeConnectError):
     """Represent NotFoundError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NoProgramSelectedError(DataClassJSONMixin):
+class NoProgramSelectedError(HomeConnectError):
     """Represent NoProgramSelectedError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NoProgramActiveError(DataClassJSONMixin):
+class NoProgramActiveError(HomeConnectError):
     """Represent NoProgramActiveError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NotAcceptableError(DataClassJSONMixin):
+class NotAcceptableError(HomeConnectError):
     """Represent NotAcceptableError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class RequestTimeoutError(DataClassJSONMixin):
+class RequestTimeoutError(HomeConnectError):
     """Represent RequestTimeoutError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ConflictError(DataClassJSONMixin):
+class ConflictError(HomeConnectError):
     """Represent ConflictError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class SelectedProgramNotSetError(DataClassJSONMixin):
+class SelectedProgramNotSetError(HomeConnectError):
     """Represent SelectedProgramNotSetError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ActiveProgramNotSetError(DataClassJSONMixin):
+class ActiveProgramNotSetError(HomeConnectError):
     """Represent ActiveProgramNotSetError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class WrongOperationStateError(DataClassJSONMixin):
+class WrongOperationStateError(HomeConnectError):
     """Represent WrongOperationStateError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ProgramNotAvailableError(DataClassJSONMixin):
+class ProgramNotAvailableError(HomeConnectError):
     """Represent ProgramNotAvailableError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class UnsupportedMediaTypeError(DataClassJSONMixin):
+class UnsupportedMediaTypeError(HomeConnectError):
     """Represent UnsupportedMediaTypeError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class TooManyRequestsError(DataClassJSONMixin):
+class TooManyRequestsError(HomeConnectError):
     """Represent TooManyRequestsError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class InternalServerError(DataClassJSONMixin):
+class InternalServerError(HomeConnectError):
     """Represent InternalServerError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class Conflict(DataClassJSONMixin):
+class Conflict(HomeConnectError):  # noqa: N818
     """Represent Conflict."""
-
-    key: str
-    description: str | None = None

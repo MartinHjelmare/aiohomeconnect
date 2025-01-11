@@ -39,6 +39,24 @@ from .model import (
     Status,
     StatusKey,
 )
+from .model.error import (
+    ActiveProgramNotSetError,
+    Conflict,
+    ConflictError,
+    ForbiddenError,
+    InternalServerError,
+    NoProgramActiveError,
+    NoProgramSelectedError,
+    NotAcceptableError,
+    NotFoundError,
+    ProgramNotAvailableError,
+    RequestTimeoutError,
+    SelectedProgramNotSetError,
+    TooManyRequestsError,
+    UnauthorizedError,
+    UnsupportedMediaTypeError,
+    WrongOperationStateError,
+)
 
 
 class AbstractAuth(ABC):
@@ -69,12 +87,29 @@ class AbstractAuth(ABC):
         """
         headers = await self._get_headers(kwargs.pop("headers", None))
 
-        return await self.client.request(
+        response = await self.client.request(
             method,
             f"{self.host}/api{url}",
             **kwargs,
             headers=headers,
         )
+        match response.status_code:
+            case 401:
+                raise UnauthorizedError.from_dict(response.json()["error"])
+            case 403:
+                raise ForbiddenError.from_dict(response.json()["error"])
+            case 406:
+                raise NotAcceptableError.from_dict(response.json()["error"])
+            case 408:
+                raise RequestTimeoutError.from_dict(response.json()["error"])
+            case 415:
+                raise UnsupportedMediaTypeError.from_dict(response.json()["error"])
+            case 429:
+                raise TooManyRequestsError.from_dict(response.json()["error"])
+            case 500:
+                raise InternalServerError.from_dict(response.json()["error"])
+            case _:
+                return response
 
     @asynccontextmanager
     async def connect_sse(
@@ -118,6 +153,7 @@ class Client:
             "/homeappliances",
             headers=None,
         )
+        response.raise_for_status()
         return ArrayOfHomeAppliances.from_dict(response.json()["data"])
 
     async def get_specific_appliance(
@@ -138,6 +174,7 @@ class Client:
             f"/homeappliances/{ha_id}",
             headers=None,
         )
+        response.raise_for_status()
         return HomeAppliance.from_dict(response.json()["data"])
 
     async def get_all_programs(
@@ -152,6 +189,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 409:
+                raise Conflict.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return ArrayOfPrograms.from_dict(response.json()["data"])
 
     async def get_available_programs(
@@ -166,6 +208,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/available",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 409:
+                raise WrongOperationStateError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return ArrayOfAvailablePrograms.from_dict(response.json()["data"])
 
     async def get_available_program(
@@ -181,6 +228,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/available/{program_key}",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 409:
+                raise ProgramNotAvailableError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return ProgramDefinition.from_dict(response.json()["data"])
 
     async def get_active_program(
@@ -195,6 +247,13 @@ class Client:
             f"/homeappliances/{ha_id}/programs/active",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NoProgramActiveError.from_dict(response.json()["error"])
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return Program.from_dict(response.json()["data"])
 
     async def start_program(
@@ -246,12 +305,17 @@ class Client:
         program = Program(
             key=program_key, name=name, options=options, constraints=constraints
         )
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/active",
             headers={"Accept-Language": accept_language},
             data=program.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def stop_program(
         self,
@@ -260,11 +324,16 @@ class Client:
         accept_language: Language | None = None,
     ) -> None:
         """Stop the active program."""
-        await self._auth.request(
+        response = await self._auth.request(
             "DELETE",
             f"/homeappliances/{ha_id}/programs/active",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 409:
+                raise WrongOperationStateError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_active_program_options(
         self,
@@ -295,6 +364,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/active/options",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NoProgramActiveError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return ArrayOfOptions.from_dict(response.json()["data"])
 
     async def set_active_program_options(
@@ -314,12 +388,17 @@ class Client:
         Please note that changing options of the running program is currently only
         supported by ovens.
         """
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/active/options",
             headers={"Accept-Language": accept_language},
             data=array_of_options.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise ActiveProgramNotSetError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_active_program_option(
         self,
@@ -334,6 +413,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/active/options/{option_key}",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NoProgramActiveError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return Option.from_dict(response.json()["data"])
 
     async def set_active_program_option(
@@ -363,12 +447,17 @@ class Client:
             display_value=display_value,
             unit=unit,
         )
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/active/options/{option_key}",
             headers={"Accept-Language": accept_language},
             data=option.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise ActiveProgramNotSetError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_selected_program(
         self,
@@ -387,6 +476,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/selected",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NoProgramSelectedError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return Program.from_dict(response.json()["data"])
 
     async def set_selected_program(
@@ -416,12 +510,17 @@ class Client:
         program = Program(
             key=program_key, name=name, options=options, constraints=constraints
         )
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/selected",
             headers={"Accept-Language": accept_language},
             data=program.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_selected_program_options(
         self,
@@ -435,6 +534,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/selected/options",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NoProgramSelectedError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return ArrayOfOptions.from_dict(response.json()["data"])
 
     async def set_selected_program_options(
@@ -445,12 +549,17 @@ class Client:
         accept_language: Language | None = None,
     ) -> None:
         """Set all options of the selected program."""
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/selected/options",
             headers={"Accept-Language": accept_language},
             data=array_of_options.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise SelectedProgramNotSetError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_selected_program_option(
         self,
@@ -465,6 +574,11 @@ class Client:
             f"/homeappliances/{ha_id}/programs/selected/options/{option_key}",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NoProgramSelectedError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return Option.from_dict(response.json()["data"])
 
     async def set_selected_program_option(
@@ -486,12 +600,17 @@ class Client:
             display_value=display_value,
             unit=unit,
         )
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/selected/options/{option_key}",
             headers={"Accept-Language": accept_language},
             data=option.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise SelectedProgramNotSetError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_images(
         self,
@@ -505,6 +624,7 @@ class Client:
             f"/homeappliances/{ha_id}/images",
             headers={"Accept-Language": accept_language},
         )
+        response.raise_for_status()
         return ArrayOfImages.from_dict(response.json()["data"])
 
     async def get_image(
@@ -514,11 +634,16 @@ class Client:
         image_key: str,
     ) -> None:
         """Get a specific image."""
-        await self._auth.request(
+        response = await self._auth.request(
             "GET",
             f"/homeappliances/{ha_id}/images/{image_key}",
             headers=None,
         )
+        match response.status_code:
+            case 404:
+                raise NotFoundError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_settings(
         self,
@@ -538,6 +663,7 @@ class Client:
             f"/homeappliances/{ha_id}/settings",
             headers={"Accept-Language": accept_language},
         )
+        response.raise_for_status()
         return ArrayOfSettings.from_dict(response.json()["data"])
 
     async def set_settings(
@@ -548,12 +674,17 @@ class Client:
         accept_language: Language | None = None,
     ) -> None:
         """Set multiple settings."""
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/settings",
             headers={"Accept-Language": accept_language},
             data=put_settings.to_dict(),
         )
+        match response.status_code:
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_setting(
         self,
@@ -568,6 +699,13 @@ class Client:
             f"/homeappliances/{ha_id}/settings/{setting_key}",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NotFoundError.from_dict(response.json()["error"])
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return GetSetting.from_dict(response.json()["data"])
 
     async def set_setting(
@@ -580,12 +718,19 @@ class Client:
     ) -> None:
         """Set a specific setting."""
         put_setting = PutSetting(key=setting_key, value=value)
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/settings/{setting_key}",
             headers={"Accept-Language": accept_language},
             data=put_setting.to_dict(),
         )
+        match response.status_code:
+            case 404:
+                raise NotFoundError.from_dict(response.json()["error"])
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
 
     async def get_status(
         self,
@@ -603,6 +748,11 @@ class Client:
             f"/homeappliances/{ha_id}/status",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return ArrayOfStatus.from_dict(response.json()["data"])
 
     async def get_status_value(
@@ -622,6 +772,13 @@ class Client:
             f"/homeappliances/{ha_id}/status/{status_key}",
             headers={"Accept-Language": accept_language},
         )
+        match response.status_code:
+            case 404:
+                raise NotFoundError.from_dict(response.json()["error"])
+            case 409:
+                raise ConflictError.from_dict(response.json()["error"])
+            case _:
+                response.raise_for_status()
         return Status.from_dict(response.json()["data"])
 
     async def get_available_commands(
@@ -712,7 +869,23 @@ class Client:
                 "Accept-Language": accept_language,
             },
         ) as event_source:
-            event_source.response.raise_for_status()
+            response = event_source.response
+            if response.is_error:
+                await response.aread()
+                match event_source.response.status_code:
+                    case 401:
+                        raise UnauthorizedError.from_dict(response.json()["error"])
+                    case 403:
+                        raise ForbiddenError.from_dict(response.json()["error"])
+                    case 406:
+                        raise NotAcceptableError.from_dict(response.json()["error"])
+                    case 429:
+                        raise TooManyRequestsError.from_dict(response.json()["error"])
+                    case 500:
+                        raise InternalServerError.from_dict(response.json()["error"])
+                    case _:
+                        response.raise_for_status()
+
             async for sse in event_source.aiter_sse():
                 if (
                     # _value2member_map_ is required for Python 3.11,
@@ -773,7 +946,23 @@ class Client:
                 "Accept-Language": accept_language,
             },
         ) as event_source:
-            event_source.response.raise_for_status()
+            response = event_source.response
+            if response.is_error:
+                await response.aread()
+                match event_source.response.status_code:
+                    case 401:
+                        raise UnauthorizedError.from_dict(response.json()["error"])
+                    case 403:
+                        raise ForbiddenError.from_dict(response.json()["error"])
+                    case 406:
+                        raise NotAcceptableError.from_dict(response.json()["error"])
+                    case 429:
+                        raise TooManyRequestsError.from_dict(response.json()["error"])
+                    case 500:
+                        raise InternalServerError.from_dict(response.json()["error"])
+                    case _:
+                        response.raise_for_status()
+
             async for sse in event_source.aiter_sse():
                 if (
                     # _value2member_map_ is required for Python 3.11,

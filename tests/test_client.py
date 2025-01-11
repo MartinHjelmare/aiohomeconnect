@@ -9,6 +9,13 @@ from pytest_httpx import HTTPXMock, IteratorStream
 
 from aiohomeconnect.client import AbstractAuth, Client
 from aiohomeconnect.model import ArrayOfEvents, Event, EventKey, EventMessage, EventType
+from aiohomeconnect.model.error import (
+    ForbiddenError,
+    InternalServerError,
+    NotAcceptableError,
+    TooManyRequestsError,
+    UnauthorizedError,
+)
 
 TEST_ACCESS_TOKEN = "1234"
 TEST_HA_ID = "SIEMENS-HCS02DWH1-6BE58C26DCC1"
@@ -224,18 +231,35 @@ async def test_stream_all_events(
     assert await anext(client.stream_all_events()) == event_message
 
 
+@pytest.mark.parametrize(
+    ("status_code", "exception"),
+    [
+        (401, UnauthorizedError),
+        (403, ForbiddenError),
+        (406, NotAcceptableError),
+        (418, httpx.HTTPStatusError),
+        (429, TooManyRequestsError),
+        (500, InternalServerError),
+    ],
+)
 async def test_stream_all_events_http_error(
-    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    status_code: int,
+    exception: type[Exception],
 ) -> None:
     """Test stream all events http error."""
     httpx_mock.add_response(
         url="https://example.com/api/homeappliances/events",
-        status_code=500,
+        status_code=status_code,
+        json={
+            "error": {"key": "some_error_key", "description": "some_error_description"}
+        },
     )
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):
+    with pytest.raises(exception):
         await anext(client.stream_all_events())
 
 
@@ -272,16 +296,33 @@ async def test_stream_events(
     assert await anext(client.stream_events(TEST_HA_ID)) == event_message
 
 
+@pytest.mark.parametrize(
+    ("status_code", "exception"),
+    [
+        (401, UnauthorizedError),
+        (403, ForbiddenError),
+        (406, NotAcceptableError),
+        (418, httpx.HTTPStatusError),
+        (429, TooManyRequestsError),
+        (500, InternalServerError),
+    ],
+)
 async def test_stream_events_http_error(
-    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    status_code: int,
+    exception: type[Exception],
 ) -> None:
     """Test stream events from a specific home appliance http error."""
     httpx_mock.add_response(
         url=f"https://example.com/api/homeappliances/{TEST_HA_ID}/events",
-        status_code=500,
+        status_code=status_code,
+        json={
+            "error": {"key": "some_error_key", "description": "some_error_description"}
+        },
     )
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    with pytest.raises(httpx.HTTPStatusError, match=r".*500 Internal Server Error.*"):
+    with pytest.raises(exception):
         await anext(client.stream_events(TEST_HA_ID))
