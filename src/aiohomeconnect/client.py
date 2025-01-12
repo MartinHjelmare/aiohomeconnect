@@ -7,7 +7,14 @@ from collections.abc import AsyncGenerator, AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
 
-from httpx import AsyncClient, Response, Timeout, codes
+from httpx import (
+    AsyncClient,
+    ReadTimeout,
+    RemoteProtocolError,
+    Response,
+    Timeout,
+    codes,
+)
 from httpx_sse import EventSource, aconnect_sse
 
 from aiohomeconnect.model import EventMessage, EventType
@@ -43,6 +50,7 @@ from .model.error import (
     ActiveProgramNotSetError,
     Conflict,
     ConflictError,
+    EventStreamInterruptedError,
     ForbiddenError,
     HomeConnectError,
     InternalServerError,
@@ -134,14 +142,17 @@ class AbstractAuth(ABC):
         """Create a SSE connection."""
         headers = await self._get_headers(kwargs.pop("headers", None))
 
-        async with aconnect_sse(
-            self.client,
-            method,
-            f"{self.host}/api{url}",
-            **kwargs,
-            headers=headers,
-        ) as event_source:
-            yield event_source
+        try:
+            async with aconnect_sse(
+                self.client,
+                method,
+                f"{self.host}/api{url}",
+                **kwargs,
+                headers=headers,
+            ) as event_source:
+                yield event_source
+        except (ReadTimeout, RemoteProtocolError) as e:
+            raise EventStreamInterruptedError from e
 
 
 class Client:

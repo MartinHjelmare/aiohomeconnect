@@ -3,13 +3,12 @@
 import asyncio
 
 from fastapi import FastAPI, HTTPException
-from httpx import ReadTimeout, RemoteProtocolError
 from rich import print as rich_print
 import typer
 import uvicorn
 
 from aiohomeconnect.model import StatusKey
-from aiohomeconnect.model.error import HomeConnectError
+from aiohomeconnect.model.error import EventStreamInterruptedError, HomeConnectError
 
 from .client import CLIClient, TokenManager
 
@@ -112,17 +111,15 @@ def subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
 async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
     """Subscribe and print events from all the appliances."""
     client = CLIClient(client_id, client_secret)
-    try:
-        while True:
-            try:
-                async for event in client.stream_all_events():
-                    rich_print(event)
-            except ReadTimeout as e:
-                rich_print(f"{e} continuing...")
-            except RemoteProtocolError as e:
-                rich_print(f"{e}, continuing...")
-    except HomeConnectError as e:
-        rich_print(f"{type(e).__name__}: {e}")
+    while True:
+        try:
+            async for event in client.stream_all_events():
+                rich_print(event)
+        except EventStreamInterruptedError as e:
+            rich_print(f"{e} continuing...")
+        except HomeConnectError as e:
+            rich_print(f"{type(e).__name__}: {e}")
+            break
 
 
 @cli.command()
@@ -136,17 +133,15 @@ async def _subscribe_appliance_events(
 ) -> None:
     """Subscribe and print events from one appliance."""
     client = CLIClient(client_id, client_secret)
-    try:
-        while True:
-            try:
-                async for event in client.stream_events(ha_id):
-                    rich_print(event)
-            except ReadTimeout as e:
-                rich_print(f"{e} continuing...")
-            except RemoteProtocolError as e:
-                rich_print(f"{e}, continuing...")
-    except HomeConnectError as e:
-        rich_print(f"{type(e).__name__}: {e}")
+    while True:
+        try:
+            async for event in client.stream_events(ha_id):
+                rich_print(event)
+        except EventStreamInterruptedError as e:
+            rich_print(f"{e}, continuing...")
+        except HomeConnectError as e:
+            rich_print(f"{type(e).__name__}: {e}")
+            break
 
 
 if __name__ == "__main__":

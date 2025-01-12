@@ -101,3 +101,7 @@ class InternalServerError(HomeConnectError):
 @dataclass
 class Conflict(HomeConnectError):  # noqa: N818
     """Represent Conflict."""
+
+
+class EventStreamInterruptedError(Exception):
+    """Represent the error cause when the event stream ends abruptly."""
