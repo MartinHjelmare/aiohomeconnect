@@ -15,8 +15,10 @@ from aiohomeconnect.model.error import (
     HomeConnectRequestError,
     InternalServerError,
     NotAcceptableError,
+    RequestTimeoutError,
     TooManyRequestsError,
     UnauthorizedError,
+    UnsupportedMediaTypeError,
 )
 
 TEST_ACCESS_TOKEN = "1234"
@@ -198,6 +200,40 @@ async def test_abstract_auth_sse(
     assert request
     assert request.headers["authorization"] == f"Bearer {TEST_ACCESS_TOKEN}"
     assert request.url.query.decode(encoding="utf-8") == "key1=value1&key2=value2"
+
+
+@pytest.mark.parametrize(
+    ("status_code", "exception"),
+    [
+        (codes.UNAUTHORIZED, UnauthorizedError),
+        (codes.FORBIDDEN, ForbiddenError),
+        (codes.NOT_ACCEPTABLE, NotAcceptableError),
+        (codes.REQUEST_TIMEOUT, RequestTimeoutError),
+        (codes.UNSUPPORTED_MEDIA_TYPE, UnsupportedMediaTypeError),
+        (codes.IM_A_TEAPOT, HomeConnectError),
+        (codes.TOO_MANY_REQUESTS, TooManyRequestsError),
+        (codes.INTERNAL_SERVER_ERROR, InternalServerError),
+    ],
+)
+async def test_generic_http_error(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    status_code: int,
+    exception: type[Exception],
+) -> None:
+    """Test stream all events http error."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances",
+        status_code=status_code,
+        json={
+            "error": {"key": "some_error_key", "description": "some_error_description"}
+        },
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(exception):
+        await client.get_home_appliances()
 
 
 async def test_request_error(
