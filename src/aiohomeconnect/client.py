@@ -7,7 +7,7 @@ from collections.abc import AsyncGenerator, AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
 
-from httpx import AsyncClient, Response, Timeout
+from httpx import AsyncClient, Response, Timeout, codes
 from httpx_sse import EventSource, aconnect_sse
 
 from aiohomeconnect.model import EventMessage, EventType
@@ -107,19 +107,19 @@ class AbstractAuth(ABC):
             headers=headers,
         )
         match response.status_code:
-            case 401:
+            case codes.UNAUTHORIZED:
                 raise UnauthorizedError.from_dict(response.json()["error"])
-            case 403:
+            case codes.FORBIDDEN:
                 raise ForbiddenError.from_dict(response.json()["error"])
-            case 406:
+            case codes.NOT_ACCEPTABLE:
                 raise NotAcceptableError.from_dict(response.json()["error"])
-            case 408:
+            case codes.REQUEST_TIMEOUT:
                 raise RequestTimeoutError.from_dict(response.json()["error"])
-            case 415:
+            case codes.UNSUPPORTED_MEDIA_TYPE:
                 raise UnsupportedMediaTypeError.from_dict(response.json()["error"])
-            case 429:
+            case codes.TOO_MANY_REQUESTS:
                 raise TooManyRequestsError.from_dict(response.json()["error"])
-            case 500:
+            case codes.INTERNAL_SERVER_ERROR:
                 raise InternalServerError.from_dict(response.json()["error"])
             case _:
                 return response
@@ -205,7 +205,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise Conflict.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -224,7 +224,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise WrongOperationStateError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -244,7 +244,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ProgramNotAvailableError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -263,9 +263,9 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NoProgramActiveError.from_dict(response.json()["error"])
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -327,7 +327,7 @@ class Client:
             data=program.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -345,7 +345,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise WrongOperationStateError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -380,7 +380,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NoProgramActiveError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -410,7 +410,7 @@ class Client:
             data=array_of_options.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ActiveProgramNotSetError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -429,7 +429,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NoProgramActiveError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -469,7 +469,7 @@ class Client:
             data=option.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ActiveProgramNotSetError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -492,7 +492,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NoProgramSelectedError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -532,7 +532,7 @@ class Client:
             data=program.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -550,7 +550,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NoProgramSelectedError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -571,7 +571,7 @@ class Client:
             data=array_of_options.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise SelectedProgramNotSetError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -590,7 +590,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NoProgramSelectedError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -622,7 +622,7 @@ class Client:
             data=option.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise SelectedProgramNotSetError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -656,7 +656,7 @@ class Client:
             headers=None,
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NotFoundError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -698,7 +698,7 @@ class Client:
             data=put_settings.to_dict(),
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -717,9 +717,9 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NotFoundError.from_dict(response.json()["error"])
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -742,9 +742,9 @@ class Client:
             data=put_setting.to_dict(),
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NotFoundError.from_dict(response.json()["error"])
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -766,7 +766,7 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -790,9 +790,9 @@ class Client:
             headers={"Accept-Language": accept_language},
         )
         match response.status_code:
-            case 404:
+            case codes.NOT_FOUND:
                 raise NotFoundError.from_dict(response.json()["error"])
-            case 409:
+            case codes.CONFLICT:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
@@ -894,15 +894,15 @@ class Client:
             if response.is_error:
                 await response.aread()
                 match event_source.response.status_code:
-                    case 401:
+                    case codes.UNAUTHORIZED:
                         raise UnauthorizedError.from_dict(response.json()["error"])
-                    case 403:
+                    case codes.FORBIDDEN:
                         raise ForbiddenError.from_dict(response.json()["error"])
-                    case 406:
+                    case codes.NOT_ACCEPTABLE:
                         raise NotAcceptableError.from_dict(response.json()["error"])
-                    case 429:
+                    case codes.TOO_MANY_REQUESTS:
                         raise TooManyRequestsError.from_dict(response.json()["error"])
-                    case 500:
+                    case codes.INTERNAL_SERVER_ERROR:
                         raise InternalServerError.from_dict(response.json()["error"])
                     case _:
                         _raise_generic_error(response)
@@ -971,15 +971,15 @@ class Client:
             if response.is_error:
                 await response.aread()
                 match event_source.response.status_code:
-                    case 401:
+                    case codes.UNAUTHORIZED:
                         raise UnauthorizedError.from_dict(response.json()["error"])
-                    case 403:
+                    case codes.FORBIDDEN:
                         raise ForbiddenError.from_dict(response.json()["error"])
-                    case 406:
+                    case codes.NOT_ACCEPTABLE:
                         raise NotAcceptableError.from_dict(response.json()["error"])
-                    case 429:
+                    case codes.TOO_MANY_REQUESTS:
                         raise TooManyRequestsError.from_dict(response.json()["error"])
-                    case 500:
+                    case codes.INTERNAL_SERVER_ERROR:
                         raise InternalServerError.from_dict(response.json()["error"])
                     case _:
                         _raise_generic_error(response)

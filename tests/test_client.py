@@ -2,7 +2,7 @@
 
 import json
 
-from httpx import AsyncClient
+from httpx import AsyncClient, codes
 import pytest
 from pytest_httpx import HTTPXMock, IteratorStream
 
@@ -234,12 +234,12 @@ async def test_stream_all_events(
 @pytest.mark.parametrize(
     ("status_code", "exception"),
     [
-        (401, UnauthorizedError),
-        (403, ForbiddenError),
-        (406, NotAcceptableError),
-        (418, HomeConnectError),
-        (429, TooManyRequestsError),
-        (500, InternalServerError),
+        (codes.UNAUTHORIZED, UnauthorizedError),
+        (codes.FORBIDDEN, ForbiddenError),
+        (codes.NOT_ACCEPTABLE, NotAcceptableError),
+        (codes.IM_A_TEAPOT, HomeConnectError),
+        (codes.TOO_MANY_REQUESTS, TooManyRequestsError),
+        (codes.INTERNAL_SERVER_ERROR, InternalServerError),
     ],
 )
 async def test_stream_all_events_http_error(
