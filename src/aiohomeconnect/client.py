@@ -11,6 +11,7 @@ from httpx import (
     AsyncClient,
     ReadTimeout,
     RemoteProtocolError,
+    RequestError,
     Response,
     Timeout,
     codes,
@@ -53,6 +54,7 @@ from .model.error import (
     EventStreamInterruptedError,
     ForbiddenError,
     HomeConnectError,
+    HomeConnectRequestError,
     InternalServerError,
     NoProgramActiveError,
     NoProgramSelectedError,
@@ -107,13 +109,16 @@ class AbstractAuth(ABC):
         The url parameter must start with a slash.
         """
         headers = await self._get_headers(kwargs.pop("headers", None))
+        try:
+            response = await self.client.request(
+                method,
+                f"{self.host}/api{url}",
+                **kwargs,
+                headers=headers,
+            )
+        except RequestError as e:
+            raise HomeConnectRequestError from e
 
-        response = await self.client.request(
-            method,
-            f"{self.host}/api{url}",
-            **kwargs,
-            headers=headers,
-        )
         match response.status_code:
             case codes.UNAUTHORIZED:
                 raise UnauthorizedError.from_dict(response.json()["error"])
@@ -153,6 +158,8 @@ class AbstractAuth(ABC):
                 yield event_source
         except (ReadTimeout, RemoteProtocolError) as e:
             raise EventStreamInterruptedError from e
+        except RequestError as e:
+            raise HomeConnectRequestError from e
 
 
 class Client:

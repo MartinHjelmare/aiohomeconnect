@@ -103,5 +103,9 @@ class Conflict(HomeConnectError):  # noqa: N818
     """Represent Conflict."""
 
 
+class HomeConnectRequestError(Exception):
+    """Represent the error cause when the event stream ends abruptly."""
+
+
 class EventStreamInterruptedError(Exception):
     """Represent the error cause when the event stream ends abruptly."""

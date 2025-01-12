@@ -2,7 +2,7 @@
 
 import json
 
-from httpx import AsyncClient, ReadTimeout, codes
+from httpx import AsyncClient, ReadTimeout, RequestError, codes
 import pytest
 from pytest_httpx import HTTPXMock, IteratorStream
 
@@ -12,6 +12,7 @@ from aiohomeconnect.model.error import (
     EventStreamInterruptedError,
     ForbiddenError,
     HomeConnectError,
+    HomeConnectRequestError,
     InternalServerError,
     NotAcceptableError,
     TooManyRequestsError,
@@ -199,6 +200,22 @@ async def test_abstract_auth_sse(
     assert request.url.query.decode(encoding="utf-8") == "key1=value1&key2=value2"
 
 
+async def test_request_error(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+) -> None:
+    """Test stream events from a specific home appliance http error."""
+    httpx_mock.add_exception(
+        exception=RequestError("some error"),
+        url="https://example.com/api/homeappliances",
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(HomeConnectRequestError):
+        await client.get_home_appliances()
+
+
 @pytest.mark.parametrize(
     ("event_data", "event_message"),
     STREAM_EVENT_CASES,
@@ -333,6 +350,7 @@ async def test_stream_events_http_error(
     ("exception", "expected_exception"),
     [
         (ReadTimeout, EventStreamInterruptedError),
+        (RequestError, HomeConnectRequestError),
     ],
 )
 async def test_stream_events_request_error(
