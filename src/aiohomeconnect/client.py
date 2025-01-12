@@ -44,6 +44,7 @@ from .model.error import (
     Conflict,
     ConflictError,
     ForbiddenError,
+    HomeConnectError,
     InternalServerError,
     NoProgramActiveError,
     NoProgramSelectedError,
@@ -57,6 +58,18 @@ from .model.error import (
     UnsupportedMediaTypeError,
     WrongOperationStateError,
 )
+
+
+def _raise_generic_error(response: Response) -> None:
+    """Raise a generic error if the response is an error."""
+    raise (
+        HomeConnectError.from_dict(error)
+        if (error := response.json().get("error"))
+        else HomeConnectError(
+            "unknown",
+            f"Unknown HTTP error (Status code: {response.status_code})",
+        )
+    )
 
 
 class AbstractAuth(ABC):
@@ -153,7 +166,8 @@ class Client:
             "/homeappliances",
             headers=None,
         )
-        response.raise_for_status()
+        if response.is_error:
+            _raise_generic_error(response)
         return ArrayOfHomeAppliances.from_dict(response.json()["data"])
 
     async def get_specific_appliance(
@@ -174,7 +188,8 @@ class Client:
             f"/homeappliances/{ha_id}",
             headers=None,
         )
-        response.raise_for_status()
+        if response.is_error:
+            _raise_generic_error(response)
         return HomeAppliance.from_dict(response.json()["data"])
 
     async def get_all_programs(
@@ -193,7 +208,7 @@ class Client:
             case 409:
                 raise Conflict.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return ArrayOfPrograms.from_dict(response.json()["data"])
 
     async def get_available_programs(
@@ -212,7 +227,7 @@ class Client:
             case 409:
                 raise WrongOperationStateError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return ArrayOfAvailablePrograms.from_dict(response.json()["data"])
 
     async def get_available_program(
@@ -232,7 +247,7 @@ class Client:
             case 409:
                 raise ProgramNotAvailableError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return ProgramDefinition.from_dict(response.json()["data"])
 
     async def get_active_program(
@@ -253,7 +268,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return Program.from_dict(response.json()["data"])
 
     async def start_program(
@@ -315,7 +330,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def stop_program(
         self,
@@ -333,7 +348,7 @@ class Client:
             case 409:
                 raise WrongOperationStateError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_active_program_options(
         self,
@@ -368,7 +383,7 @@ class Client:
             case 404:
                 raise NoProgramActiveError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return ArrayOfOptions.from_dict(response.json()["data"])
 
     async def set_active_program_options(
@@ -398,7 +413,7 @@ class Client:
             case 409:
                 raise ActiveProgramNotSetError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_active_program_option(
         self,
@@ -417,7 +432,7 @@ class Client:
             case 404:
                 raise NoProgramActiveError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return Option.from_dict(response.json()["data"])
 
     async def set_active_program_option(
@@ -457,7 +472,7 @@ class Client:
             case 409:
                 raise ActiveProgramNotSetError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_selected_program(
         self,
@@ -480,7 +495,7 @@ class Client:
             case 404:
                 raise NoProgramSelectedError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return Program.from_dict(response.json()["data"])
 
     async def set_selected_program(
@@ -520,7 +535,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_selected_program_options(
         self,
@@ -538,7 +553,7 @@ class Client:
             case 404:
                 raise NoProgramSelectedError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return ArrayOfOptions.from_dict(response.json()["data"])
 
     async def set_selected_program_options(
@@ -559,7 +574,7 @@ class Client:
             case 409:
                 raise SelectedProgramNotSetError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_selected_program_option(
         self,
@@ -578,7 +593,7 @@ class Client:
             case 404:
                 raise NoProgramSelectedError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return Option.from_dict(response.json()["data"])
 
     async def set_selected_program_option(
@@ -610,7 +625,7 @@ class Client:
             case 409:
                 raise SelectedProgramNotSetError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_images(
         self,
@@ -624,7 +639,8 @@ class Client:
             f"/homeappliances/{ha_id}/images",
             headers={"Accept-Language": accept_language},
         )
-        response.raise_for_status()
+        if response.is_error:
+            _raise_generic_error(response)
         return ArrayOfImages.from_dict(response.json()["data"])
 
     async def get_image(
@@ -643,7 +659,7 @@ class Client:
             case 404:
                 raise NotFoundError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_settings(
         self,
@@ -663,7 +679,8 @@ class Client:
             f"/homeappliances/{ha_id}/settings",
             headers={"Accept-Language": accept_language},
         )
-        response.raise_for_status()
+        if response.is_error:
+            _raise_generic_error(response)
         return ArrayOfSettings.from_dict(response.json()["data"])
 
     async def set_settings(
@@ -684,7 +701,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_setting(
         self,
@@ -705,7 +722,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return GetSetting.from_dict(response.json()["data"])
 
     async def set_setting(
@@ -730,7 +747,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
 
     async def get_status(
         self,
@@ -752,7 +769,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return ArrayOfStatus.from_dict(response.json()["data"])
 
     async def get_status_value(
@@ -778,7 +795,7 @@ class Client:
             case 409:
                 raise ConflictError.from_dict(response.json()["error"])
             case _:
-                response.raise_for_status()
+                _raise_generic_error(response)
         return Status.from_dict(response.json()["data"])
 
     async def get_available_commands(
@@ -803,12 +820,14 @@ class Client:
         accept_language: Language | None = None,
     ) -> None:
         """Execute multiple commands."""
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/commands",
             headers={"Accept-Language": accept_language},
             data=put_commands.to_dict(),
         )
+        if response.is_error:
+            _raise_generic_error(response)
 
     async def put_command(
         self,
@@ -820,12 +839,14 @@ class Client:
     ) -> None:
         """Execute a specific command."""
         put_command = PutCommand(key=command_key, value=value)
-        await self._auth.request(
+        response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/commands/{command_key}",
             headers={"Accept-Language": accept_language},
             data=put_command.to_dict(),
         )
+        if response.is_error:
+            _raise_generic_error(response)
 
     async def stream_all_events(
         self,
@@ -884,7 +905,7 @@ class Client:
                     case 500:
                         raise InternalServerError.from_dict(response.json()["error"])
                     case _:
-                        response.raise_for_status()
+                        _raise_generic_error(response)
 
             async for sse in event_source.aiter_sse():
                 if (
@@ -961,7 +982,7 @@ class Client:
                     case 500:
                         raise InternalServerError.from_dict(response.json()["error"])
                     case _:
-                        response.raise_for_status()
+                        _raise_generic_error(response)
 
             async for sse in event_source.aiter_sse():
                 if (

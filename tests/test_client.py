@@ -2,7 +2,6 @@
 
 import json
 
-import httpx
 from httpx import AsyncClient
 import pytest
 from pytest_httpx import HTTPXMock, IteratorStream
@@ -11,6 +10,7 @@ from aiohomeconnect.client import AbstractAuth, Client
 from aiohomeconnect.model import ArrayOfEvents, Event, EventKey, EventMessage, EventType
 from aiohomeconnect.model.error import (
     ForbiddenError,
+    HomeConnectError,
     InternalServerError,
     NotAcceptableError,
     TooManyRequestsError,
@@ -237,7 +237,7 @@ async def test_stream_all_events(
         (401, UnauthorizedError),
         (403, ForbiddenError),
         (406, NotAcceptableError),
-        (418, httpx.HTTPStatusError),
+        (418, HomeConnectError),
         (429, TooManyRequestsError),
         (500, InternalServerError),
     ],
@@ -302,7 +302,7 @@ async def test_stream_events(
         (401, UnauthorizedError),
         (403, ForbiddenError),
         (406, NotAcceptableError),
-        (418, httpx.HTTPStatusError),
+        (418, HomeConnectError),
         (429, TooManyRequestsError),
         (500, InternalServerError),
     ],
