@@ -32,7 +32,8 @@ async def test_options_settings_status_references_at_events() -> None:
         )
     for event_key in EventKey.__members__.values():
         if ".Option." in event_key.value and event_key not in (
-            # Exceptions
+            # Exceptions: These keys are not in the API documentation
+            # as program options although they have "Option" in the key
             EventKey.BSH_COMMON_OPTION_ELAPSED_PROGRAM_TIME,
             EventKey.BSH_COMMON_OPTION_ESTIMATED_TOTAL_PROGRAM_TIME,
             EventKey.BSH_COMMON_OPTION_PROGRAM_PROGRESS,
