@@ -8,6 +8,11 @@ import typer
 import uvicorn
 
 from aiohomeconnect.model import StatusKey
+from aiohomeconnect.model.error import (
+    EventStreamInterruptedError,
+    HomeConnectApiError,
+    HomeConnectRequestError,
+)
 
 from .client import CLIClient, TokenManager
 
@@ -75,8 +80,13 @@ async def _get_appliances(
     client_secret: str,
 ) -> None:
     """Get the appliances."""
-    client = CLIClient(client_id, client_secret)
-    rich_print(await client.get_home_appliances())
+    try:
+        client = CLIClient(client_id, client_secret)
+        rich_print(await client.get_home_appliances())
+    except HomeConnectApiError as e:
+        rich_print(f"{type(e).__name__}: {e}")
+    except HomeConnectRequestError as e:
+        rich_print(e)
 
 
 @cli.command()
@@ -87,12 +97,17 @@ def get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
 
 async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
     """Get the operation state of the device."""
-    client = CLIClient(client_id, client_secret)
-    rich_print(
-        await client.get_status_value(
-            ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
+    try:
+        client = CLIClient(client_id, client_secret)
+        rich_print(
+            await client.get_status_value(
+                ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
+            )
         )
-    )
+    except HomeConnectApiError as e:
+        rich_print(f"{type(e).__name__}: {e}")
+    except HomeConnectRequestError as e:
+        rich_print(e)
 
 
 @cli.command()
@@ -104,8 +119,18 @@ def subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
 async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
     """Subscribe and print events from all the appliances."""
     client = CLIClient(client_id, client_secret)
-    async for event in client.stream_all_events():
-        rich_print(event)
+    while True:
+        try:
+            async for event in client.stream_all_events():
+                rich_print(event)
+        except EventStreamInterruptedError as e:
+            rich_print(f"{e} continuing...")
+        except HomeConnectApiError as e:
+            rich_print(f"{type(e).__name__}: {e}")
+            break
+        except HomeConnectRequestError as e:
+            rich_print(e)
+            break
 
 
 @cli.command()
@@ -119,8 +144,18 @@ async def _subscribe_appliance_events(
 ) -> None:
     """Subscribe and print events from one appliance."""
     client = CLIClient(client_id, client_secret)
-    async for event in client.stream_events(ha_id):
-        rich_print(event)
+    while True:
+        try:
+            async for event in client.stream_events(ha_id):
+                rich_print(event)
+        except EventStreamInterruptedError as e:
+            rich_print(f"{e}, continuing...")
+        except HomeConnectApiError as e:
+            rich_print(f"{type(e).__name__}: {e}")
+            break
+        except HomeConnectRequestError as e:
+            rich_print(e)
+            break
 
 
 if __name__ == "__main__":

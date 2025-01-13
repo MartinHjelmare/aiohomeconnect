@@ -8,128 +8,109 @@ from mashumaro.mixins.json import DataClassJSONMixin
 
 
 @dataclass
-class UnauthorizedError(DataClassJSONMixin):
+class HomeConnectError(Exception):
+    """Base class for Home Connect exceptions."""
+
+
+@dataclass
+class HomeConnectApiError(HomeConnectError, DataClassJSONMixin):
+    """Base class for Home Connect API exceptions."""
+
+    key: str
+    description: str | None = None
+
+    def __str__(self) -> str:
+        """Return the string representation of the error."""
+        return f"{self.description} ({self.key})"
+
+    def __repr__(self) -> str:
+        """Return the representation of the error."""
+        return f"{self.description} ({self.key})"
+
+
+@dataclass
+class UnauthorizedError(HomeConnectApiError):
     """Represent UnauthorizedError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ForbiddenError(DataClassJSONMixin):
+class ForbiddenError(HomeConnectApiError):
     """Represent ForbiddenError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NotFoundError(DataClassJSONMixin):
+class NotFoundError(HomeConnectApiError):
     """Represent NotFoundError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NoProgramSelectedError(DataClassJSONMixin):
+class NoProgramSelectedError(HomeConnectApiError):
     """Represent NoProgramSelectedError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NoProgramActiveError(DataClassJSONMixin):
+class NoProgramActiveError(HomeConnectApiError):
     """Represent NoProgramActiveError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class NotAcceptableError(DataClassJSONMixin):
+class NotAcceptableError(HomeConnectApiError):
     """Represent NotAcceptableError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class RequestTimeoutError(DataClassJSONMixin):
+class RequestTimeoutError(HomeConnectApiError):
     """Represent RequestTimeoutError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ConflictError(DataClassJSONMixin):
+class ConflictError(HomeConnectApiError):
     """Represent ConflictError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class SelectedProgramNotSetError(DataClassJSONMixin):
+class SelectedProgramNotSetError(HomeConnectApiError):
     """Represent SelectedProgramNotSetError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ActiveProgramNotSetError(DataClassJSONMixin):
+class ActiveProgramNotSetError(HomeConnectApiError):
     """Represent ActiveProgramNotSetError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class WrongOperationStateError(DataClassJSONMixin):
+class WrongOperationStateError(HomeConnectApiError):
     """Represent WrongOperationStateError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class ProgramNotAvailableError(DataClassJSONMixin):
+class ProgramNotAvailableError(HomeConnectApiError):
     """Represent ProgramNotAvailableError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class UnsupportedMediaTypeError(DataClassJSONMixin):
+class UnsupportedMediaTypeError(HomeConnectApiError):
     """Represent UnsupportedMediaTypeError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class TooManyRequestsError(DataClassJSONMixin):
+class TooManyRequestsError(HomeConnectApiError):
     """Represent TooManyRequestsError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class InternalServerError(DataClassJSONMixin):
+class InternalServerError(HomeConnectApiError):
     """Represent InternalServerError."""
 
-    key: str
-    description: str | None = None
-
 
 @dataclass
-class Conflict(DataClassJSONMixin):
+class Conflict(HomeConnectApiError):  # noqa: N818
     """Represent Conflict."""
 
-    key: str
-    description: str | None = None
+
+class HomeConnectRequestError(HomeConnectError):
+    """Represent the error cause when the event stream ends abruptly."""
+
+
+class EventStreamInterruptedError(HomeConnectError):
+    """Represent the error cause when the event stream ends abruptly."""
