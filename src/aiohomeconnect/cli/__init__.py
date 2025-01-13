@@ -10,7 +10,7 @@ import uvicorn
 from aiohomeconnect.model import StatusKey
 from aiohomeconnect.model.error import (
     EventStreamInterruptedError,
-    HomeConnectError,
+    HomeConnectApiError,
     HomeConnectRequestError,
 )
 
@@ -83,7 +83,7 @@ async def _get_appliances(
     try:
         client = CLIClient(client_id, client_secret)
         rich_print(await client.get_home_appliances())
-    except HomeConnectError as e:
+    except HomeConnectApiError as e:
         rich_print(f"{type(e).__name__}: {e}")
     except HomeConnectRequestError as e:
         rich_print(e)
@@ -104,7 +104,7 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
                 ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
             )
         )
-    except HomeConnectError as e:
+    except HomeConnectApiError as e:
         rich_print(f"{type(e).__name__}: {e}")
     except HomeConnectRequestError as e:
         rich_print(e)
@@ -125,7 +125,7 @@ async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -
                 rich_print(event)
         except EventStreamInterruptedError as e:
             rich_print(f"{e} continuing...")
-        except HomeConnectError as e:
+        except HomeConnectApiError as e:
             rich_print(f"{type(e).__name__}: {e}")
             break
         except HomeConnectRequestError as e:
@@ -150,7 +150,7 @@ async def _subscribe_appliance_events(
                 rich_print(event)
         except EventStreamInterruptedError as e:
             rich_print(f"{e}, continuing...")
-        except HomeConnectError as e:
+        except HomeConnectApiError as e:
             rich_print(f"{type(e).__name__}: {e}")
             break
         except HomeConnectRequestError as e:

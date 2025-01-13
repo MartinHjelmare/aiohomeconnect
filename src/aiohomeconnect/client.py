@@ -53,7 +53,7 @@ from .model.error import (
     ConflictError,
     EventStreamInterruptedError,
     ForbiddenError,
-    HomeConnectError,
+    HomeConnectApiError,
     HomeConnectRequestError,
     InternalServerError,
     NoProgramActiveError,
@@ -73,9 +73,9 @@ from .model.error import (
 def _raise_generic_error(response: Response) -> None:
     """Raise a generic error if the response is an error."""
     raise (
-        HomeConnectError.from_dict(error)
+        HomeConnectApiError.from_dict(error)
         if (error := response.json().get("error"))
-        else HomeConnectError(
+        else HomeConnectApiError(
             "unknown",
             f"Unknown HTTP error (Status code: {response.status_code})",
         )

@@ -8,8 +8,13 @@ from mashumaro.mixins.json import DataClassJSONMixin
 
 
 @dataclass
-class HomeConnectError(Exception, DataClassJSONMixin):
-    """Represent UnauthorizedError."""
+class HomeConnectError(Exception):
+    """Base class for Home Connect exceptions."""
+
+
+@dataclass
+class HomeConnectApiError(HomeConnectError, DataClassJSONMixin):
+    """Base class for Home Connect API exceptions."""
 
     key: str
     description: str | None = None
@@ -24,88 +29,88 @@ class HomeConnectError(Exception, DataClassJSONMixin):
 
 
 @dataclass
-class UnauthorizedError(HomeConnectError):
+class UnauthorizedError(HomeConnectApiError):
     """Represent UnauthorizedError."""
 
 
 @dataclass
-class ForbiddenError(HomeConnectError):
+class ForbiddenError(HomeConnectApiError):
     """Represent ForbiddenError."""
 
 
 @dataclass
-class NotFoundError(HomeConnectError):
+class NotFoundError(HomeConnectApiError):
     """Represent NotFoundError."""
 
 
 @dataclass
-class NoProgramSelectedError(HomeConnectError):
+class NoProgramSelectedError(HomeConnectApiError):
     """Represent NoProgramSelectedError."""
 
 
 @dataclass
-class NoProgramActiveError(HomeConnectError):
+class NoProgramActiveError(HomeConnectApiError):
     """Represent NoProgramActiveError."""
 
 
 @dataclass
-class NotAcceptableError(HomeConnectError):
+class NotAcceptableError(HomeConnectApiError):
     """Represent NotAcceptableError."""
 
 
 @dataclass
-class RequestTimeoutError(HomeConnectError):
+class RequestTimeoutError(HomeConnectApiError):
     """Represent RequestTimeoutError."""
 
 
 @dataclass
-class ConflictError(HomeConnectError):
+class ConflictError(HomeConnectApiError):
     """Represent ConflictError."""
 
 
 @dataclass
-class SelectedProgramNotSetError(HomeConnectError):
+class SelectedProgramNotSetError(HomeConnectApiError):
     """Represent SelectedProgramNotSetError."""
 
 
 @dataclass
-class ActiveProgramNotSetError(HomeConnectError):
+class ActiveProgramNotSetError(HomeConnectApiError):
     """Represent ActiveProgramNotSetError."""
 
 
 @dataclass
-class WrongOperationStateError(HomeConnectError):
+class WrongOperationStateError(HomeConnectApiError):
     """Represent WrongOperationStateError."""
 
 
 @dataclass
-class ProgramNotAvailableError(HomeConnectError):
+class ProgramNotAvailableError(HomeConnectApiError):
     """Represent ProgramNotAvailableError."""
 
 
 @dataclass
-class UnsupportedMediaTypeError(HomeConnectError):
+class UnsupportedMediaTypeError(HomeConnectApiError):
     """Represent UnsupportedMediaTypeError."""
 
 
 @dataclass
-class TooManyRequestsError(HomeConnectError):
+class TooManyRequestsError(HomeConnectApiError):
     """Represent TooManyRequestsError."""
 
 
 @dataclass
-class InternalServerError(HomeConnectError):
+class InternalServerError(HomeConnectApiError):
     """Represent InternalServerError."""
 
 
 @dataclass
-class Conflict(HomeConnectError):  # noqa: N818
+class Conflict(HomeConnectApiError):  # noqa: N818
     """Represent Conflict."""
 
 
-class HomeConnectRequestError(Exception):
+class HomeConnectRequestError(HomeConnectError):
     """Represent the error cause when the event stream ends abruptly."""
 
 
-class EventStreamInterruptedError(Exception):
+class EventStreamInterruptedError(HomeConnectError):
     """Represent the error cause when the event stream ends abruptly."""
