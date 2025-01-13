@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.10.0 (2025-01-13)
+
+### Features
+
+* Raise exceptions on http errors (#44) ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+
+### Chores
+
+* Update python-semantic-release/python-semantic-release action to v9.16.1 ([`6848225`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6848225337fd05d215e1d1dbcf7a900b65da7bbc))
+* Update dependency python-semantic-release to v9.16.1 ([`ab274a6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/ab274a639521e4907ab1b808f6093cfc6df1bdd5))
+* Update python-semantic-release/python-semantic-release action to v9.16.0 ([`a5245d0`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a5245d02202f2c5e4ffb9971619faeab30683146))
+* Update dependency python-semantic-release to v9.16.0 ([`d005128`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d005128e6a4fca7533a269179ec63aff179ae15e))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.9.1 ([`39bcea1`](https://github.com/MartinHjelmare/aiohomeconnect/commit/39bcea1c9c9918bf982d8e20e1d05470d42fef12))
+* Update dependency ruff to v0.9.1 ([`87d73d9`](https://github.com/MartinHjelmare/aiohomeconnect/commit/87d73d9b4bc91837f3e4e4bdbac594deda6cf4dd))
+
 ## v0.9.0 (2025-01-10)
 
 ### Features
