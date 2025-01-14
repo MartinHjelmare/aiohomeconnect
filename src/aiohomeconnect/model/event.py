@@ -10,6 +10,10 @@ from httpx_sse import ServerSentEvent
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
+from aiohomeconnect.model.program import OptionKey
+from aiohomeconnect.model.setting import SettingKey
+from aiohomeconnect.model.status import StatusKey
+
 
 @dataclass
 class ArrayOfEvents(DataClassJSONMixin):
@@ -80,44 +84,48 @@ class EventKey(StrEnum):
     BSH_COMMON_EVENT_ALARM_CLOCK_ELAPSED = "BSH.Common.Event.AlarmClockElapsed"
     BSH_COMMON_EVENT_PROGRAM_ABORTED = "BSH.Common.Event.ProgramAborted"
     BSH_COMMON_EVENT_PROGRAM_FINISHED = "BSH.Common.Event.ProgramFinished"
-    BSH_COMMON_OPTION_DURATION = "BSH.Common.Option.Duration"
+    BSH_COMMON_OPTION_DURATION = OptionKey.BSH_COMMON_DURATION
     BSH_COMMON_OPTION_ELAPSED_PROGRAM_TIME = "BSH.Common.Option.ElapsedProgramTime"
     BSH_COMMON_OPTION_ESTIMATED_TOTAL_PROGRAM_TIME = (
         "BSH.Common.Option.EstimatedTotalProgramTime"
     )
-    BSH_COMMON_OPTION_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
+    BSH_COMMON_OPTION_FINISH_IN_RELATIVE = OptionKey.BSH_COMMON_FINISH_IN_RELATIVE
     BSH_COMMON_OPTION_PROGRAM_PROGRESS = "BSH.Common.Option.ProgramProgress"
     BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME = "BSH.Common.Option.RemainingProgramTime"
     BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME_IS_ESTIMATED = (
         "BSH.Common.Option.RemainingProgramTimeIsEstimated"
     )
-    BSH_COMMON_OPTION_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
+    BSH_COMMON_OPTION_START_IN_RELATIVE = OptionKey.BSH_COMMON_START_IN_RELATIVE
     BSH_COMMON_ROOT_ACTIVE_PROGRAM = "BSH.Common.Root.ActiveProgram"
     BSH_COMMON_ROOT_SELECTED_PROGRAM = "BSH.Common.Root.SelectedProgram"
-    BSH_COMMON_SETTING_ALARM_CLOCK = "BSH.Common.Setting.AlarmClock"
+    BSH_COMMON_SETTING_ALARM_CLOCK = SettingKey.BSH_COMMON_ALARM_CLOCK
     BSH_COMMON_SETTING_AMBIENT_LIGHT_BRIGHTNESS = (
-        "BSH.Common.Setting.AmbientLightBrightness"
+        SettingKey.BSH_COMMON_AMBIENT_LIGHT_BRIGHTNESS
     )
-    BSH_COMMON_SETTING_AMBIENT_LIGHT_COLOR = "BSH.Common.Setting.AmbientLightColor"
+    BSH_COMMON_SETTING_AMBIENT_LIGHT_COLOR = SettingKey.BSH_COMMON_AMBIENT_LIGHT_COLOR
     BSH_COMMON_SETTING_AMBIENT_LIGHT_CUSTOM_COLOR = (
-        "BSH.Common.Setting.AmbientLightCustomColor"
+        SettingKey.BSH_COMMON_AMBIENT_LIGHT_CUSTOM_COLOR
     )
-    BSH_COMMON_SETTING_AMBIENT_LIGHT_ENABLED = "BSH.Common.Setting.AmbientLightEnabled"
-    BSH_COMMON_SETTING_CHILD_LOCK = "BSH.Common.Setting.ChildLock"
-    BSH_COMMON_SETTING_LIQUID_VOLUME_UNIT = "BSH.Common.Setting.LiquidVolumeUnit"
-    BSH_COMMON_SETTING_POWER_STATE = "BSH.Common.Setting.PowerState"
-    BSH_COMMON_SETTING_TEMPERATURE_UNIT = "BSH.Common.Setting.TemperatureUnit"
-    BSH_COMMON_STATUS_BATTERY_CHARGING_STATE = "BSH.Common.Status.BatteryChargingState"
-    BSH_COMMON_STATUS_BATTERY_LEVEL = "BSH.Common.Status.BatteryLevel"
-    BSH_COMMON_STATUS_CHARGING_CONNECTION = "BSH.Common.Status.ChargingConnection"
-    BSH_COMMON_STATUS_DOOR_STATE = "BSH.Common.Status.DoorState"
-    BSH_COMMON_STATUS_LOCAL_CONTROL_ACTIVE = "BSH.Common.Status.LocalControlActive"
-    BSH_COMMON_STATUS_OPERATION_STATE = "BSH.Common.Status.OperationState"
-    BSH_COMMON_STATUS_REMOTE_CONTROL_ACTIVE = "BSH.Common.Status.RemoteControlActive"
+    BSH_COMMON_SETTING_AMBIENT_LIGHT_ENABLED = (
+        SettingKey.BSH_COMMON_AMBIENT_LIGHT_ENABLED
+    )
+    BSH_COMMON_SETTING_CHILD_LOCK = SettingKey.BSH_COMMON_CHILD_LOCK
+    BSH_COMMON_SETTING_LIQUID_VOLUME_UNIT = SettingKey.BSH_COMMON_LIQUID_VOLUME_UNIT
+    BSH_COMMON_SETTING_POWER_STATE = SettingKey.BSH_COMMON_POWER_STATE
+    BSH_COMMON_SETTING_TEMPERATURE_UNIT = SettingKey.BSH_COMMON_TEMPERATURE_UNIT
+    BSH_COMMON_STATUS_BATTERY_CHARGING_STATE = (
+        StatusKey.BSH_COMMON_BATTERY_CHARGING_STATE
+    )
+    BSH_COMMON_STATUS_BATTERY_LEVEL = StatusKey.BSH_COMMON_BATTERY_LEVEL
+    BSH_COMMON_STATUS_CHARGING_CONNECTION = StatusKey.BSH_COMMON_CHARGING_CONNECTION
+    BSH_COMMON_STATUS_DOOR_STATE = StatusKey.BSH_COMMON_DOOR_STATE
+    BSH_COMMON_STATUS_LOCAL_CONTROL_ACTIVE = StatusKey.BSH_COMMON_LOCAL_CONTROL_ACTIVE
+    BSH_COMMON_STATUS_OPERATION_STATE = StatusKey.BSH_COMMON_OPERATION_STATE
+    BSH_COMMON_STATUS_REMOTE_CONTROL_ACTIVE = StatusKey.BSH_COMMON_REMOTE_CONTROL_ACTIVE
     BSH_COMMON_STATUS_REMOTE_CONTROL_START_ALLOWED = (
-        "BSH.Common.Status.RemoteControlStartAllowed"
+        StatusKey.BSH_COMMON_REMOTE_CONTROL_START_ALLOWED
     )
-    BSH_COMMON_STATUS_VIDEO_CAMERA_STATE = "BSH.Common.Status.Video.CameraState"
+    BSH_COMMON_STATUS_VIDEO_CAMERA_STATE = StatusKey.BSH_COMMON_VIDEO_CAMERA_STATE
     CONSUMER_PRODUCTS_CLEANING_ROBOT_EVENT_DOCKING_STATION_NOT_FOUND = (
         "ConsumerProducts.CleaningRobot.Event.DockingStationNotFound"
     )
@@ -128,43 +136,43 @@ class EventKey(StrEnum):
         "ConsumerProducts.CleaningRobot.Event.RobotIsStuck"
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_OPTION_CLEANING_MODE = (
-        "ConsumerProducts.CleaningRobot.Option.CleaningMode"
+        OptionKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_OPTION_PROCESS_PHASE = (
         "ConsumerProducts.CleaningRobot.Option.ProcessPhase"
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_OPTION_REFERENCE_MAP_ID = (
-        "ConsumerProducts.CleaningRobot.Option.ReferenceMapId"
+        OptionKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_REFERENCE_MAP_ID
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_SETTING_CURRENT_MAP = (
-        "ConsumerProducts.CleaningRobot.Setting.CurrentMap"
+        SettingKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_CURRENT_MAP
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_SETTING_NAME_OF_MAP_1 = (
-        "ConsumerProducts.CleaningRobot.Setting.NameOfMap1"
+        SettingKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_1
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_SETTING_NAME_OF_MAP_2 = (
-        "ConsumerProducts.CleaningRobot.Setting.NameOfMap2"
+        SettingKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_2
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_SETTING_NAME_OF_MAP_3 = (
-        "ConsumerProducts.CleaningRobot.Setting.NameOfMap3"
+        SettingKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_3
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_SETTING_NAME_OF_MAP_4 = (
-        "ConsumerProducts.CleaningRobot.Setting.NameOfMap4"
+        SettingKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_4
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_SETTING_NAME_OF_MAP_5 = (
-        "ConsumerProducts.CleaningRobot.Setting.NameOfMap5"
+        SettingKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_NAME_OF_MAP_5
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_STATUS_DUST_BOX_INSERTED = (
-        "ConsumerProducts.CleaningRobot.Status.DustBoxInserted"
+        StatusKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_DUST_BOX_INSERTED
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_STATUS_LAST_SELECTED_MAP = (
-        "ConsumerProducts.CleaningRobot.Status.LastSelectedMap"
+        StatusKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_LAST_SELECTED_MAP
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_STATUS_LIFTED = (
-        "ConsumerProducts.CleaningRobot.Status.Lifted"
+        StatusKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_LIFTED
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_STATUS_LOST = (
-        "ConsumerProducts.CleaningRobot.Status.Lost"
+        StatusKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_LOST
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_BEAN_CONTAINER_EMPTY = (
         "ConsumerProducts.CoffeeMaker.Event.BeanContainerEmpty"
@@ -227,58 +235,58 @@ class EventKey(StrEnum):
         "ConsumerProducts.CoffeeMaker.Event.WaterTankEmpty"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_BEAN_AMOUNT = (
-        "ConsumerProducts.CoffeeMaker.Option.BeanAmount"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEAN_AMOUNT
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_BEAN_CONTAINER_SELECTION = (
-        "ConsumerProducts.CoffeeMaker.Option.BeanContainerSelection"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEAN_CONTAINER_SELECTION
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_COFFEE_MILK_RATIO = (
-        "ConsumerProducts.CoffeeMaker.Option.CoffeeMilkRatio"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_MILK_RATIO
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_COFFEE_TEMPERATURE = (
-        "ConsumerProducts.CoffeeMaker.Option.CoffeeTemperature"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_TEMPERATURE
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_FILL_QUANTITY = (
-        "ConsumerProducts.CoffeeMaker.Option.FillQuantity"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_FILL_QUANTITY
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_FLOW_RATE = (
-        "ConsumerProducts.CoffeeMaker.Option.FlowRate"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_FLOW_RATE
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_HOT_WATER_TEMPERATURE = (
-        "ConsumerProducts.CoffeeMaker.Option.HotWaterTemperature"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_HOT_WATER_TEMPERATURE
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_OPTION_MULTIPLE_BEVERAGES = (
-        "ConsumerProducts.CoffeeMaker.Option.MultipleBeverages"
+        OptionKey.CONSUMER_PRODUCTS_COFFEE_MAKER_MULTIPLE_BEVERAGES
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_SETTING_CUP_WARMER = (
-        "ConsumerProducts.CoffeeMaker.Setting.CupWarmer"
+        SettingKey.CONSUMER_PRODUCTS_COFFEE_MAKER_CUP_WARMER
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_COFFEE = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffee"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_COFFEE_AND_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffeeAndMilk"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE_AND_MILK
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_FROTHY_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterFrothyMilk"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_FROTHY_MILK
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_HOT_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotMilk"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_MILK
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_HOT_WATER = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWater"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_HOT_WATER_CUPS = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWaterCups"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER_CUPS
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterMilk"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_MILK
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_POWDER_COFFEE = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterPowderCoffee"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_POWDER_COFFEE
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_STATUS_BEVERAGE_COUNTER_RISTRETTO_ESPRESSO = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterRistrettoEspresso"
+        StatusKey.CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_RISTRETTO_ESPRESSO
     )
     COOKING_COMMON_EVENT_HOOD_GREASE_FILTER_MAX_SATURATION_NEARLY_REACHED = (
         "Cooking.Common.Event.Hood.GreaseFilterMaxSaturationNearlyReached"
@@ -287,25 +295,29 @@ class EventKey(StrEnum):
         "Cooking.Common.Event.Hood.GreaseFilterMaxSaturationReached"
     )
     COOKING_COMMON_OPTION_HOOD_INTENSIVE_LEVEL = (
-        "Cooking.Common.Option.Hood.IntensiveLevel"
+        OptionKey.COOKING_COMMON_HOOD_INTENSIVE_LEVEL
     )
-    COOKING_COMMON_OPTION_HOOD_VENTING_LEVEL = "Cooking.Common.Option.Hood.VentingLevel"
-    COOKING_COMMON_SETTING_LIGHTING = "Cooking.Common.Setting.Lighting"
+    COOKING_COMMON_OPTION_HOOD_VENTING_LEVEL = (
+        OptionKey.COOKING_COMMON_HOOD_VENTING_LEVEL
+    )
+    COOKING_COMMON_SETTING_LIGHTING = SettingKey.COOKING_COMMON_LIGHTING
     COOKING_COMMON_SETTING_LIGHTING_BRIGHTNESS = (
-        "Cooking.Common.Setting.LightingBrightness"
+        SettingKey.COOKING_COMMON_LIGHTING_BRIGHTNESS
     )
-    COOKING_HOOD_SETTING_COLOR_TEMPERATURE = "Cooking.Hood.Setting.ColorTemperature"
+    COOKING_HOOD_SETTING_COLOR_TEMPERATURE = SettingKey.COOKING_HOOD_COLOR_TEMPERATURE
     COOKING_HOOD_SETTING_COLOR_TEMPERATURE_PERCENT = (
-        "Cooking.Hood.Setting.ColorTemperaturePercent"
+        SettingKey.COOKING_HOOD_COLOR_TEMPERATURE_PERCENT
     )
     COOKING_OVEN_EVENT_PREHEAT_FINISHED = "Cooking.Oven.Event.PreheatFinished"
     COOKING_OVEN_EVENT_REGULAR_PREHEAT_FINISHED = (
         "Cooking.Oven.Event.RegularPreheatFinished"
     )
-    COOKING_OVEN_OPTION_FAST_PRE_HEAT = "Cooking.Oven.Option.FastPreHeat"
-    COOKING_OVEN_OPTION_SETPOINT_TEMPERATURE = "Cooking.Oven.Option.SetpointTemperature"
-    COOKING_OVEN_OPTION_WARMING_LEVEL = "Cooking.Oven.Option.WarmingLevel"
-    COOKING_OVEN_SETTING_SABBATH_MODE = "Cooking.Oven.Setting.SabbathMode"
+    COOKING_OVEN_OPTION_FAST_PRE_HEAT = OptionKey.COOKING_OVEN_FAST_PRE_HEAT
+    COOKING_OVEN_OPTION_SETPOINT_TEMPERATURE = (
+        OptionKey.COOKING_OVEN_SETPOINT_TEMPERATURE
+    )
+    COOKING_OVEN_OPTION_WARMING_LEVEL = OptionKey.COOKING_OVEN_WARMING_LEVEL
+    COOKING_OVEN_SETTING_SABBATH_MODE = SettingKey.COOKING_OVEN_SABBATH_MODE
     DISHCARE_DISHWASHER_EVENT_RINSE_AID_NEARLY_EMPTY = (
         "Dishcare.Dishwasher.Event.RinseAidNearlyEmpty"
     )
@@ -313,141 +325,149 @@ class EventKey(StrEnum):
         "Dishcare.Dishwasher.Event.SaltNearlyEmpty"
     )
     DISHCARE_DISHWASHER_OPTION_BRILLIANCE_DRY = (
-        "Dishcare.Dishwasher.Option.BrillianceDry"
+        OptionKey.DISHCARE_DISHWASHER_BRILLIANCE_DRY
     )
-    DISHCARE_DISHWASHER_OPTION_ECO_DRY = "Dishcare.Dishwasher.Option.EcoDry"
-    DISHCARE_DISHWASHER_OPTION_EXTRA_DRY = "Dishcare.Dishwasher.Option.ExtraDry"
-    DISHCARE_DISHWASHER_OPTION_HALF_LOAD = "Dishcare.Dishwasher.Option.HalfLoad"
-    DISHCARE_DISHWASHER_OPTION_HYGIENE_PLUS = "Dishcare.Dishwasher.Option.HygienePlus"
-    DISHCARE_DISHWASHER_OPTION_INTENSIV_ZONE = "Dishcare.Dishwasher.Option.IntensivZone"
+    DISHCARE_DISHWASHER_OPTION_ECO_DRY = OptionKey.DISHCARE_DISHWASHER_ECO_DRY
+    DISHCARE_DISHWASHER_OPTION_EXTRA_DRY = OptionKey.DISHCARE_DISHWASHER_EXTRA_DRY
+    DISHCARE_DISHWASHER_OPTION_HALF_LOAD = OptionKey.DISHCARE_DISHWASHER_HALF_LOAD
+    DISHCARE_DISHWASHER_OPTION_HYGIENE_PLUS = OptionKey.DISHCARE_DISHWASHER_HYGIENE_PLUS
+    DISHCARE_DISHWASHER_OPTION_INTENSIV_ZONE = (
+        OptionKey.DISHCARE_DISHWASHER_INTENSIV_ZONE
+    )
     DISHCARE_DISHWASHER_OPTION_SILENCE_ON_DEMAND = (
-        "Dishcare.Dishwasher.Option.SilenceOnDemand"
+        OptionKey.DISHCARE_DISHWASHER_SILENCE_ON_DEMAND
     )
     DISHCARE_DISHWASHER_OPTION_VARIO_SPEED_PLUS = (
-        "Dishcare.Dishwasher.Option.VarioSpeedPlus"
+        OptionKey.DISHCARE_DISHWASHER_VARIO_SPEED_PLUS
     )
-    DISHCARE_DISHWASHER_OPTION_ZEOLITE_DRY = "Dishcare.Dishwasher.Option.ZeoliteDry"
-    LAUNDRY_CARE_COMMON_OPTION_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
+    DISHCARE_DISHWASHER_OPTION_ZEOLITE_DRY = OptionKey.DISHCARE_DISHWASHER_ZEOLITE_DRY
+    LAUNDRY_CARE_COMMON_OPTION_VARIO_PERFECT = (
+        OptionKey.LAUNDRY_CARE_COMMON_VARIO_PERFECT
+    )
     LAUNDRY_CARE_DRYER_EVENT_DRYING_PROCESS_FINISHED = (
         "LaundryCare.Dryer.Event.DryingProcessFinished"
     )
-    LAUNDRY_CARE_DRYER_OPTION_DRYING_TARGET = "LaundryCare.Dryer.Option.DryingTarget"
+    LAUNDRY_CARE_DRYER_OPTION_DRYING_TARGET = OptionKey.LAUNDRY_CARE_DRYER_DRYING_TARGET
     LAUNDRY_CARE_WASHER_EVENT_I_DOS_1_FILL_LEVEL_POOR = (
         "LaundryCare.Washer.Event.IDos1FillLevelPoor"
     )
     LAUNDRY_CARE_WASHER_EVENT_I_DOS_2_FILL_LEVEL_POOR = (
         "LaundryCare.Washer.Event.IDos2FillLevelPoor"
     )
-    LAUNDRY_CARE_WASHER_OPTION_I_DOS_1_ACTIVE = "LaundryCare.Washer.Option.IDos1Active"
-    LAUNDRY_CARE_WASHER_OPTION_I_DOS_2_ACTIVE = "LaundryCare.Washer.Option.IDos2Active"
-    LAUNDRY_CARE_WASHER_OPTION_SPIN_SPEED = "LaundryCare.Washer.Option.SpinSpeed"
-    LAUNDRY_CARE_WASHER_OPTION_TEMPERATURE = "LaundryCare.Washer.Option.Temperature"
+    LAUNDRY_CARE_WASHER_OPTION_I_DOS_1_ACTIVE = (
+        OptionKey.LAUNDRY_CARE_WASHER_I_DOS_1_ACTIVE
+    )
+    LAUNDRY_CARE_WASHER_OPTION_I_DOS_2_ACTIVE = (
+        OptionKey.LAUNDRY_CARE_WASHER_I_DOS_2_ACTIVE
+    )
+    LAUNDRY_CARE_WASHER_OPTION_SPIN_SPEED = OptionKey.LAUNDRY_CARE_WASHER_SPIN_SPEED
+    LAUNDRY_CARE_WASHER_OPTION_TEMPERATURE = OptionKey.LAUNDRY_CARE_WASHER_TEMPERATURE
     LAUNDRY_CARE_WASHER_SETTING_I_DOS_1_BASE_LEVEL = (
-        "LaundryCare.Washer.Setting.IDos1BaseLevel"
+        SettingKey.LAUNDRY_CARE_WASHER_I_DOS_1_BASE_LEVEL
     )
     LAUNDRY_CARE_WASHER_SETTING_I_DOS_2_BASE_LEVEL = (
-        "LaundryCare.Washer.Setting.IDos2BaseLevel"
+        SettingKey.LAUNDRY_CARE_WASHER_I_DOS_2_BASE_LEVEL
     )
     REFRIGERATION_COMMON_SETTING_BOTTLE_COOLER_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.BottleCooler.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_BOTTLE_COOLER_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_SETTING_CHILLER_COMMON_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.ChillerCommon.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_CHILLER_COMMON_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_SETTING_CHILLER_LEFT_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.ChillerLeft.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_CHILLER_LEFT_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_SETTING_CHILLER_RIGHT_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.ChillerRight.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_CHILLER_RIGHT_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_SETTING_DISPENSER_ENABLED = (
-        "Refrigeration.Common.Setting.Dispenser.Enabled"
+        SettingKey.REFRIGERATION_COMMON_DISPENSER_ENABLED
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_FORCE_FREEZER = (
-        "Refrigeration.Common.Setting.Door.AssistantForceFreezer"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_FORCE_FREEZER
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_FORCE_FRIDGE = (
-        "Refrigeration.Common.Setting.Door.AssistantForceFridge"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_FORCE_FRIDGE
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_FREEZER = (
-        "Refrigeration.Common.Setting.Door.AssistantFreezer"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_FREEZER
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_FRIDGE = (
-        "Refrigeration.Common.Setting.Door.AssistantFridge"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_FRIDGE
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_TIMEOUT_FREEZER = (
-        "Refrigeration.Common.Setting.Door.AssistantTimeoutFreezer"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_TIMEOUT_FREEZER
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_TIMEOUT_FRIDGE = (
-        "Refrigeration.Common.Setting.Door.AssistantTimeoutFridge"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_TIMEOUT_FRIDGE
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_TRIGGER_FREEZER = (
-        "Refrigeration.Common.Setting.Door.AssistantTriggerFreezer"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_TRIGGER_FREEZER
     )
     REFRIGERATION_COMMON_SETTING_DOOR_ASSISTANT_TRIGGER_FRIDGE = (
-        "Refrigeration.Common.Setting.Door.AssistantTriggerFridge"
+        SettingKey.REFRIGERATION_COMMON_DOOR_ASSISTANT_TRIGGER_FRIDGE
     )
-    REFRIGERATION_COMMON_SETTING_ECO_MODE = "Refrigeration.Common.Setting.EcoMode"
-    REFRIGERATION_COMMON_SETTING_FRESH_MODE = "Refrigeration.Common.Setting.FreshMode"
+    REFRIGERATION_COMMON_SETTING_ECO_MODE = SettingKey.REFRIGERATION_COMMON_ECO_MODE
+    REFRIGERATION_COMMON_SETTING_FRESH_MODE = SettingKey.REFRIGERATION_COMMON_FRESH_MODE
     REFRIGERATION_COMMON_SETTING_LIGHT_EXTERNAL_BRIGHTNESS = (
-        "Refrigeration.Common.Setting.Light.External.Brightness"
+        SettingKey.REFRIGERATION_COMMON_LIGHT_EXTERNAL_BRIGHTNESS
     )
     REFRIGERATION_COMMON_SETTING_LIGHT_EXTERNAL_POWER = (
-        "Refrigeration.Common.Setting.Light.External.Power"
+        SettingKey.REFRIGERATION_COMMON_LIGHT_EXTERNAL_POWER
     )
     REFRIGERATION_COMMON_SETTING_LIGHT_INTERNAL_BRIGHTNESS = (
-        "Refrigeration.Common.Setting.Light.Internal.Brightness"
+        SettingKey.REFRIGERATION_COMMON_LIGHT_INTERNAL_BRIGHTNESS
     )
     REFRIGERATION_COMMON_SETTING_LIGHT_INTERNAL_POWER = (
-        "Refrigeration.Common.Setting.Light.Internal.Power"
+        SettingKey.REFRIGERATION_COMMON_LIGHT_INTERNAL_POWER
     )
     REFRIGERATION_COMMON_SETTING_SABBATH_MODE = (
-        "Refrigeration.Common.Setting.SabbathMode"
+        SettingKey.REFRIGERATION_COMMON_SABBATH_MODE
     )
     REFRIGERATION_COMMON_SETTING_VACATION_MODE = (
-        "Refrigeration.Common.Setting.VacationMode"
+        SettingKey.REFRIGERATION_COMMON_VACATION_MODE
     )
     REFRIGERATION_COMMON_SETTING_WINE_COMPARTMENT_2_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.WineCompartment2.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_WINE_COMPARTMENT_2_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_SETTING_WINE_COMPARTMENT_3_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.WineCompartment3.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_WINE_COMPARTMENT_3_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_SETTING_WINE_COMPARTMENT_SETPOINT_TEMPERATURE = (
-        "Refrigeration.Common.Setting.WineCompartment.SetpointTemperature"
+        SettingKey.REFRIGERATION_COMMON_WINE_COMPARTMENT_SETPOINT_TEMPERATURE
     )
     REFRIGERATION_COMMON_STATUS_DOOR_BOTTLE_COOLER = (
-        "Refrigeration.Common.Status.Door.BottleCooler"
+        StatusKey.REFRIGERATION_COMMON_DOOR_BOTTLE_COOLER
     )
     REFRIGERATION_COMMON_STATUS_DOOR_CHILLER = (
-        "Refrigeration.Common.Status.Door.Chiller"
+        StatusKey.REFRIGERATION_COMMON_DOOR_CHILLER
     )
     REFRIGERATION_COMMON_STATUS_DOOR_CHILLER_COMMON = (
-        "Refrigeration.Common.Status.Door.ChillerCommon"
+        StatusKey.REFRIGERATION_COMMON_DOOR_CHILLER_COMMON
     )
     REFRIGERATION_COMMON_STATUS_DOOR_CHILLER_LEFT = (
-        "Refrigeration.Common.Status.Door.ChillerLeft"
+        StatusKey.REFRIGERATION_COMMON_DOOR_CHILLER_LEFT
     )
     REFRIGERATION_COMMON_STATUS_DOOR_CHILLER_RIGHT = (
-        "Refrigeration.Common.Status.Door.ChillerRight"
+        StatusKey.REFRIGERATION_COMMON_DOOR_CHILLER_RIGHT
     )
     REFRIGERATION_COMMON_STATUS_DOOR_FLEX_COMPARTMENT = (
-        "Refrigeration.Common.Status.Door.FlexCompartment"
+        StatusKey.REFRIGERATION_COMMON_DOOR_FLEX_COMPARTMENT
     )
     REFRIGERATION_COMMON_STATUS_DOOR_FREEZER = (
-        "Refrigeration.Common.Status.Door.Freezer"
+        StatusKey.REFRIGERATION_COMMON_DOOR_FREEZER
     )
     REFRIGERATION_COMMON_STATUS_DOOR_REFRIGERATOR = (
-        "Refrigeration.Common.Status.Door.Refrigerator"
+        StatusKey.REFRIGERATION_COMMON_DOOR_REFRIGERATOR
     )
     REFRIGERATION_COMMON_STATUS_DOOR_REFRIGERATOR2 = (
-        "Refrigeration.Common.Status.Door.Refrigerator2"
+        StatusKey.REFRIGERATION_COMMON_DOOR_REFRIGERATOR_2
     )
     REFRIGERATION_COMMON_STATUS_DOOR_REFRIGERATOR3 = (
-        "Refrigeration.Common.Status.Door.Refrigerator3"
+        StatusKey.REFRIGERATION_COMMON_DOOR_REFRIGERATOR_3
     )
     REFRIGERATION_COMMON_STATUS_DOOR_WINE_COMPARTMENT = (
-        "Refrigeration.Common.Status.Door.WineCompartment"
+        StatusKey.REFRIGERATION_COMMON_DOOR_WINE_COMPARTMENT
     )
     REFRIGERATION_FRIDGE_FREEZER_EVENT_DOOR_ALARM_FREEZER = (
         "Refrigeration.FridgeFreezer.Event.DoorAlarmFreezer"
@@ -459,16 +479,16 @@ class EventKey(StrEnum):
         "Refrigeration.FridgeFreezer.Event.TemperatureAlarmFreezer"
     )
     REFRIGERATION_FRIDGE_FREEZER_SETTING_SETPOINT_TEMPERATURE_FREEZER = (
-        "Refrigeration.FridgeFreezer.Setting.SetpointTemperatureFreezer"
+        SettingKey.REFRIGERATION_FRIDGE_FREEZER_SETPOINT_TEMPERATURE_FREEZER
     )
     REFRIGERATION_FRIDGE_FREEZER_SETTING_SETPOINT_TEMPERATURE_REFRIGERATOR = (
-        "Refrigeration.FridgeFreezer.Setting.SetpointTemperatureRefrigerator"
+        SettingKey.REFRIGERATION_FRIDGE_FREEZER_SETPOINT_TEMPERATURE_REFRIGERATOR
     )
     REFRIGERATION_FRIDGE_FREEZER_SETTING_SUPER_MODE_FREEZER = (
-        "Refrigeration.FridgeFreezer.Setting.SuperModeFreezer"
+        SettingKey.REFRIGERATION_FRIDGE_FREEZER_SUPER_MODE_FREEZER
     )
     REFRIGERATION_FRIDGE_FREEZER_SETTING_SUPER_MODE_REFRIGERATOR = (
-        "Refrigeration.FridgeFreezer.Setting.SuperModeRefrigerator"
+        SettingKey.REFRIGERATION_FRIDGE_FREEZER_SUPER_MODE_REFRIGERATOR
     )
 
 
