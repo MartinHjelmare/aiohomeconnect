@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.11.0 (2025-01-14)
+
+### Features
+
+* Reference options, settings, and status enum keys at events enum (#43) ([`e391340`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e391340c3af2c3545f5d6f404784e9e0a3ba7d1a))
+
 ## v0.10.0 (2025-01-13)
 
 ### Features
