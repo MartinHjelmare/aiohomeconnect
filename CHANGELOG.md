@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.11.1 (2025-01-16)
+
+### Bug fixes
+
+* Raise exception only on error request (#45) ([`e5479a7`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e5479a7577d208a0ed6863a083f6e689eb875b96))
+
+### Chores
+
+* Update wagoid/commitlint-github-action action to v6.2.1 ([`c897247`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c897247417605b475d4d0537048b1323c6c6a96b))
+
 ## v0.11.0 (2025-01-14)
 
 ### Features
