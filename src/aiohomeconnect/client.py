@@ -72,14 +72,15 @@ from .model.error import (
 
 def _raise_generic_error(response: Response) -> None:
     """Raise a generic error if the response is an error."""
-    raise (
-        HomeConnectApiError.from_dict(error)
-        if (error := response.json().get("error"))
-        else HomeConnectApiError(
-            "unknown",
-            f"Unknown HTTP error (Status code: {response.status_code})",
+    if response.is_error:
+        raise (
+            HomeConnectApiError.from_dict(error)
+            if (error := response.json().get("error"))
+            else HomeConnectApiError(
+                "unknown",
+                f"Unknown HTTP error (Status code: {response.status_code})",
+            )
         )
-    )
 
 
 class AbstractAuth(ABC):
@@ -184,8 +185,7 @@ class Client:
             "/homeappliances",
             headers=None,
         )
-        if response.is_error:
-            _raise_generic_error(response)
+        _raise_generic_error(response)
         return ArrayOfHomeAppliances.from_dict(response.json()["data"])
 
     async def get_specific_appliance(
@@ -206,8 +206,7 @@ class Client:
             f"/homeappliances/{ha_id}",
             headers=None,
         )
-        if response.is_error:
-            _raise_generic_error(response)
+        _raise_generic_error(response)
         return HomeAppliance.from_dict(response.json()["data"])
 
     async def get_all_programs(
@@ -657,8 +656,7 @@ class Client:
             f"/homeappliances/{ha_id}/images",
             headers={"Accept-Language": accept_language},
         )
-        if response.is_error:
-            _raise_generic_error(response)
+        _raise_generic_error(response)
         return ArrayOfImages.from_dict(response.json()["data"])
 
     async def get_image(
@@ -697,8 +695,7 @@ class Client:
             f"/homeappliances/{ha_id}/settings",
             headers={"Accept-Language": accept_language},
         )
-        if response.is_error:
-            _raise_generic_error(response)
+        _raise_generic_error(response)
         return ArrayOfSettings.from_dict(response.json()["data"])
 
     async def set_settings(
@@ -844,8 +841,7 @@ class Client:
             headers={"Accept-Language": accept_language},
             data=put_commands.to_dict(),
         )
-        if response.is_error:
-            _raise_generic_error(response)
+        _raise_generic_error(response)
 
     async def put_command(
         self,
@@ -863,8 +859,7 @@ class Client:
             headers={"Accept-Language": accept_language},
             data=put_command.to_dict(),
         )
-        if response.is_error:
-            _raise_generic_error(response)
+        _raise_generic_error(response)
 
     async def stream_all_events(
         self,
