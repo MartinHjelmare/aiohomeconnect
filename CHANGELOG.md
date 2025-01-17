@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.11.2 (2025-01-17)
+
+### Bug fixes
+
+* Fix requests that have a body (#46) ([`13134f4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/13134f4bb3d5e6409120958ef79d2e6e579af52d))
+
 ## v0.11.1 (2025-01-16)
 
 ### Bug fixes
