@@ -110,12 +110,16 @@ class AbstractAuth(ABC):
         The url parameter must start with a slash.
         """
         headers = await self._get_headers(kwargs.pop("headers", None))
+        data = kwargs.pop("data", None)
+        if data is not None:
+            headers["content-type"] = "application/vnd.bsh.sdk.v1+json"
         try:
             response = await self.client.request(
                 method,
                 f"{self.host}/api{url}",
                 **kwargs,
                 headers=headers,
+                json={"data": data} if data is not None else None,
             )
         except RequestError as e:
             raise HomeConnectRequestError from e
