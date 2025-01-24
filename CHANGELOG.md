@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.11.3 (2025-01-24)
+
+### Bug fixes
+
+* Update dependency fastapi to v0.115.7 ([`9979e6d`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9979e6dddcd49da9870e9a746d2a298d5bc36349))
+
+### Chores
+
+* Update dependency ruff to v0.9.3 ([`d860e20`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d860e20f91700fea39adf4547f4b08483bbf3aec))
+* Update pre-commit hook codespell-project/codespell to v2.4.0 ([`808d4ce`](https://github.com/MartinHjelmare/aiohomeconnect/commit/808d4ced4447c413cddd1366481566f4d302e6cf))
+* Update dependency codespell to v2.4.0 ([`a2ae0a8`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a2ae0a85b4c153918feb62df66146113a8da88c5))
+* Update dependency pre-commit to v4.1.0 ([`9600c8f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9600c8f579305ce86129a87194b83d7a5f0fa4c1))
+* Update dependency ruff to v0.9.2 (#47) ([`10032bb`](https://github.com/MartinHjelmare/aiohomeconnect/commit/10032bbdb5ea9fa9187a95f8b766b8eb5f45d784))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.9.2 ([`bcd43a5`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bcd43a5c38970ce6abf423d6e6b81ec6f83647dc))
+
 ## v0.11.2 (2025-01-17)
 
 ### Bug fixes
