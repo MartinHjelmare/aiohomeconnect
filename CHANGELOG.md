@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.11.4 (2025-01-25)
+
+### Bug fixes
+
+* Ignore `none` values at models used at `put` requests (#48) ([`6d8000f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6d8000f99044a704274394cb097232943609d165))
+
+### Chores
+
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.9.3 ([`058f5c1`](https://github.com/MartinHjelmare/aiohomeconnect/commit/058f5c1a4a05460703e9010dc5f5e752d696cd29))
+
 ## v0.11.3 (2025-01-24)
 
 ### Bug fixes
