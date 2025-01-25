@@ -7,6 +7,7 @@ from enum import StrEnum
 from typing import Any
 
 from mashumaro import field_options
+from mashumaro.config import BaseConfig
 from mashumaro.mixins.json import DataClassJSONMixin
 
 
@@ -18,6 +19,11 @@ class Program(DataClassJSONMixin):
     name: str | None = None
     options: list[Option] | None = None
     constraints: ProgramConstraints | None = None
+
+    class Config(BaseConfig):
+        """Config for mashumaro."""
+
+        omit_none = True
 
 
 @dataclass
@@ -137,6 +143,11 @@ class Option(DataClassJSONMixin):
         default=None, metadata=field_options(alias="displayvalue")
     )
     unit: str | None = None
+
+    class Config(BaseConfig):
+        """Config for mashumaro."""
+
+        omit_none = True
 
 
 @dataclass
