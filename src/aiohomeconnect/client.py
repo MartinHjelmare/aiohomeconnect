@@ -296,6 +296,7 @@ class Client:
         ha_id: str,
         *,
         program_key: ProgramKey,
+        name: str | None = None,
         options: list[Option] | None = None,
         accept_language: Language | None = None,
     ) -> None:
@@ -335,7 +336,7 @@ class Client:
         There are no programs available for freezers, fridge freezers,
         refrigerators and wine coolers.
         """
-        program = Program(key=program_key, options=options)
+        program = Program(key=program_key, name=name, options=options)
         response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/active",
@@ -519,6 +520,7 @@ class Client:
         ha_id: str,
         *,
         program_key: ProgramKey,
+        name: str | None = None,
         options: list[Option] | None = None,
         accept_language: Language | None = None,
     ) -> None:
@@ -536,7 +538,7 @@ class Client:
         directly from the home appliance. Any changes to the available options
         due to the state of the appliance is only reflected in the selected program.
         """
-        program = Program(key=program_key, options=options)
+        program = Program(key=program_key, name=name, options=options)
         response = await self._auth.request(
             "PUT",
             f"/homeappliances/{ha_id}/programs/selected",
