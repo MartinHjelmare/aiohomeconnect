@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.12.1 (2025-01-29)
+
+### Bug fixes
+
+* Use `raw_key` for the correct dataclasses for programs (#51) ([`a489f6e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a489f6eaaeeed7b0da8e9f6a8f5d676cbcb899d4))
+
 ## v0.12.0 (2025-01-29)
 
 ### Features
