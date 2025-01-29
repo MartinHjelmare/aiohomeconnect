@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.12.0 (2025-01-29)
+
+### Features
+
+* Add `raw_key` field (#50) ([`d7ed726`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d7ed72636a2af53f3a7ced3f6f477e5e20d27ba0))
+
+### Chores
+
+* Update dependency pytest-asyncio to v0.25.3 ([`28fd9f0`](https://github.com/MartinHjelmare/aiohomeconnect/commit/28fd9f0df2cedf130341656bb48ac7c3514b945a))
+* Update pre-commit hook codespell-project/codespell to v2.4.1 ([`e65ad35`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e65ad35c777b562920008dbbee663d45e7485641))
+* Update dependency codespell to v2.4.1 ([`3606b99`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3606b99e5b420d33241460f73764c4377789189b))
+* Update dependency authlib to v1.4.1 ([`c796891`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c7968915898c90bbbbbe57a9c388ea00d819f937))
+* Update pre-commit hook commitizen-tools/commitizen to v4.1.1 ([`9a72358`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9a723584f300fcd1ff0681e3011e2fc195b71a1e))
+* Update python-semantic-release/python-semantic-release action to v9.17.0 ([`9e4210f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9e4210f34a85a9a3079147024c16cf8273e9f617))
+* Update dependency python-semantic-release to v9.17.0 ([`5749354`](https://github.com/MartinHjelmare/aiohomeconnect/commit/57493546d8cc22df2d02af7c0aae4e72e57e8b5d))
+* Update renovate semantic commit strategy (#49) ([`5bb49e7`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5bb49e785498b5912a6ea70e26c0018801aeb0d1))
+
 ## v0.11.4 (2025-01-25)
 
 ### Bug fixes
