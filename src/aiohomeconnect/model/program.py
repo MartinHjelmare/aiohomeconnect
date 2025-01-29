@@ -16,6 +16,7 @@ class Program(DataClassJSONMixin):
     """Represent Program."""
 
     key: ProgramKey
+    raw_key: str = field(metadata=field_options(alias="key"))
     name: str | None = None
     options: list[Option] | None = None
     constraints: ProgramConstraints | None = None

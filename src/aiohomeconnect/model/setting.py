@@ -15,6 +15,7 @@ class GetSetting(DataClassJSONMixin):
     """Specific setting of the home appliance."""
 
     key: SettingKey
+    raw_key: str = field(metadata=field_options(alias="key"))
     value: Any
     name: str | None = None
     display_value: str | None = field(
