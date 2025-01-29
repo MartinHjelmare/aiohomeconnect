@@ -15,6 +15,7 @@ class Status(DataClassJSONMixin):
     """Represent Status."""
 
     key: StatusKey
+    raw_key: str = field(metadata=field_options(alias="key"))
     value: Any
     name: str | None = None
     display_value: str | None = field(

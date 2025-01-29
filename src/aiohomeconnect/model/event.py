@@ -27,6 +27,7 @@ class Event(DataClassJSONMixin):
     """Represent Event."""
 
     key: EventKey
+    raw_key: str = field(metadata=field_options(alias="key"))
     timestamp: int
     level: str
     handling: str

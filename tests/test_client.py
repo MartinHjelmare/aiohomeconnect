@@ -58,6 +58,7 @@ STREAM_EVENT_CASES = [
                     Event(
                         handling="none",
                         key=EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD,
+                        raw_key=EventKey.DISHCARE_DISHWASHER_OPTION_HALF_LOAD.value,
                         level="hint",
                         timestamp=1733611453,
                         uri="/a/random/relative/uri",
@@ -66,6 +67,7 @@ STREAM_EVENT_CASES = [
                     Event(
                         handling="none",
                         key=EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME,
+                        raw_key=EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME.value,
                         level="hint",
                         timestamp=1733611453,
                         unit="seconds",
@@ -98,6 +100,7 @@ STREAM_EVENT_CASES = [
                     Event(
                         handling="acknowledge",
                         key=EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED,
+                        raw_key=EventKey.BSH_COMMON_EVENT_PROGRAM_ABORTED.value,
                         level="hint",
                         timestamp=1733616930,
                         value="BSH.Common.EnumType.EventPresentState.Present",
@@ -123,7 +126,8 @@ STREAM_EVENT_CASES = [
                 [
                     Event(
                         handling="none",
-                        key=EventKey("BSH.Common.Appliance.Disconnected"),
+                        key=EventKey.BSH_COMMON_APPLIANCE_DISCONNECTED,
+                        raw_key=EventKey.BSH_COMMON_APPLIANCE_DISCONNECTED.value,
                         level="hint",
                         timestamp=1733611817,
                         value=True,
