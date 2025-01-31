@@ -20,6 +20,7 @@ from httpx_sse import EventSource, aconnect_sse
 
 from aiohomeconnect.model import EventMessage, EventType
 
+from .const import LOGGER
 from .model import (
     ArrayOfAvailablePrograms,
     ArrayOfCommands,
@@ -112,6 +113,9 @@ class AbstractAuth(ABC):
         data = kwargs.pop("data", None)
         if data is not None:
             headers["content-type"] = "application/vnd.bsh.sdk.v1+json"
+
+        LOGGER.debug("Request: %s %s", method, url)
+
         try:
             response = await self.client.request(
                 method,
@@ -122,6 +126,8 @@ class AbstractAuth(ABC):
             )
         except RequestError as e:
             raise HomeConnectRequestError from e
+
+        LOGGER.debug("Response: \n%s", response.text)
 
         match response.status_code:
             case codes.UNAUTHORIZED:
@@ -918,6 +924,8 @@ class Client:
                         _raise_generic_error(response)
 
             async for sse in event_source.aiter_sse():
+                LOGGER.debug("Event: %s", sse)
+
                 if (
                     # _value2member_map_ is required for Python 3.11,
                     # remove after dropping support for it.
