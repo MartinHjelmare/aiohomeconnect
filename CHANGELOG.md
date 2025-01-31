@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.12.2 (2025-01-31)
+
+### Bug fixes
+
+* Include debug log of request and response and sse event (#52) ([`9e0a719`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9e0a71921b5aca2909ac406190117c0c7aa8640b))
+
+### Chores
+
+* Update dependency ruff to v0.9.4 ([`4531e3b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/4531e3bab3419cf90af3c271dc580f59abc33fd3))
+* Update pre-commit hook astral-sh/ruff-pre-commit to v0.9.4 ([`5993fb6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5993fb6348b754eb4d133cdf09d859396ec618c8))
+* Update dependency fastapi to v0.115.8 ([`6406a14`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6406a14ab7aa900c4669f0a00e94994a6c878f6f))
+
 ## v0.12.1 (2025-01-29)
 
 ### Bug fixes
