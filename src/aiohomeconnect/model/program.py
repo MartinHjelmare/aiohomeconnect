@@ -15,7 +15,7 @@ from mashumaro.mixins.json import DataClassJSONMixin
 class Program(DataClassJSONMixin):
     """Represent Program."""
 
-    key: ProgramKey
+    key: ProgramKey | None = None
     name: str | None = None
     options: list[Option] | None = None
     constraints: ProgramConstraints | None = None
