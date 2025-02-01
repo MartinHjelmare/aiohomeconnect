@@ -4,15 +4,20 @@
     ":semanticCommitTypeAll(chore)"
   ],
   "automergeType": "branch",
-  "dependencies": {
-    "major": {
-      "semanticCommitType": "fix"
-    }
-  },
   "packageRules": [
     {
       "groupName": "httpx",
-      "matchPackageNames": ["*httpx*"]
+      "matchPackageNames": [
+        "*httpx*"
+      ]
+    },
+    {
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "major": {
+        "semanticCommitType": "fix"
+      }
     }
   ]
 }
