@@ -1,9 +1,9 @@
 # Changes here will be overwritten by Copier
-_commit: 4e0a137
+_commit: dd79d05
 _src_path: gh:browniebroke/pypackage-template
 add_me_as_contributor: false
 cli_name: aiohomeconnect
-copyright_year: '2024'
+copyright_year: '2025'
 documentation: true
 email: marhje52@gmail.com
 full_name: Martin Hjelmare
@@ -16,7 +16,7 @@ package_name: aiohomeconnect
 project_name: aiohomeconnect
 project_short_description: An asyncio client for the Home Connect API.
 project_slug: aiohomeconnect
-run_poetry_install: false
+run_uv_sync: false
 setup_github: false
 setup_pre_commit: true
 
