@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.12.3 (2025-02-01)
+
+### Bug fixes
+
+* Make program model key optional (#53) ([`9d354ec`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9d354ec82996fae80cec1d5d9d69b712b73af80d))
+
 ## v0.12.2 (2025-01-31)
 
 ### Bug fixes

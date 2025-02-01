@@ -1,3 +1,3 @@
 """Asynchronous Python client for Home Connect API."""
 
-__version__ = "0.12.2"
+__version__ = "0.12.3"
