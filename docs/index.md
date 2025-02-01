@@ -16,6 +16,13 @@ changelog
 contributing
 ```
 
+```{toctree}
+:caption: API Reference
+:maxdepth: 2
+
+aiohomeconnect
+```
+
 ```{include} ../README.md
 
 ```
