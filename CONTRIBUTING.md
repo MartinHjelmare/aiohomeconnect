@@ -49,7 +49,7 @@ Ready to contribute? Here's how to set yourself up for local development.
 3. Install the project dependencies with [uv](https://docs.astral.sh/uv/):
 
    ```shell
-   $ uv sync
+   $ uv sync --all-extras
    ```
 
 4. Create a branch for local development:
