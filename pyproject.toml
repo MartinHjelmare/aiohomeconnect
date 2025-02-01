@@ -45,7 +45,7 @@ cli = [
 [dependency-groups]
 dev = [
   "codespell==2.4.1",
-  "copier>=9.3.1,<9.4",
+  "copier>=9.4.1,<9.5",
   "mypy==1.14.1",
   "pre-commit==4.1.0",
   "pytest-asyncio==0.25.3",
