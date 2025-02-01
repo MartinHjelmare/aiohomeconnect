@@ -7,14 +7,10 @@
   "packageRules": [
     {
       "groupName": "httpx",
-      "matchPackageNames": [
-        "*httpx*"
-      ]
+      "matchPackageNames": ["*httpx*"]
     },
     {
-      "matchDepTypes": [
-        "dependencies"
-      ],
+      "matchDepTypes": ["dependencies"],
       "major": {
         "semanticCommitType": "fix"
       }
