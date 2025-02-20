@@ -105,7 +105,7 @@ class TokenManager:
         """Check if the token is valid."""
         return self._token["expires_at"] > time.time() + TOKEN_EXPIRES_MARGIN
 
-    async def fetch_access_token(self, code: str) -> None:
+    async def fetch_access_token(self, code: str) -> dict[str, Any]:
         """Fetch the access token."""
         token = self._token = await self._client.fetch_token(
             OAUTH2_TOKEN,
@@ -116,6 +116,7 @@ class TokenManager:
         self._validate_token()
         self.access_token = token["access_token"]
         await self.save_access_token()
+        return token
 
     async def load_access_token(self) -> None:
         """Load the access token."""

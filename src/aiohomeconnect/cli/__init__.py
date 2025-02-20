@@ -1,13 +1,15 @@
 """Provide a CLI for Home Connect API."""
 
 import asyncio
+import logging
+from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from rich import print as rich_print
 import typer
 import uvicorn
 
-from aiohomeconnect.model import StatusKey
+from aiohomeconnect.model import OptionKey, StatusKey
 from aiohomeconnect.model.error import (
     EventStreamInterruptedError,
     HomeConnectApiError,
@@ -18,6 +20,10 @@ from .client import CLIClient, TokenManager
 
 cli = typer.Typer()
 app = FastAPI()
+logging.basicConfig(level=logging.WARNING)
+logging.getLogger("aiohomeconnect").setLevel(logging.DEBUG)
+
+LOGGER = logging.getLogger(__name__)
 
 
 @cli.command()
@@ -49,18 +55,19 @@ async def _authorize(client_id: str, client_secret: str) -> None:
         if code is None:
             raise HTTPException(
                 status_code=400,
-                detail="Missing both core and error parameter, one is required",
+                detail="Missing both code and error parameter, one is required",
             )
-        await fetch_token(code)
+        token = await fetch_token(code)
+        rich_print(f"Token fetched: {token}")
         return {"code": code, "state": state}
 
     server = uvicorn.Server(
         uvicorn.Config("aiohomeconnect.cli:app", port=5000, log_level="info"),
     )
 
-    async def fetch_token(code: str) -> None:
+    async def fetch_token(code: str) -> dict[str, Any]:
         """Stop the server."""
-        await token_manager.fetch_access_token(code)
+        return await token_manager.fetch_access_token(code)
 
     rich_print(f"Visit the following URL to authorize this client:\n{uri}")
     await server.serve()
@@ -103,6 +110,55 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
             await client.get_status_value(
                 ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
             )
+        )
+    except HomeConnectApiError as e:
+        rich_print(f"{type(e).__name__}: {e}")
+    except HomeConnectRequestError as e:
+        rich_print(e)
+
+
+@cli.command()
+def set_selected_program_option(
+    client_id: str,
+    client_secret: str,
+    ha_id: str,
+    *,
+    option_key: OptionKey,
+    bool_value: bool | None = None,
+    float_value: float | None = None,
+    string_value: str | None = None,
+) -> None:
+    """Set an option of a program on an appliance."""
+    value: bool | float | str
+    if float_value is not None:
+        value = float_value
+    elif string_value is not None:
+        value = string_value
+    elif bool_value is not None:
+        value = bool_value
+    else:
+        raise ValueError("One of bool_value, float_value, or string_value must be set")
+    LOGGER.debug("Setting option %s to %s", option_key, value)
+    asyncio.run(
+        _set_selected_program_option(
+            client_id, client_secret, ha_id, option_key=option_key, value=value
+        )
+    )
+
+
+async def _set_selected_program_option(
+    client_id: str,
+    client_secret: str,
+    ha_id: str,
+    *,
+    option_key: OptionKey,
+    value: Any,
+) -> None:
+    """Set an option of a program on an appliance."""
+    try:
+        client = CLIClient(client_id, client_secret)
+        await client.set_selected_program_option(
+            ha_id, option_key=option_key, value=value
         )
     except HomeConnectApiError as e:
         rich_print(f"{type(e).__name__}: {e}")
