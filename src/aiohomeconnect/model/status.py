@@ -138,3 +138,4 @@ class StatusKey(StrEnum):
         "ConsumerProducts.CleaningRobot.Status.Lifted"
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_LOST = "ConsumerProducts.CleaningRobot.Status.Lost"
+    COOKING_OVEN_CURRENT_CAVITY_TEMPERATURE = "Cooking.Oven.Status.CurrentCavityTemperature"
