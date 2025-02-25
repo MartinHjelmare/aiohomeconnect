@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.15.0 (2025-02-25)
+
+### Features
+
+* Add retry after info from rate limit error (#58) ([`675aa3f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/675aa3f8b85feb0ea1975460b45d65f53f985962))
+
 ## v0.14.0 (2025-02-25)
 
 ### Features
