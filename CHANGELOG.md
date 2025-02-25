@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.14.0 (2025-02-25)
+
+### Features
+
+* Add cavity temperature (#59) ([`a160e37`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a160e37167038cb38b4174f210841f3ae0f9e622))
+
 ## v0.13.0 (2025-02-20)
 
 ### Features
