@@ -215,7 +215,6 @@ async def test_abstract_auth_sse(
         (codes.REQUEST_TIMEOUT, RequestTimeoutError),
         (codes.UNSUPPORTED_MEDIA_TYPE, UnsupportedMediaTypeError),
         (codes.IM_A_TEAPOT, HomeConnectApiError),
-        (codes.TOO_MANY_REQUESTS, TooManyRequestsError),
         (codes.INTERNAL_SERVER_ERROR, InternalServerError),
     ],
 )
@@ -238,6 +237,29 @@ async def test_generic_http_error(
 
     with pytest.raises(exception):
         await client.get_home_appliances()
+
+
+async def test_rate_limit_error(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test the abstract auth request."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances",
+        status_code=codes.TOO_MANY_REQUESTS,
+        json={
+            "error": {"key": "some_error_key", "description": "some_error_description"}
+        },
+        headers={"Retry-After": "1"},
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(TooManyRequestsError) as exc_info:
+        await client.get_home_appliances()
+
+    assert exc_info.value.key == "some_error_key"
+    assert exc_info.value.description == "some_error_description"
+    assert exc_info.value.retry_after == 1
 
 
 async def test_request_error(
