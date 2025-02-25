@@ -141,7 +141,10 @@ class AbstractAuth(ABC):
             case codes.UNSUPPORTED_MEDIA_TYPE:
                 raise UnsupportedMediaTypeError.from_dict(response.json()["error"])
             case codes.TOO_MANY_REQUESTS:
-                raise TooManyRequestsError.from_dict(response.json()["error"])
+                err = TooManyRequestsError.from_dict(response.json()["error"])
+                retry_after = response.headers.get("Retry-After")
+                err.retry_after = int(retry_after) if retry_after else None
+                raise err
             case codes.INTERNAL_SERVER_ERROR:
                 raise InternalServerError.from_dict(response.json()["error"])
             case _:

@@ -97,6 +97,8 @@ class UnsupportedMediaTypeError(HomeConnectApiError):
 class TooManyRequestsError(HomeConnectApiError):
     """Represent TooManyRequestsError."""
 
+    retry_after: int | None = None
+
 
 @dataclass
 class InternalServerError(HomeConnectApiError):
