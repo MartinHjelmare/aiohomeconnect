@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.15.1 (2025-02-27)
+
+### Bug fixes
+
+* Missing error handling at get available commands endpoint (#60) ([`2bf902b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2bf902b795e5987eed2b758e3ed363b3e0fbbd7f))
+
 ## v0.15.0 (2025-02-25)
 
 ### Features
