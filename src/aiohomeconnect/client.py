@@ -831,6 +831,7 @@ class Client:
             f"/homeappliances/{ha_id}/commands",
             headers={"Accept-Language": accept_language},
         )
+        _raise_generic_error(response)
         return ArrayOfCommands.from_dict(response.json()["data"])
 
     async def put_commands(
