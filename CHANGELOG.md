@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.16.0 (2025-03-01)
+
+### Features
+
+* Improve exceptions and cli logging (#61) ([`62b1bbc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/62b1bbce54236fcba758bb0c3d8a9baec7b2c0e2))
+
 ## v0.15.1 (2025-02-27)
 
 ### Bug fixes
