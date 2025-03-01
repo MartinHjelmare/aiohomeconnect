@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from mashumaro.mixins.json import DataClassJSONMixin
 
 
-@dataclass
 class HomeConnectError(Exception):
     """Base class for Home Connect exceptions."""
 

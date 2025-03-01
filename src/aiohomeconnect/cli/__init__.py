@@ -5,7 +5,7 @@ import logging
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
-from rich import print as rich_print
+from rich.console import Console
 import typer
 import uvicorn
 
@@ -18,12 +18,19 @@ from aiohomeconnect.model.error import (
 
 from .client import CLIClient, TokenManager
 
-cli = typer.Typer()
 app = FastAPI()
-logging.basicConfig(level=logging.WARNING)
+cli = typer.Typer()
+console = Console()
+error_console = Console(stderr=True, style="bold red")
+warning_console = Console(style="bold yellow")
+logging.basicConfig(
+    datefmt="%Y-%m-%d %H:%M:%S",
+    format=(
+        "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
+    ),
+    level=logging.WARNING,
+)
 logging.getLogger("aiohomeconnect").setLevel(logging.DEBUG)
-
-LOGGER = logging.getLogger(__name__)
 
 
 @cli.command()
@@ -58,7 +65,7 @@ async def _authorize(client_id: str, client_secret: str) -> None:
                 detail="Missing both code and error parameter, one is required",
             )
         token = await fetch_token(code)
-        rich_print(f"Token fetched: {token}")
+        console.log(f"Token fetched: {token}")
         return {"code": code, "state": state}
 
     server = uvicorn.Server(
@@ -69,7 +76,7 @@ async def _authorize(client_id: str, client_secret: str) -> None:
         """Stop the server."""
         return await token_manager.fetch_access_token(code)
 
-    rich_print(f"Visit the following URL to authorize this client:\n{uri}")
+    console.print(f"Visit the following URL to authorize this client:\n{uri}")
     await server.serve()
 
 
@@ -89,11 +96,11 @@ async def _get_appliances(
     """Get the appliances."""
     try:
         client = CLIClient(client_id, client_secret)
-        rich_print(await client.get_home_appliances())
+        console.log(await client.get_home_appliances())
     except HomeConnectApiError as e:
-        rich_print(f"{type(e).__name__}: {e}")
+        error_console.log(f"{type(e).__name__}: {e}")
     except HomeConnectRequestError as e:
-        rich_print(e)
+        error_console.log(f"{type(e).__name__}: {e}")
 
 
 @cli.command()
@@ -106,15 +113,15 @@ async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -
     """Get the operation state of the device."""
     try:
         client = CLIClient(client_id, client_secret)
-        rich_print(
+        console.log(
             await client.get_status_value(
                 ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
             )
         )
     except HomeConnectApiError as e:
-        rich_print(f"{type(e).__name__}: {e}")
+        error_console.log(f"{type(e).__name__}: {e}")
     except HomeConnectRequestError as e:
-        rich_print(e)
+        error_console.log(f"{type(e).__name__}: {e}")
 
 
 @cli.command()
@@ -138,7 +145,7 @@ def set_selected_program_option(
         value = bool_value
     else:
         raise ValueError("One of bool_value, float_value, or string_value must be set")
-    LOGGER.debug("Setting option %s to %s", option_key, value)
+    console.log(f"Setting option {option_key} to {value}")
     asyncio.run(
         _set_selected_program_option(
             client_id, client_secret, ha_id, option_key=option_key, value=value
@@ -161,9 +168,9 @@ async def _set_selected_program_option(
             ha_id, option_key=option_key, value=value
         )
     except HomeConnectApiError as e:
-        rich_print(f"{type(e).__name__}: {e}")
+        error_console.log(f"{type(e).__name__}: {e}")
     except HomeConnectRequestError as e:
-        rich_print(e)
+        error_console.log(f"{type(e).__name__}: {e}")
 
 
 @cli.command()
@@ -178,14 +185,14 @@ async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -
     while True:
         try:
             async for event in client.stream_all_events():
-                rich_print(event)
+                console.log(event)
         except EventStreamInterruptedError as e:
-            rich_print(f"{e} continuing...")
+            warning_console.log(f"{type(e).__name__}: {e} continuing...")
         except HomeConnectApiError as e:
-            rich_print(f"{type(e).__name__}: {e}")
+            error_console.log(f"{type(e).__name__}: {e}")
             break
         except HomeConnectRequestError as e:
-            rich_print(e)
+            error_console.log(f"{type(e).__name__}: {e}")
             break
 
 
@@ -203,14 +210,14 @@ async def _subscribe_appliance_events(
     while True:
         try:
             async for event in client.stream_events(ha_id):
-                rich_print(event)
+                console.log(event)
         except EventStreamInterruptedError as e:
-            rich_print(f"{e}, continuing...")
+            warning_console.log(f"{type(e).__name__}: {e} continuing...")
         except HomeConnectApiError as e:
-            rich_print(f"{type(e).__name__}: {e}")
+            error_console.log(f"{type(e).__name__}: {e}")
             break
         except HomeConnectRequestError as e:
-            rich_print(e)
+            error_console.log(f"{type(e).__name__}: {e}")
             break
 
 

@@ -125,7 +125,7 @@ class AbstractAuth(ABC):
                 json={"data": data} if data is not None else None,
             )
         except RequestError as e:
-            raise HomeConnectRequestError from e
+            raise HomeConnectRequestError(f"{type(e).__name__}: {e}") from e
 
         LOGGER.debug("Response: \n%s", response.text)
 
@@ -170,9 +170,9 @@ class AbstractAuth(ABC):
             ) as event_source:
                 yield event_source
         except (ReadTimeout, RemoteProtocolError) as e:
-            raise EventStreamInterruptedError from e
+            raise EventStreamInterruptedError(f"{type(e).__name__}: {e}") from e
         except RequestError as e:
-            raise HomeConnectRequestError from e
+            raise HomeConnectRequestError(f"{type(e).__name__}: {e}") from e
 
 
 class Client:
