@@ -225,7 +225,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfPrograms:
         """Get all programs of a given home appliance."""
         response = await self._auth.request(
@@ -244,7 +244,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfAvailablePrograms:
         """Get all currently available programs on the given home appliance."""
         response = await self._auth.request(
@@ -264,7 +264,7 @@ class Client:
         ha_id: str,
         *,
         program_key: ProgramKey,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ProgramDefinition:
         """Get a specific available program."""
         response = await self._auth.request(
@@ -283,7 +283,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> Program:
         """Get the active program."""
         response = await self._auth.request(
@@ -307,7 +307,7 @@ class Client:
         program_key: ProgramKey,
         name: str | None = None,
         options: list[Option] | None = None,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Start the given program.
 
@@ -362,7 +362,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Stop the active program."""
         response = await self._auth.request(
@@ -380,7 +380,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfOptions:
         """Get all options of the active program.
 
@@ -417,7 +417,7 @@ class Client:
         ha_id: str,
         *,
         array_of_options: ArrayOfOptions,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Set all options of the active program.
 
@@ -446,7 +446,7 @@ class Client:
         ha_id: str,
         *,
         option_key: OptionKey,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> Option:
         """Get a specific option of the active program."""
         response = await self._auth.request(
@@ -470,7 +470,7 @@ class Client:
         name: str | None = None,
         display_value: str | None = None,
         unit: str | None = None,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Set a specific option of the active program.
 
@@ -504,7 +504,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> Program:
         """Get the selected program.
 
@@ -531,7 +531,7 @@ class Client:
         program_key: ProgramKey,
         name: str | None = None,
         options: list[Option] | None = None,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Select the given program.
 
@@ -564,7 +564,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfOptions:
         """Get all options of the selected program."""
         response = await self._auth.request(
@@ -584,7 +584,7 @@ class Client:
         ha_id: str,
         *,
         array_of_options: ArrayOfOptions,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Set all options of the selected program."""
         response = await self._auth.request(
@@ -604,7 +604,7 @@ class Client:
         ha_id: str,
         *,
         option_key: OptionKey,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> Option:
         """Get a specific option of the selected program."""
         response = await self._auth.request(
@@ -628,7 +628,7 @@ class Client:
         name: str | None = None,
         display_value: str | None = None,
         unit: str | None = None,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Set a specific option of the selected program."""
         option = Option(
@@ -654,7 +654,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfImages:
         """Get a list of available images."""
         response = await self._auth.request(
@@ -687,7 +687,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfSettings:
         """Get a list of available settings.
 
@@ -709,7 +709,7 @@ class Client:
         ha_id: str,
         *,
         put_settings: PutSettings,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Set multiple settings."""
         response = await self._auth.request(
@@ -729,7 +729,7 @@ class Client:
         ha_id: str,
         *,
         setting_key: SettingKey,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> GetSetting:
         """Get a specific setting."""
         response = await self._auth.request(
@@ -752,7 +752,7 @@ class Client:
         *,
         setting_key: SettingKey,
         value: Any,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Set a specific setting."""
         put_setting = PutSetting(key=setting_key, value=value)
@@ -774,7 +774,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfStatus:
         """Get a list of available status.
 
@@ -798,7 +798,7 @@ class Client:
         ha_id: str,
         *,
         status_key: StatusKey,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> Status:
         """Get a specific status.
 
@@ -823,7 +823,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> ArrayOfCommands:
         """Get a list of available and writable commands."""
         response = await self._auth.request(
@@ -839,7 +839,7 @@ class Client:
         ha_id: str,
         *,
         put_commands: PutCommands,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Execute multiple commands."""
         response = await self._auth.request(
@@ -856,7 +856,7 @@ class Client:
         *,
         command_key: CommandKey,
         value: Any,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> None:
         """Execute a specific command."""
         put_command = PutCommand(key=command_key, value=value)
@@ -871,7 +871,7 @@ class Client:
     async def stream_all_events(
         self,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> AsyncGenerator[EventMessage]:
         """Get stream of events for all appliances.
 
@@ -943,7 +943,7 @@ class Client:
         self,
         ha_id: str,
         *,
-        accept_language: Language | None = None,
+        accept_language: Language | None = Language.EN,
     ) -> AsyncGenerator[EventMessage]:
         """Get stream of events for one appliance.
 
