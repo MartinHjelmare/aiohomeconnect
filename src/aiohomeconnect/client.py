@@ -110,6 +110,7 @@ class AbstractAuth(ABC):
         The url parameter must start with a slash.
         """
         headers = await self._get_headers(kwargs.pop("headers", None))
+        headers["accept"] = "application/vnd.bsh.sdk.v1+json"
         data = kwargs.pop("data", None)
         if data is not None:
             headers["content-type"] = "application/vnd.bsh.sdk.v1+json"
