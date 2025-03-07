@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.16.3 (2025-03-07)
+
+### Bug fixes
+
+* Set correct request accept header (#64) ([`9ce3e7c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9ce3e7c7c14b1366fcd5709ad71132797158d3b3))
+
 ## v0.16.2 (2025-03-04)
 
 ## v0.16.1 (2025-03-04)
