@@ -51,7 +51,7 @@ dev = [
   "pytest-asyncio==0.25.3",
   "pytest-httpx==0.35.0",
   "python-semantic-release==9.21.0",
-  "ruff==0.9.9",
+  "ruff==0.9.10",
   "pytest==8.3.5",
   "pytest-cov==6.0.0",
 ]
