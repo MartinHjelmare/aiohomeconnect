@@ -9,6 +9,8 @@ from typing import Any
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
+from aiohomeconnect.const import LOGGER
+
 
 @dataclass
 class GetSetting(DataClassJSONMixin):
@@ -71,8 +73,9 @@ class SettingKey(StrEnum):
     """Represent a setting key."""
 
     @classmethod
-    def _missing_(cls, _: object) -> SettingKey:
+    def _missing_(cls, value: object) -> SettingKey:
         """Return UNKNOWN for missing keys."""
+        LOGGER.debug("Unknown setting key: %s", value)
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"
