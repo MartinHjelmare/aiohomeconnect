@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.17.0 (2025-04-04)
+
+### Features
+
+* Add logs for unknown keys in event, program, setting and status models (#66) ([`2b5ead6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2b5ead6980e93a862bed23f3f2ae18f54f86f872))
+
 ## v0.16.3 (2025-03-07)
 
 ### Bug fixes
