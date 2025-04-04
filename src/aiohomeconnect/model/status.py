@@ -9,6 +9,8 @@ from typing import Any
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
+from aiohomeconnect.const import LOGGER
+
 
 @dataclass
 class Status(DataClassJSONMixin):
@@ -56,8 +58,9 @@ class StatusKey(StrEnum):
     """Represent a status key."""
 
     @classmethod
-    def _missing_(cls, _: object) -> StatusKey:
+    def _missing_(cls, value: object) -> StatusKey:
         """Return UNKNOWN for missing keys."""
+        LOGGER.debug("Unknown status key: %s", value)
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"

@@ -10,6 +10,7 @@ from httpx_sse import ServerSentEvent
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
+from aiohomeconnect.const import LOGGER
 from aiohomeconnect.model.program import OptionKey
 from aiohomeconnect.model.setting import SettingKey
 from aiohomeconnect.model.status import StatusKey
@@ -73,8 +74,9 @@ class EventKey(StrEnum):
     """Represent an event key."""
 
     @classmethod
-    def _missing_(cls, _: object) -> EventKey:
+    def _missing_(cls, value: object) -> EventKey:
         """Return UNKNOWN for missing keys."""
+        LOGGER.debug("Unknown event key: %s", value)
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"

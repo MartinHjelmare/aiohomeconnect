@@ -10,6 +10,8 @@ from mashumaro import field_options
 from mashumaro.config import BaseConfig
 from mashumaro.mixins.json import DataClassJSONMixin
 
+from aiohomeconnect.const import LOGGER
+
 
 @dataclass
 class Program(DataClassJSONMixin):
@@ -163,8 +165,9 @@ class OptionKey(StrEnum):
     """Represent an option key."""
 
     @classmethod
-    def _missing_(cls, _: object) -> OptionKey:
+    def _missing_(cls, value: object) -> OptionKey:
         """Return UNKNOWN for missing keys."""
+        LOGGER.debug("Unknown option key: %s", value)
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"
@@ -227,8 +230,9 @@ class ProgramKey(StrEnum):
     """Represent a program key."""
 
     @classmethod
-    def _missing_(cls, _: object) -> ProgramKey:
+    def _missing_(cls, value: object) -> ProgramKey:
         """Return UNKNOWN for missing keys."""
+        LOGGER.debug("Unknown program key: %s", value)
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"
