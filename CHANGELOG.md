@@ -1,16 +1,18 @@
 # Changelog
 
+## v1.0.0-rc.1 (2025-05-25)
+
 ## v0.17.0 (2025-04-04)
 
 ### Features
 
-* Add logs for unknown keys in event, program, setting and status models (#66) ([`2b5ead6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2b5ead6980e93a862bed23f3f2ae18f54f86f872))
+* Add logs for unknown keys in event, program, setting and status models ([`2b5ead6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2b5ead6980e93a862bed23f3f2ae18f54f86f872))
 
 ## v0.16.3 (2025-03-07)
 
 ### Bug fixes
 
-* Set correct request accept header (#64) ([`9ce3e7c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9ce3e7c7c14b1366fcd5709ad71132797158d3b3))
+* Set correct request accept header ([`9ce3e7c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9ce3e7c7c14b1366fcd5709ad71132797158d3b3))
 
 ## v0.16.2 (2025-03-04)
 
@@ -20,65 +22,86 @@
 
 ### Features
 
-* Improve exceptions and cli logging (#61) ([`62b1bbc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/62b1bbce54236fcba758bb0c3d8a9baec7b2c0e2))
+* Improve exceptions and cli logging ([`62b1bbc`](https://github.com/MartinHjelmare/aiohomeconnect/commit/62b1bbce54236fcba758bb0c3d8a9baec7b2c0e2))
 
 ## v0.15.1 (2025-02-27)
 
 ### Bug fixes
 
-* Missing error handling at get available commands endpoint (#60) ([`2bf902b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2bf902b795e5987eed2b758e3ed363b3e0fbbd7f))
+* Missing error handling at get available commands endpoint ([`2bf902b`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2bf902b795e5987eed2b758e3ed363b3e0fbbd7f))
 
 ## v0.15.0 (2025-02-25)
 
 ### Features
 
-* Add retry after info from rate limit error (#58) ([`675aa3f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/675aa3f8b85feb0ea1975460b45d65f53f985962))
+* Add retry after info from rate limit error ([`675aa3f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/675aa3f8b85feb0ea1975460b45d65f53f985962))
+* Add retry after info from rate limit error ([`675aa3f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/675aa3f8b85feb0ea1975460b45d65f53f985962))
+
+### Bug fixes
+
+* Correctly handle missing header ([`675aa3f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/675aa3f8b85feb0ea1975460b45d65f53f985962))
 
 ## v0.14.0 (2025-02-25)
 
 ### Features
 
-* Add cavity temperature (#59) ([`a160e37`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a160e37167038cb38b4174f210841f3ae0f9e622))
+* Add cavity temperature ([`a160e37`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a160e37167038cb38b4174f210841f3ae0f9e622))
+* Add cavity temperature ([`a160e37`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a160e37167038cb38b4174f210841f3ae0f9e622))
 
 ## v0.13.0 (2025-02-20)
 
 ### Features
 
-* Add set selected program option to cli (#57) ([`29a68cf`](https://github.com/MartinHjelmare/aiohomeconnect/commit/29a68cf686de140bd34226191f8554ea1b162946))
+* Add set selected program option to cli ([`29a68cf`](https://github.com/MartinHjelmare/aiohomeconnect/commit/29a68cf686de140bd34226191f8554ea1b162946))
 
 ### Build system
 
-* Run copier update (#54) ([`712d2b4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/712d2b45765b6f91147164c8292b96a22b500a4d))
+* Run copier update ([`712d2b4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/712d2b45765b6f91147164c8292b96a22b500a4d))
+* Run copier update ([`712d2b4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/712d2b45765b6f91147164c8292b96a22b500a4d))
+
+### Bug fixes
+
+* Install all extras in ci ([`712d2b4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/712d2b45765b6f91147164c8292b96a22b500a4d))
+
+### Documentation
+
+* Fix uv sync for dev ([`712d2b4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/712d2b45765b6f91147164c8292b96a22b500a4d))
 
 ## v0.12.3 (2025-02-01)
 
 ### Bug fixes
 
-* Make program model key optional (#53) ([`9d354ec`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9d354ec82996fae80cec1d5d9d69b712b73af80d))
+* Make program model key optional ([`9d354ec`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9d354ec82996fae80cec1d5d9d69b712b73af80d))
 
 ## v0.12.2 (2025-01-31)
 
 ### Bug fixes
 
-* Include debug log of request and response and sse event (#52) ([`9e0a719`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9e0a71921b5aca2909ac406190117c0c7aa8640b))
+* Include debug log of request and response and sse event ([`9e0a719`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9e0a71921b5aca2909ac406190117c0c7aa8640b))
 
 ## v0.12.1 (2025-01-29)
 
 ### Bug fixes
 
-* Use `raw_key` for the correct dataclasses for programs (#51) ([`a489f6e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a489f6eaaeeed7b0da8e9f6a8f5d676cbcb899d4))
+* Use `raw_key` for the correct dataclasses for programs ([`a489f6e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a489f6eaaeeed7b0da8e9f6a8f5d676cbcb899d4))
 
 ## v0.12.0 (2025-01-29)
 
 ### Features
 
-* Add `raw_key` field (#50) ([`d7ed726`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d7ed72636a2af53f3a7ced3f6f477e5e20d27ba0))
+* Add `raw_key` field ([`d7ed726`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d7ed72636a2af53f3a7ced3f6f477e5e20d27ba0))
+* Add `raw_key` field ([`d7ed726`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d7ed72636a2af53f3a7ced3f6f477e5e20d27ba0))
+
+### Bug fixes
+
+* Allow and set as default `none` for `program` dataclass ([`d7ed726`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d7ed72636a2af53f3a7ced3f6f477e5e20d27ba0))
 
 ## v0.11.4 (2025-01-25)
 
 ### Bug fixes
 
-* Ignore `none` values at models used at `put` requests (#48) ([`6d8000f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6d8000f99044a704274394cb097232943609d165))
+* Ignore `none` values at models used at `put` requests ([`6d8000f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6d8000f99044a704274394cb097232943609d165))
+* Ignore `none` values at models used at `put` requests ([`6d8000f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6d8000f99044a704274394cb097232943609d165))
 
 ## v0.11.3 (2025-01-24)
 
@@ -90,49 +113,68 @@
 
 ### Bug fixes
 
-* Fix requests that have a body (#46) ([`13134f4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/13134f4bb3d5e6409120958ef79d2e6e579af52d))
+* Fix requests that have a body ([`13134f4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/13134f4bb3d5e6409120958ef79d2e6e579af52d))
 
 ## v0.11.1 (2025-01-16)
 
 ### Bug fixes
 
-* Raise exception only on error request (#45) ([`e5479a7`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e5479a7577d208a0ed6863a083f6e689eb875b96))
+* Raise exception only on error request ([`e5479a7`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e5479a7577d208a0ed6863a083f6e689eb875b96))
 
 ## v0.11.0 (2025-01-14)
 
 ### Features
 
-* Reference options, settings, and status enum keys at events enum (#43) ([`e391340`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e391340c3af2c3545f5d6f404784e9e0a3ba7d1a))
+* Reference options, settings, and status enum keys at events enum ([`e391340`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e391340c3af2c3545f5d6f404784e9e0a3ba7d1a))
+* Reference options, settings, and status enum keys at events enum ([`e391340`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e391340c3af2c3545f5d6f404784e9e0a3ba7d1a))
+* Improve option keys exception comment at tests ([`e391340`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e391340c3af2c3545f5d6f404784e9e0a3ba7d1a))
 
 ## v0.10.0 (2025-01-13)
 
 ### Features
 
-* Raise exceptions on http errors (#44) ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Raise exceptions on http errors ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Raise exceptions on http errors ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Always handle http errors ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Use httpx codes enumeration ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Handle event stream possible exceptions ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Handle httpx exceptions ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Add generic http errors test ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
+* Common base class for all the home connect exceptions ([`112cd75`](https://github.com/MartinHjelmare/aiohomeconnect/commit/112cd75094285117201d0672072ec61d0ffcd7a5))
 
 ## v0.9.0 (2025-01-10)
 
 ### Features
 
-* Support unknown enum values (#41) ([`efced94`](https://github.com/MartinHjelmare/aiohomeconnect/commit/efced94961f56e1f6621c587113f18d067231158))
+* Support unknown enum values ([`efced94`](https://github.com/MartinHjelmare/aiohomeconnect/commit/efced94961f56e1f6621c587113f18d067231158))
+* Support unknown enum values ([`efced94`](https://github.com/MartinHjelmare/aiohomeconnect/commit/efced94961f56e1f6621c587113f18d067231158))
 
 ## v0.8.0 (2025-01-09)
 
 ### Features
 
-* Complete string enumerations and fix names (#40) ([`b92e281`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b92e2818623a4d72539eb362cbe5721d14d43e31))
+* Complete string enumerations and fix names ([`b92e281`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b92e2818623a4d72539eb362cbe5721d14d43e31))
+* Complete string enumerations ([`b92e281`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b92e2818623a4d72539eb362cbe5721d14d43e31))
+* Add vario perfect option to events ([`b92e281`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b92e2818623a4d72539eb362cbe5721d14d43e31))
+
+### Bug fixes
+
+* Use correct names at programkey enum ([`b92e281`](https://github.com/MartinHjelmare/aiohomeconnect/commit/b92e2818623a4d72539eb362cbe5721d14d43e31))
 
 ## v0.7.5 (2025-01-06)
 
 ### Bug fixes
 
-* Set default values for optional model attributes (#37) ([`bb2744a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb2744a165fbcab5e0de9a4c58e10e7d5f6a0a66))
+* Set default values for optional model attributes ([`bb2744a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb2744a165fbcab5e0de9a4c58e10e7d5f6a0a66))
+* Set default values for optional model attributes ([`bb2744a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb2744a165fbcab5e0de9a4c58e10e7d5f6a0a66))
+* Add the value of optional attributes at modeler ([`bb2744a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb2744a165fbcab5e0de9a4c58e10e7d5f6a0a66))
+* Use sorted_properties instead of properties at modeler ([`bb2744a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb2744a165fbcab5e0de9a4c58e10e7d5f6a0a66))
 
 ## v0.7.4 (2025-01-06)
 
 ### Bug fixes
 
-* Home appliance model (#36) ([`5cd6e06`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5cd6e064673bff8df9c9fc5ec4f8259682d2b58e))
+* Home appliance model ([`5cd6e06`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5cd6e064673bff8df9c9fc5ec4f8259682d2b58e))
 
 ## v0.7.3 (2024-12-20)
 
@@ -156,7 +198,13 @@
 
 ### Features
 
-* Add sse streams (#34) ([`36a53a4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/36a53a4eedac701b359857f1f75475fcec5547c3))
+* Add sse streams ([`36a53a4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/36a53a4eedac701b359857f1f75475fcec5547c3))
+* Remove sse client, just yield ([`36a53a4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/36a53a4eedac701b359857f1f75475fcec5547c3))
+* Use modeled event message isntead of raw sse event ([`36a53a4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/36a53a4eedac701b359857f1f75475fcec5547c3))
+
+### Bug fixes
+
+* Suggested changes ([`36a53a4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/36a53a4eedac701b359857f1f75475fcec5547c3))
 
 ## v0.6.4 (2024-12-07)
 
@@ -186,7 +234,9 @@
 
 ### Features
 
-* Add dishwasher keys (#31) ([`496079f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/496079fa4cc6a5e7e6d207710cc24d9a94e6c960))
+* Add dishwasher keys ([`496079f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/496079fa4cc6a5e7e6d207710cc24d9a94e6c960))
+* Add dishwasher program keys ([`496079f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/496079fa4cc6a5e7e6d207710cc24d9a94e6c960))
+* Add dishwasher option keys ([`496079f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/496079fa4cc6a5e7e6d207710cc24d9a94e6c960))
 
 ## v0.5.2 (2024-11-29)
 
@@ -204,19 +254,32 @@
 
 ### Features
 
-* Add coffee machine keys (#26) ([`d002752`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d00275212d5662f6f1b50c5e10ed370d2a90e8ea))
+* Add coffee machine keys ([`d002752`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d00275212d5662f6f1b50c5e10ed370d2a90e8ea))
+* Add coffee machine program keys ([`d002752`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d00275212d5662f6f1b50c5e10ed370d2a90e8ea))
+* Add coffee machine option keys ([`d002752`](https://github.com/MartinHjelmare/aiohomeconnect/commit/d00275212d5662f6f1b50c5e10ed370d2a90e8ea))
 
 ## v0.4.0 (2024-11-24)
 
 ### Features
 
-* Finish event keys (#25) ([`3b2d74c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3b2d74cc32571d8462be7a14e2eda65bc7f0f256))
+* Finish event keys ([`3b2d74c`](https://github.com/MartinHjelmare/aiohomeconnect/commit/3b2d74cc32571d8462be7a14e2eda65bc7f0f256))
 
 ## v0.3.0 (2024-11-24)
 
 ### Features
 
-* Add model foundation (#24) ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Add model foundation ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Add model and client methods ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Provide base for model keys ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+
+### Bug fixes
+
+* Replace number with float ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Update model with production swagger ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Adjust headers ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Handle optional items ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Update model ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
+* Update cli call ([`722f614`](https://github.com/MartinHjelmare/aiohomeconnect/commit/722f61472d375debaf73c5fb40937e1495929fac))
 
 ## v0.2.13 (2024-11-23)
 
@@ -300,7 +363,15 @@
 
 ### Features
 
-* Add swagger parser (#12) ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+* Add swagger parser ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+* Add swagger model script ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+* Add definition models ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+
+### Bug fixes
+
+* Adjust docstring indentation ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+* Adjust default headers ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
+* Use data item for now ([`aefbefa`](https://github.com/MartinHjelmare/aiohomeconnect/commit/aefbefa9378c7a505e1fca93c28dce69a3a9a46f))
 
 ## v0.1.9 (2024-10-04)
 
@@ -360,6 +431,9 @@
 
 ### Features
 
-* Add base client (#2) ([`9578126`](https://github.com/MartinHjelmare/aiohomeconnect/commit/95781265581a8231b39c76ba9c58f7df606702d5))
+* Add base client ([`9578126`](https://github.com/MartinHjelmare/aiohomeconnect/commit/95781265581a8231b39c76ba9c58f7df606702d5))
+* Add abstract auth ([`9578126`](https://github.com/MartinHjelmare/aiohomeconnect/commit/95781265581a8231b39c76ba9c58f7df606702d5))
+* Add cli to authorize and get token ([`9578126`](https://github.com/MartinHjelmare/aiohomeconnect/commit/95781265581a8231b39c76ba9c58f7df606702d5))
+* Add crude client without model ([`9578126`](https://github.com/MartinHjelmare/aiohomeconnect/commit/95781265581a8231b39c76ba9c58f7df606702d5))
 
 ## v0.0.0 (2024-01-01)
