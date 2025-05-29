@@ -1,0 +1,36 @@
+{
+  "name": "aiohomeconnect dev",
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && uv sync --all-extras && pre-commit install",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "ms-python.pylint",
+        "ms-python.vscode-pylance",
+        "visualstudioexptteam.vscodeintellicode",
+        "redhat.vscode-yaml",
+        "esbenp.prettier-vscode",
+        "GitHub.vscode-pull-request-github",
+        "GitHub.copilot"
+      ]
+    },
+    "settings": {
+      "python.experiments.optOutFrom": ["pythonTestAdapter"],
+      "python.terminal.activateEnvInCurrentTerminal": true,
+      "python.testing.pytestArgs": ["tests"],
+      "python.testing.unittestEnabled": false,
+      "python.testing.pytestEnabled": true,
+      "pylint.importStrategy": "fromEnvironment",
+      "editor.formatOnPaste": false,
+      "editor.formatOnSave": true,
+      "editor.formatOnType": true,
+      "files.trimTrailingWhitespace": true,
+      "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+      }
+    }
+  }
+}
