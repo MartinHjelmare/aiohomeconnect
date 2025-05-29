@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.17.1 (2025-05-29)
+
+### Bug fixes
+
+* Handle no content on http error (#77) ([`9779ca6`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9779ca676d7ab63c2ee5881583e376ebebe80f5b))
+
 ## v0.17.0 (2025-04-04)
 
 ### Features
