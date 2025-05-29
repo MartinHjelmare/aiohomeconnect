@@ -239,6 +239,22 @@ async def test_generic_http_error(
         await client.get_home_appliances()
 
 
+async def test_generic_http_error_no_content(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+) -> None:
+    """Test stream all events http error with no content."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances",
+        status_code=codes.IM_A_TEAPOT,
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(HomeConnectApiError):
+        await client.get_home_appliances()
+
+
 async def test_rate_limit_error(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock
 ) -> None:

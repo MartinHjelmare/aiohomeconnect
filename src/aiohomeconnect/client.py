@@ -75,7 +75,7 @@ def _raise_generic_error(response: Response) -> None:
     if response.is_error:
         raise (
             HomeConnectApiError.from_dict(error)
-            if (error := response.json().get("error"))
+            if response.content and (error := response.json().get("error"))
             else HomeConnectApiError(
                 "unknown",
                 f"Unknown HTTP error (Status code: {response.status_code})",
