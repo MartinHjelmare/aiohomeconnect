@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.18.0 (2025-06-17)
+
+### Features
+
+* Add data to debug logs (#80) ([`59efaaf`](https://github.com/MartinHjelmare/aiohomeconnect/commit/59efaafba659c951f6ffbc0df149ffa4c4ccd522))
+
 ## v0.17.1 (2025-05-29)
 
 ### Bug fixes
