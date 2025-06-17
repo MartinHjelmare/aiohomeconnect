@@ -115,7 +115,7 @@ class AbstractAuth(ABC):
         if data is not None:
             headers["content-type"] = "application/vnd.bsh.sdk.v1+json"
 
-        LOGGER.debug("Request: %s %s", method, url)
+        LOGGER.debug("Request: %s %s | Data: %s", method, url, data)
 
         try:
             response = await self.client.request(
