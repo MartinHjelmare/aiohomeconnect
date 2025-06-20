@@ -124,6 +124,7 @@ class AbstractAuth(ABC):
                 **kwargs,
                 headers=headers,
                 json={"data": data} if data is not None else None,
+                timeout=Timeout(5, read=30),
             )
         except RequestError as e:
             raise HomeConnectRequestError(f"{type(e).__name__}: {e}") from e
