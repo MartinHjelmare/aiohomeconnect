@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.18.1 (2025-06-20)
+
+### Bug fixes
+
+* Set higher timeout for requests (#81) ([`4f4de10`](https://github.com/MartinHjelmare/aiohomeconnect/commit/4f4de10af427be83c469c903f2aba225f0cf27a7))
+
 ## v0.18.0 (2025-06-17)
 
 ### Features
