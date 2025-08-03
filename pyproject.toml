@@ -50,7 +50,7 @@ dev = [
   "pre-commit==4.2.0",
   "pytest-asyncio==1.1.0",
   "pytest-httpx==0.35.0",
-  "python-semantic-release==9.21.1",
+  "python-semantic-release>=10,<11",
   "ruff==0.12.5",
   "pytest==8.4.1",
   "pytest-cov==6.2.1",
@@ -143,6 +143,7 @@ ignore_missing_imports = true
 module = "authlib.*"
 
 [tool.semantic_release]
+allow_zero_version = true
 build_command = """
 pip install uv
 uv lock
@@ -155,6 +156,8 @@ version_variables = [
   "src/aiohomeconnect/__init__.py:__version__",
   "docs/conf.py:release",
 ]
+[tool.semantic_release.commit_parser_options]
+parse_squash_commits = false
 
 [tool.semantic_release.changelog]
 exclude_commit_patterns = [
