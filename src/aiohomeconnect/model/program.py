@@ -218,6 +218,12 @@ class OptionKey(StrEnum):
     DISHCARE_DISHWASHER_SILENCE_ON_DEMAND = "Dishcare.Dishwasher.Option.SilenceOnDemand"
     DISHCARE_DISHWASHER_VARIO_SPEED_PLUS = "Dishcare.Dishwasher.Option.VarioSpeedPlus"
     DISHCARE_DISHWASHER_ZEOLITE_DRY = "Dishcare.Dishwasher.Option.ZeoliteDry"
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN_SPEED_MODE = (
+        "HeatingVentilationAirConditioning.AirConditioner.Option.FanSpeedMode"
+    )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN_SPEED_PERCENTAGE = (
+        "HeatingVentilationAirConditioning.AirConditioner.Option.FanSpeedPercentage"
+    )
     LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
     LAUNDRY_CARE_DRYER_DRYING_TARGET = "LaundryCare.Dryer.Option.DryingTarget"
     LAUNDRY_CARE_WASHER_I_DOS_1_ACTIVE = "LaundryCare.Washer.Option.IDos1Active"
@@ -401,6 +407,7 @@ class ProgramKey(StrEnum):
     COOKING_OVEN_MICROWAVE_1000_WATT = "Cooking.Oven.Program.Microwave.1000Watt"
     COOKING_OVEN_MICROWAVE_180_WATT = "Cooking.Oven.Program.Microwave.180Watt"
     COOKING_OVEN_MICROWAVE_360_WATT = "Cooking.Oven.Program.Microwave.360Watt"
+    COOKING_OVEN_MICROWAVE_450_WATT = "Cooking.Oven.Program.Microwave.450Watt"
     COOKING_OVEN_MICROWAVE_600_WATT = "Cooking.Oven.Program.Microwave.600Watt"
     COOKING_OVEN_MICROWAVE_900_WATT = "Cooking.Oven.Program.Microwave.900Watt"
     COOKING_OVEN_MICROWAVE_90_WATT = "Cooking.Oven.Program.Microwave.90Watt"
@@ -431,6 +438,24 @@ class ProgramKey(StrEnum):
     DISHCARE_DISHWASHER_QUICK_65 = "Dishcare.Dishwasher.Program.Quick65"
     DISHCARE_DISHWASHER_STEAM_FRESH = "Dishcare.Dishwasher.Program.SteamFresh"
     DISHCARE_DISHWASHER_SUPER_60 = "Dishcare.Dishwasher.Program.Super60"
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_ACTIVE_CLEAN = (
+        "HeatingVentilationAirConditioning.AirConditioner.Program.ActiveClean"
+    )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_AUTO = (
+        "HeatingVentilationAirConditioning.AirConditioner.Program.Auto"
+    )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_COOL = (
+        "HeatingVentilationAirConditioning.AirConditioner.Program.Cool"
+    )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_DRY = (
+        "HeatingVentilationAirConditioning.AirConditioner.Program.Dry"
+    )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN = (
+        "HeatingVentilationAirConditioning.AirConditioner.Program.Fan"
+    )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_HEAT = (
+        "HeatingVentilationAirConditioning.AirConditioner.Program.Heat"
+    )
     LAUNDRY_CARE_DRYER_ANTI_SHRINK = "LaundryCare.Dryer.Program.AntiShrink"
     LAUNDRY_CARE_DRYER_BLANKETS = "LaundryCare.Dryer.Program.Blankets"
     LAUNDRY_CARE_DRYER_BUSINESS_SHIRTS = "LaundryCare.Dryer.Program.BusinessShirts"
