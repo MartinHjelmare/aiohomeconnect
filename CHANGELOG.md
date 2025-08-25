@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.19.0 (2025-08-25)
+
+### Features
+
+- Add features related to new appliances
+  ([#95](https://github.com/MartinHjelmare/aiohomeconnect/pull/95),
+  [`0b5cb1d`](https://github.com/MartinHjelmare/aiohomeconnect/commit/0b5cb1db0eaddea16987a5c39356db55b7259272))
+
+
 ## v0.18.1 (2025-06-20)
 
 ### Bug Fixes
