@@ -180,6 +180,9 @@ class OptionKey(StrEnum):
     CONSUMER_PRODUCTS_CLEANING_ROBOT_REFERENCE_MAP_ID = (
         "ConsumerProducts.CleaningRobot.Option.ReferenceMapId"
     )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_SUCTION_POWER = (
+        "ConsumerProducts.CleaningRobot.Option.SuctionPower"
+    )
     CONSUMER_PRODUCTS_COFFEE_MAKER_BEAN_AMOUNT = (
         "ConsumerProducts.CoffeeMaker.Option.BeanAmount"
     )
