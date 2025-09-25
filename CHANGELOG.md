@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.20.0 (2025-09-25)
+
+### Features
+
+- Add Spotless series related features
+  ([#103](https://github.com/MartinHjelmare/aiohomeconnect/pull/103),
+  [`c0b5a81`](https://github.com/MartinHjelmare/aiohomeconnect/commit/c0b5a8149a69c84680b03aaf50f009ab7405cee5))
+
+
 ## v0.19.0 (2025-08-25)
 
 ### Features
