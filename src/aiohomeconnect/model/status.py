@@ -68,6 +68,9 @@ class StatusKey(StrEnum):
     BSH_COMMON_BATTERY_LEVEL = "BSH.Common.Status.BatteryLevel"
     BSH_COMMON_CHARGING_CONNECTION = "BSH.Common.Status.ChargingConnection"
     BSH_COMMON_DOOR_STATE = "BSH.Common.Status.DoorState"
+    BSH_COMMON_INTERIOR_ILLUMINATION_ACTIVE = (
+        "BSH.Common.Status.InteriorIlluminationActive"
+    )
     BSH_COMMON_LOCAL_CONTROL_ACTIVE = "BSH.Common.Status.LocalControlActive"
     BSH_COMMON_OPERATION_STATE = "BSH.Common.Status.OperationState"
     BSH_COMMON_REMOTE_CONTROL_ACTIVE = "BSH.Common.Status.RemoteControlActive"
