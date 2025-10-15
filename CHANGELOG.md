@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.22.0 (2025-10-15)
+
+### Features
+
+- Add more washer options and stop program event
+  ([#107](https://github.com/MartinHjelmare/aiohomeconnect/pull/107),
+  [`5ad11fe`](https://github.com/MartinHjelmare/aiohomeconnect/commit/5ad11fe0d231be42fc8c37834f95e5f43706272f))
+
+
 ## v0.21.0 (2025-10-15)
 
 ### Features
