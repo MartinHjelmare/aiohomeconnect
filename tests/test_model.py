@@ -35,10 +35,8 @@ async def test_options_settings_status_references_at_events() -> None:
             # Exceptions: These keys are not in the API documentation
             # as program options although they have "Option" in the key
             EventKey.BSH_COMMON_OPTION_ELAPSED_PROGRAM_TIME,
-            EventKey.BSH_COMMON_OPTION_ESTIMATED_TOTAL_PROGRAM_TIME,
             EventKey.BSH_COMMON_OPTION_PROGRAM_PROGRESS,
             EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME,
-            EventKey.BSH_COMMON_OPTION_REMAINING_PROGRAM_TIME_IS_ESTIMATED,
             EventKey.CONSUMER_PRODUCTS_CLEANING_ROBOT_OPTION_PROCESS_PHASE,
         ):
             assert event_key in OptionKey.__members__.values(), (

@@ -172,7 +172,13 @@ class OptionKey(StrEnum):
 
     UNKNOWN = "unknown"
     BSH_COMMON_DURATION = "BSH.Common.Option.Duration"
+    BSH_COMMON_ESTIMATED_TOTAL_PROGRAM_TIME = (
+        "BSH.Common.Option.EstimatedTotalProgramTime"
+    )
     BSH_COMMON_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
+    BSH_COMMON_REMAINING_PROGRAM_TIME_IS_ESTIMATED = (
+        "BSH.Common.Option.RemainingProgramTimeIsEstimated"
+    )
     BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
@@ -228,10 +234,23 @@ class OptionKey(StrEnum):
         "HeatingVentilationAirConditioning.AirConditioner.Option.FanSpeedPercentage"
     )
     LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
+    LAUNDRY_CARE_COMMON_LOAD_RECOMMENDATION = (
+        "LaundryCare.Common.Option.LoadRecommendation"
+    )
+    LAUNDRY_CARE_COMMON_SILENT_MODE = "LaundryCare.Common.Option.SilentMode"
     LAUNDRY_CARE_DRYER_DRYING_TARGET = "LaundryCare.Dryer.Option.DryingTarget"
     LAUNDRY_CARE_WASHER_I_DOS_1_ACTIVE = "LaundryCare.Washer.Option.IDos1Active"
     LAUNDRY_CARE_WASHER_I_DOS_2_ACTIVE = "LaundryCare.Washer.Option.IDos2Active"
+    LAUNDRY_CARE_WASHER_INTENSIVE_PLUS = "LaundryCare.Washer.Option.IntensivePlus"
+    LAUNDRY_CARE_WASHER_LESS_IRONING = "LaundryCare.Washer.Option.LessIroning"
+    LAUNDRY_CARE_WASHER_MINI_LOAD = "LaundryCare.Washer.Option.MiniLoad"
+    LAUNDRY_CARE_WASHER_PREWASH = "LaundryCare.Washer.Option.Prewash"
+    LAUNDRY_CARE_WASHER_RINSE_HOLD = "LaundryCare.Washer.Option.RinseHold"
+    LAUNDRY_CARE_WASHER_RINSE_PLUS = "LaundryCare.Washer.Option.RinsePlus"
+    LAUNDRY_CARE_WASHER_SOAK = "LaundryCare.Washer.Option.Soak"
     LAUNDRY_CARE_WASHER_SPIN_SPEED = "LaundryCare.Washer.Option.SpinSpeed"
+    LAUNDRY_CARE_WASHER_STAINS = "LaundryCare.Washer.Option.Stains"
+    LAUNDRY_CARE_WASHER_WATER_PLUS = "LaundryCare.Washer.Option.WaterPlus"
     LAUNDRY_CARE_WASHER_TEMPERATURE = "LaundryCare.Washer.Option.Temperature"
 
 
