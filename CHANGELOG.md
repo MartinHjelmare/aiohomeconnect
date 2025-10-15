@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.21.0 (2025-10-15)
+
+### Features
+
+- Add interior illuminance active status
+  ([#106](https://github.com/MartinHjelmare/aiohomeconnect/pull/106),
+  [`8be5262`](https://github.com/MartinHjelmare/aiohomeconnect/commit/8be526226303b81f6b571b568b036592c93429a9))
+
+
 ## v0.20.0 (2025-09-25)
 
 ### Features
