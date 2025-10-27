@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.23.0 (2025-10-27)
+
+### Features
+
+- Add intelligent program ([#108](https://github.com/MartinHjelmare/aiohomeconnect/pull/108),
+  [`e3f8282`](https://github.com/MartinHjelmare/aiohomeconnect/commit/e3f8282e772dbe38519f8cd42520535cda7c7397))
+
+
 ## v0.22.0 (2025-10-15)
 
 ### Features
