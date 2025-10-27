@@ -460,6 +460,7 @@ class ProgramKey(StrEnum):
     DISHCARE_DISHWASHER_QUICK_65 = "Dishcare.Dishwasher.Program.Quick65"
     DISHCARE_DISHWASHER_STEAM_FRESH = "Dishcare.Dishwasher.Program.SteamFresh"
     DISHCARE_DISHWASHER_SUPER_60 = "Dishcare.Dishwasher.Program.Super60"
+    DISHCARE_DISHWASHER_LEARNINGDISHWASHER = "Dishcare.Dishwasher.Program.LearningDishwasher"
     HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_ACTIVE_CLEAN = (
         "HeatingVentilationAirConditioning.AirConditioner.Program.ActiveClean"
     )
