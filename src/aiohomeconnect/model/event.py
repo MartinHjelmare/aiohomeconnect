@@ -32,7 +32,7 @@ class Event(DataClassJSONMixin):
     timestamp: int
     level: str
     handling: str
-    value: str | int | float | bool
+    value: str | int | float | bool | None
     name: str | None = None
     uri: str | None = None
     display_value: str | None = field(
