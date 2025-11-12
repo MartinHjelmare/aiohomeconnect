@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.23.1 (2025-11-12)
+
+### Bug Fixes
+
+- Allow None values at event model
+  ([#110](https://github.com/MartinHjelmare/aiohomeconnect/pull/110),
+  [`0307a54`](https://github.com/MartinHjelmare/aiohomeconnect/commit/0307a54f5cacf2ed94b8afb7715c940a4f520b11))
+
+
 ## v0.23.0 (2025-10-27)
 
 ### Features
