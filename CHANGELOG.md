@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.24.0 (2025-12-01)
+
+### Features
+
+- Add new washer machine programs
+  ([#113](https://github.com/MartinHjelmare/aiohomeconnect/pull/113),
+  [`babd2ee`](https://github.com/MartinHjelmare/aiohomeconnect/commit/babd2ee07c4e33b0eeea39b3e45b62f55088f1e5))
+
+
 ## v0.23.1 (2025-11-12)
 
 ### Bug Fixes
