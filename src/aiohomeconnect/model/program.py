@@ -539,17 +539,20 @@ class ProgramKey(StrEnum):
     LAUNDRY_CARE_WASHER_DOWN_DUVET_DUVET = "LaundryCare.Washer.Program.DownDuvet.Duvet"
     LAUNDRY_CARE_WASHER_DRUM_CLEAN = "LaundryCare.Washer.Program.DrumClean"
     LAUNDRY_CARE_WASHER_EASY_CARE = "LaundryCare.Washer.Program.EasyCare"
+    LAUNDRY_CARE_WASHER_HYGIENE_PLUS = "LaundryCare.Washer.Program.HygienePlus"
     LAUNDRY_CARE_WASHER_MIX = "LaundryCare.Washer.Program.Mix"
     LAUNDRY_CARE_WASHER_MIX_NIGHT_WASH = "LaundryCare.Washer.Program.Mix.NightWash"
     LAUNDRY_CARE_WASHER_MONSOON = "LaundryCare.Washer.Program.Monsoon"
     LAUNDRY_CARE_WASHER_OUTDOOR = "LaundryCare.Washer.Program.Outdoor"
     LAUNDRY_CARE_WASHER_PLUSH_TOY = "LaundryCare.Washer.Program.PlushToy"
     LAUNDRY_CARE_WASHER_POWER_SPEED_59 = "LaundryCare.Washer.Program.PowerSpeed59"
+    LAUNDRY_CARE_WASHER_RINSE = "LaundryCare.Washer.Program.Rinse"
     LAUNDRY_CARE_WASHER_RINSE_RINSE_SPIN_DRAIN = (
         "LaundryCare.Washer.Program.Rinse.RinseSpinDrain"
     )
     LAUNDRY_CARE_WASHER_SENSITIVE = "LaundryCare.Washer.Program.Sensitive"
     LAUNDRY_CARE_WASHER_SHIRTS_BLOUSES = "LaundryCare.Washer.Program.ShirtsBlouses"
+    LAUNDRY_CARE_WASHER_SPIN_SPIN_DRAIN = "LaundryCare.Washer.Program.Spin.SpinDrain"
     LAUNDRY_CARE_WASHER_SPORT_FITNESS = "LaundryCare.Washer.Program.SportFitness"
     LAUNDRY_CARE_WASHER_SUPER_153045_SUPER_15 = (
         "LaundryCare.Washer.Program.Super153045.Super15"
