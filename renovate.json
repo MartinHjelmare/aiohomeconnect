@@ -11,6 +11,10 @@
       "matchPackageNames": ["*httpx*"]
     },
     {
+      "groupName": "pytest",
+      "matchPackageNames": ["*pytest*"]
+    },
+    {
       "matchDepTypes": ["dependencies"],
       "major": {
         "semanticCommitType": "fix"
