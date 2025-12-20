@@ -172,6 +172,7 @@ class OptionKey(StrEnum):
 
     UNKNOWN = "unknown"
     BSH_COMMON_DURATION = "BSH.Common.Option.Duration"
+    BSH_COMMON_ENERGY_FORECAST = "BSH.Common.Option.EnergyForecast"
     BSH_COMMON_ESTIMATED_TOTAL_PROGRAM_TIME = (
         "BSH.Common.Option.EstimatedTotalProgramTime"
     )
@@ -180,6 +181,7 @@ class OptionKey(StrEnum):
         "BSH.Common.Option.RemainingProgramTimeIsEstimated"
     )
     BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
+    BSH_COMMON_WATER_FORECAST = "BSH.Common.Option.WaterForecast"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
     )
