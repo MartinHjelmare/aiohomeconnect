@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.26.0 (2025-12-22)
+
+### Features
+
+- Add resource forecast options ([#123](https://github.com/MartinHjelmare/aiohomeconnect/pull/123),
+  [`fe8c074`](https://github.com/MartinHjelmare/aiohomeconnect/commit/fe8c074e0413f45a332f4ca0a4cf5a4f011927c7))
+
+
 ## v0.25.0 (2025-12-22)
 
 ### Features
