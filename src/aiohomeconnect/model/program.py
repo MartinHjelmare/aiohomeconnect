@@ -172,11 +172,14 @@ class OptionKey(StrEnum):
 
     UNKNOWN = "unknown"
     BSH_COMMON_DURATION = "BSH.Common.Option.Duration"
+    BSH_COMMON_ELAPSED_PROGRAM_TIME = "BSH.Common.Option.ElapsedProgramTime"
     BSH_COMMON_ENERGY_FORECAST = "BSH.Common.Option.EnergyForecast"
     BSH_COMMON_ESTIMATED_TOTAL_PROGRAM_TIME = (
         "BSH.Common.Option.EstimatedTotalProgramTime"
     )
     BSH_COMMON_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
+    BSH_COMMON_PROGRAM_PROGRESS = "BSH.Common.Option.ProgramProgress"
+    BSH_COMMON_REMAINING_PROGRAM_TIME = "BSH.Common.Option.RemainingProgramTime"
     BSH_COMMON_REMAINING_PROGRAM_TIME_IS_ESTIMATED = (
         "BSH.Common.Option.RemainingProgramTimeIsEstimated"
     )
@@ -184,6 +187,9 @@ class OptionKey(StrEnum):
     BSH_COMMON_WATER_FORECAST = "BSH.Common.Option.WaterForecast"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_CLEANING_MODE = (
         "ConsumerProducts.CleaningRobot.Option.CleaningMode"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_PROCESS_PHASE = (
+        "ConsumerProducts.CleaningRobot.Option.ProcessPhase"
     )
     CONSUMER_PRODUCTS_CLEANING_ROBOT_REFERENCE_MAP_ID = (
         "ConsumerProducts.CleaningRobot.Option.ReferenceMapId"
@@ -436,6 +442,7 @@ class ProgramKey(StrEnum):
     COOKING_OVEN_MICROWAVE_900_WATT = "Cooking.Oven.Program.Microwave.900Watt"
     COOKING_OVEN_MICROWAVE_90_WATT = "Cooking.Oven.Program.Microwave.90Watt"
     COOKING_OVEN_MICROWAVE_MAX = "Cooking.Oven.Program.Microwave.Max"
+    COOKING_OVEN_STEAM_MODES_STEAM = "Cooking.Oven.Program.SteamModes.Steam"
     DISHCARE_DISHWASHER_AUTO_1 = "Dishcare.Dishwasher.Program.Auto1"
     DISHCARE_DISHWASHER_AUTO_2 = "Dishcare.Dishwasher.Program.Auto2"
     DISHCARE_DISHWASHER_AUTO_3 = "Dishcare.Dishwasher.Program.Auto3"
