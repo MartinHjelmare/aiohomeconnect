@@ -434,6 +434,7 @@ class ProgramKey(StrEnum):
     COOKING_OVEN_MICROWAVE_900_WATT = "Cooking.Oven.Program.Microwave.900Watt"
     COOKING_OVEN_MICROWAVE_90_WATT = "Cooking.Oven.Program.Microwave.90Watt"
     COOKING_OVEN_MICROWAVE_MAX = "Cooking.Oven.Program.Microwave.Max"
+    COOKING_OVEN_STEAM_MODES_STEAM = "Cooking.Oven.Program.SteamModes.Steam"
     DISHCARE_DISHWASHER_AUTO_1 = "Dishcare.Dishwasher.Program.Auto1"
     DISHCARE_DISHWASHER_AUTO_2 = "Dishcare.Dishwasher.Program.Auto2"
     DISHCARE_DISHWASHER_AUTO_3 = "Dishcare.Dishwasher.Program.Auto3"
