@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.25.0 (2025-12-22)
+
+### Features
+
+- Add steam program ([#122](https://github.com/MartinHjelmare/aiohomeconnect/pull/122),
+  [`6bb7629`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6bb762902d68b1f4cc069fc15f2535e92fdf52a8))
+
+
 ## v0.24.0 (2025-12-01)
 
 ### Features
