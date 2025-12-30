@@ -178,6 +178,7 @@ class OptionKey(StrEnum):
         "BSH.Common.Option.EstimatedTotalProgramTime"
     )
     BSH_COMMON_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
+    BSH_COMMON_PROGRAM_FAVORITE_001 = "BSH.Common.Program.Favorite.001"
     BSH_COMMON_PROGRAM_PROGRESS = "BSH.Common.Option.ProgramProgress"
     BSH_COMMON_REMAINING_PROGRAM_TIME = "BSH.Common.Option.RemainingProgramTime"
     BSH_COMMON_REMAINING_PROGRAM_TIME_IS_ESTIMATED = (
@@ -455,6 +456,9 @@ class ProgramKey(StrEnum):
     DISHCARE_DISHWASHER_GLASS_CARE = "Dishcare.Dishwasher.Program.GlassCare"
     DISHCARE_DISHWASHER_INTENSIV_45 = "Dishcare.Dishwasher.Program.Intensiv45"
     DISHCARE_DISHWASHER_INTENSIV_70 = "Dishcare.Dishwasher.Program.Intensiv70"
+    DISHCARE_DISHWASHER_INTENSIVE_FIXED_ZONE = (
+        "Dishcare.Dishwasher.Program.IntensiveFixedZone"
+    )
     DISHCARE_DISHWASHER_INTENSIV_POWER = "Dishcare.Dishwasher.Program.IntensivPower"
     DISHCARE_DISHWASHER_KURZ_60 = "Dishcare.Dishwasher.Program.Kurz60"
     DISHCARE_DISHWASHER_LEARNING_DISHWASHER = (
