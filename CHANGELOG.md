@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.27.0 (2026-01-05)
+
+### Features
+
+- Add hot air gentle program ([#127](https://github.com/MartinHjelmare/aiohomeconnect/pull/127),
+  [`37f27af`](https://github.com/MartinHjelmare/aiohomeconnect/commit/37f27afdb4d775e04dddb99dafd689859a155987))
+
+
 ## v0.26.0 (2025-12-22)
 
 ### Features
