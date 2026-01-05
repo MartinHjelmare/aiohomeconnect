@@ -391,6 +391,9 @@ class ProgramKey(StrEnum):
         "Cooking.Oven.Program.HeatingMode.FrozenHeatupSpecial"
     )
     COOKING_OVEN_HEATING_MODE_HOT_AIR = "Cooking.Oven.Program.HeatingMode.HotAir"
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_GENTLE = (
+        "Cooking.Oven.Program.HeatingMode.HotAirGentle"
+    )
     COOKING_OVEN_HEATING_MODE_HOT_AIR_100_STEAM = (
         "Cooking.Oven.Program.HeatingMode.HotAir100Steam"
     )
