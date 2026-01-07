@@ -459,6 +459,9 @@ class ProgramKey(StrEnum):
     DISHCARE_DISHWASHER_INTENSIV_45 = "Dishcare.Dishwasher.Program.Intensiv45"
     DISHCARE_DISHWASHER_INTENSIV_70 = "Dishcare.Dishwasher.Program.Intensiv70"
     DISHCARE_DISHWASHER_INTENSIV_POWER = "Dishcare.Dishwasher.Program.IntensivPower"
+    DISHCARE_DISHWASHER_INTENSIVE_FIXED_ZONE = (
+        "Dishcare.Dishwasher.Program.IntensiveFixedZone"
+    )
     DISHCARE_DISHWASHER_KURZ_60 = "Dishcare.Dishwasher.Program.Kurz60"
     DISHCARE_DISHWASHER_LEARNING_DISHWASHER = (
         "Dishcare.Dishwasher.Program.LearningDishwasher"
