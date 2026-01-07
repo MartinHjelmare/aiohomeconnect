@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.28.0 (2026-01-07)
+
+### Features
+
+- Add "Intensive Fixed Zone" dishwasher program
+  ([#128](https://github.com/MartinHjelmare/aiohomeconnect/pull/128),
+  [`68ac231`](https://github.com/MartinHjelmare/aiohomeconnect/commit/68ac231e35dcde0957f411af6280d07793892a30))
+
+
 ## v0.27.0 (2026-01-05)
 
 ### Features
