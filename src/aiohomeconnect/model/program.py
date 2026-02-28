@@ -553,6 +553,9 @@ class ProgramKey(StrEnum):
     LAUNDRY_CARE_WASHER_DESSOUS = "LaundryCare.Washer.Program.Dessous"
     LAUNDRY_CARE_WASHER_DOWN_DUVET_DUVET = "LaundryCare.Washer.Program.DownDuvet.Duvet"
     LAUNDRY_CARE_WASHER_DRUM_CLEAN = "LaundryCare.Washer.Program.DrumClean"
+    LAUNDRY_CARE_WASHER_DRUM_CLEAN_70 = (
+        "LaundryCare.Washer.Program.DrumClean.DrumClean70.DrumClean70"
+    )
     LAUNDRY_CARE_WASHER_EASY_CARE = "LaundryCare.Washer.Program.EasyCare"
     LAUNDRY_CARE_WASHER_HYGIENE_PLUS = "LaundryCare.Washer.Program.HygienePlus"
     LAUNDRY_CARE_WASHER_MIX = "LaundryCare.Washer.Program.Mix"
