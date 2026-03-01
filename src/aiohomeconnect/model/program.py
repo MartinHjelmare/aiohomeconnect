@@ -171,6 +171,7 @@ class OptionKey(StrEnum):
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"
+    BSH_COMMON_BASE_PROGRAM = "BSH.Common.Option.BaseProgram"
     BSH_COMMON_DURATION = "BSH.Common.Option.Duration"
     BSH_COMMON_ELAPSED_PROGRAM_TIME = "BSH.Common.Option.ElapsedProgramTime"
     BSH_COMMON_ENERGY_FORECAST = "BSH.Common.Option.EnergyForecast"
@@ -178,10 +179,14 @@ class OptionKey(StrEnum):
         "BSH.Common.Option.EstimatedTotalProgramTime"
     )
     BSH_COMMON_FINISH_IN_RELATIVE = "BSH.Common.Option.FinishInRelative"
+    BSH_COMMON_PROGRAM_NAME = "BSH.Common.Option.ProgramName"
     BSH_COMMON_PROGRAM_PROGRESS = "BSH.Common.Option.ProgramProgress"
     BSH_COMMON_REMAINING_PROGRAM_TIME = "BSH.Common.Option.RemainingProgramTime"
     BSH_COMMON_REMAINING_PROGRAM_TIME_IS_ESTIMATED = (
         "BSH.Common.Option.RemainingProgramTimeIsEstimated"
+    )
+    BSH_COMMON_SMART_ENERGY_SERVICE_SMART_START_ENABLED = (
+        "BSH.Common.Option.SmartEnergyService.SmartStartEnabled"
     )
     BSH_COMMON_START_IN_RELATIVE = "BSH.Common.Option.StartInRelative"
     BSH_COMMON_WATER_FORECAST = "BSH.Common.Option.WaterForecast"
