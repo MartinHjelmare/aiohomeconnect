@@ -277,6 +277,7 @@ class ProgramKey(StrEnum):
         return cls.UNKNOWN
 
     UNKNOWN = "unknown"
+    BSH_COMMON_FAVORITE_001 = "BSH.Common.Program.Favorite.001"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
     )
