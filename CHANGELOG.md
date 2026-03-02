@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.30.0 (2026-03-02)
+
+### Features
+
+- Add favorite 001 program key ([#133](https://github.com/MartinHjelmare/aiohomeconnect/pull/133),
+  [`9d7289e`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9d7289e1f787e1fddd76f7a890c227e4a85173a3))
+
+
 ## v0.29.0 (2026-03-02)
 
 ### Features
