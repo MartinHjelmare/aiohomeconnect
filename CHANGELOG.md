@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.29.0 (2026-03-02)
+
+### Features
+
+- Add some new common options ([#132](https://github.com/MartinHjelmare/aiohomeconnect/pull/132),
+  [`f8e0efe`](https://github.com/MartinHjelmare/aiohomeconnect/commit/f8e0efe0e0f92fa444264764092c4172a79c8c20))
+
+
 ## v0.28.0 (2026-01-07)
 
 ### Features
