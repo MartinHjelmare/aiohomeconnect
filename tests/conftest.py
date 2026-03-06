@@ -7,7 +7,7 @@ import pytest
 
 
 @pytest.fixture
-async def httpx_client() -> AsyncGenerator[AsyncClient, None]:
+async def httpx_client() -> AsyncGenerator[AsyncClient]:
     """Return an authenticated HTTP client."""
     async with AsyncClient() as client:
         yield client
