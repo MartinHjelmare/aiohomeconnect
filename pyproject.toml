@@ -17,7 +17,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
 ]
 description = "An asyncio client for the Home Connect API."
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 name = "aiohomeconnect"
 readme = "README.md"
 requires-python = ">=3.11"
