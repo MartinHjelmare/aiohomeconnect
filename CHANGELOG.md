@@ -2,6 +2,18 @@
 
 <!-- version list -->
 
+## v0.31.0 (2026-03-06)
+
+### Chores
+
+- Require Python 3.13 ([#136](https://github.com/MartinHjelmare/aiohomeconnect/pull/136),
+  [`bb81249`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bb81249c30778c811a6ef46a2d126416f7e7226b))
+
+### Breaking Changes
+
+- Drop support for Python 3.11 and 3.12
+
+
 ## v0.30.0 (2026-03-02)
 
 ### Features
