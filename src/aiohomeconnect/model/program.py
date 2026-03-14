@@ -389,9 +389,15 @@ class ProgramKey(StrEnum):
     COOKING_OVEN_HEATING_MODE_BOTTOM_HEATING = (
         "Cooking.Oven.Program.HeatingMode.BottomHeating"
     )
+    COOKING_OVEN_HEATING_MODE_BREAD_BAKING = (
+        "Cooking.Oven.Program.HeatingMode.BreadBaking"
+    )
     COOKING_OVEN_HEATING_MODE_DEFROST = "Cooking.Oven.Program.HeatingMode.Defrost"
     COOKING_OVEN_HEATING_MODE_DESICCATION = (
         "Cooking.Oven.Program.HeatingMode.Desiccation"
+    )
+    COOKING_OVEN_HEATING_MODE_DOUGH_PROVING = (
+        "Cooking.Oven.Program.HeatingMode.DoughProving"
     )
     COOKING_OVEN_HEATING_MODE_FROZEN_HEATUP_SPECIAL = (
         "Cooking.Oven.Program.HeatingMode.FrozenHeatupSpecial"
