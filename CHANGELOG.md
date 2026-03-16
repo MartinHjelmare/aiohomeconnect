@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.32.0 (2026-03-16)
+
+### Features
+
+- Add bread baking and dough proving program keys
+  ([#137](https://github.com/MartinHjelmare/aiohomeconnect/pull/137),
+  [`6907531`](https://github.com/MartinHjelmare/aiohomeconnect/commit/6907531c5b0cdea0dda4d0c48a406f2602701c95))
+
+
 ## v0.31.0 (2026-03-06)
 
 ### Chores
