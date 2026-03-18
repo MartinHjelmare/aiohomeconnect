@@ -386,6 +386,8 @@ class ProgramKey(StrEnum):
     COOKING_COMMON_HOOD_AUTOMATIC = "Cooking.Common.Program.Hood.Automatic"
     COOKING_COMMON_HOOD_DELAYED_SHUT_OFF = "Cooking.Common.Program.Hood.DelayedShutOff"
     COOKING_COMMON_HOOD_VENTING = "Cooking.Common.Program.Hood.Venting"
+    COOKING_OVEN_HEATING_MODE_3D_HOT_AIR = "Cooking.Oven.Program.HeatingMode.3DHotAir"
+    COOKING_OVEN_HEATING_MODE_AIR_FRY = "Cooking.Oven.Program.HeatingMode.AirFry"
     COOKING_OVEN_HEATING_MODE_BOTTOM_HEATING = (
         "Cooking.Oven.Program.HeatingMode.BottomHeating"
     )
@@ -401,6 +403,12 @@ class ProgramKey(StrEnum):
     )
     COOKING_OVEN_HEATING_MODE_FROZEN_HEATUP_SPECIAL = (
         "Cooking.Oven.Program.HeatingMode.FrozenHeatupSpecial"
+    )
+    COOKING_OVEN_HEATING_MODE_GRILL_LARGE_AREA = (
+        "Cooking.Oven.Program.HeatingMode.GrillLargeArea"
+    )
+    COOKING_OVEN_HEATING_MODE_GRILL_SMALL_AREA = (
+        "Cooking.Oven.Program.HeatingMode.GrillSmallArea"
     )
     COOKING_OVEN_HEATING_MODE_HOT_AIR = "Cooking.Oven.Program.HeatingMode.HotAir"
     COOKING_OVEN_HEATING_MODE_HOT_AIR_GENTLE = (
