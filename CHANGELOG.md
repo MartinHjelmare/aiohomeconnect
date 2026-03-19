@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.33.0 (2026-03-19)
+
+### Features
+
+- Add 3d hot air and grill programs
+  ([#138](https://github.com/MartinHjelmare/aiohomeconnect/pull/138),
+  [`a9995de`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a9995de11d76fe8cc746642e630fb2b8ed1c014d))
+
+
 ## v0.32.0 (2026-03-16)
 
 ### Features
