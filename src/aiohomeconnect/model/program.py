@@ -278,6 +278,7 @@ class ProgramKey(StrEnum):
 
     UNKNOWN = "unknown"
     BSH_COMMON_FAVORITE_001 = "BSH.Common.Program.Favorite.001"
+    BSH_COMMON_FAVORITE_002 = "BSH.Common.Program.Favorite.002"
     CONSUMER_PRODUCTS_CLEANING_ROBOT_BASIC_GO_HOME = (
         "ConsumerProducts.CleaningRobot.Program.Basic.GoHome"
     )
@@ -325,6 +326,12 @@ class ProgramKey(StrEnum):
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_X_L_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.XLCoffee"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_APPLIANCE_ON_RINSING = (
+        "ConsumerProducts.CoffeeMaker.Program.CleaningModes.ApplianceOnRinsing"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_APPLIANCE_OFF_RINSING = (
+        "ConsumerProducts.CoffeeMaker.Program.CleaningModes.ApplianceOffRinsing"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_AMERICANO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Americano"
