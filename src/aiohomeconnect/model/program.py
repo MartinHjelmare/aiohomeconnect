@@ -246,11 +246,11 @@ class OptionKey(StrEnum):
     HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN_SPEED_PERCENTAGE = (
         "HeatingVentilationAirConditioning.AirConditioner.Option.FanSpeedPercentage"
     )
-    LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
     LAUNDRY_CARE_COMMON_LOAD_RECOMMENDATION = (
         "LaundryCare.Common.Option.LoadRecommendation"
     )
     LAUNDRY_CARE_COMMON_SILENT_MODE = "LaundryCare.Common.Option.SilentMode"
+    LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
     LAUNDRY_CARE_DRYER_DRYING_TARGET = "LaundryCare.Dryer.Option.DryingTarget"
     LAUNDRY_CARE_WASHER_I_DOS_1_ACTIVE = "LaundryCare.Washer.Option.IDos1Active"
     LAUNDRY_CARE_WASHER_I_DOS_2_ACTIVE = "LaundryCare.Washer.Option.IDos2Active"
@@ -263,8 +263,8 @@ class OptionKey(StrEnum):
     LAUNDRY_CARE_WASHER_SOAK = "LaundryCare.Washer.Option.Soak"
     LAUNDRY_CARE_WASHER_SPIN_SPEED = "LaundryCare.Washer.Option.SpinSpeed"
     LAUNDRY_CARE_WASHER_STAINS = "LaundryCare.Washer.Option.Stains"
-    LAUNDRY_CARE_WASHER_WATER_PLUS = "LaundryCare.Washer.Option.WaterPlus"
     LAUNDRY_CARE_WASHER_TEMPERATURE = "LaundryCare.Washer.Option.Temperature"
+    LAUNDRY_CARE_WASHER_WATER_PLUS = "LaundryCare.Washer.Option.WaterPlus"
 
 
 class ProgramKey(StrEnum):
@@ -327,11 +327,11 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_X_L_COFFEE = (
         "ConsumerProducts.CoffeeMaker.Program.Beverage.XLCoffee"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_APPLIANCE_ON_RINSING = (
-        "ConsumerProducts.CoffeeMaker.Program.CleaningModes.ApplianceOnRinsing"
-    )
     CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_APPLIANCE_OFF_RINSING = (
         "ConsumerProducts.CoffeeMaker.Program.CleaningModes.ApplianceOffRinsing"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_APPLIANCE_ON_RINSING = (
+        "ConsumerProducts.CoffeeMaker.Program.CleaningModes.ApplianceOnRinsing"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_COFFEE_WORLD_AMERICANO = (
         "ConsumerProducts.CoffeeMaker.Program.CoffeeWorld.Americano"
@@ -418,9 +418,6 @@ class ProgramKey(StrEnum):
         "Cooking.Oven.Program.HeatingMode.GrillSmallArea"
     )
     COOKING_OVEN_HEATING_MODE_HOT_AIR = "Cooking.Oven.Program.HeatingMode.HotAir"
-    COOKING_OVEN_HEATING_MODE_HOT_AIR_GENTLE = (
-        "Cooking.Oven.Program.HeatingMode.HotAirGentle"
-    )
     COOKING_OVEN_HEATING_MODE_HOT_AIR_100_STEAM = (
         "Cooking.Oven.Program.HeatingMode.HotAir100Steam"
     )
@@ -434,6 +431,9 @@ class ProgramKey(StrEnum):
         "Cooking.Oven.Program.HeatingMode.HotAir80Steam"
     )
     COOKING_OVEN_HEATING_MODE_HOT_AIR_ECO = "Cooking.Oven.Program.HeatingMode.HotAirEco"
+    COOKING_OVEN_HEATING_MODE_HOT_AIR_GENTLE = (
+        "Cooking.Oven.Program.HeatingMode.HotAirGentle"
+    )
     COOKING_OVEN_HEATING_MODE_HOT_AIR_GRILLING = (
         "Cooking.Oven.Program.HeatingMode.HotAirGrilling"
     )
