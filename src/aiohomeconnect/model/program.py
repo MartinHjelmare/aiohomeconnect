@@ -249,6 +249,7 @@ class OptionKey(StrEnum):
     LAUNDRY_CARE_COMMON_LOAD_RECOMMENDATION = (
         "LaundryCare.Common.Option.LoadRecommendation"
     )
+    LAUNDRY_CARE_COMMON_PROCESS_PHASE = "LaundryCare.Common.Option.ProcessPhase"
     LAUNDRY_CARE_COMMON_REFER_TO_PROGRAM = "LaundryCare.Common.Option.ReferToProgram"
     LAUNDRY_CARE_COMMON_SILENT_MODE = "LaundryCare.Common.Option.SilentMode"
     LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
