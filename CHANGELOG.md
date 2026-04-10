@@ -2,6 +2,23 @@
 
 <!-- version list -->
 
+## v0.35.0 (2026-04-10)
+
+### Features
+
+- Add setpoint temperature option for air conditioner
+  ([#149](https://github.com/MartinHjelmare/aiohomeconnect/pull/149),
+  [`584e423`](https://github.com/MartinHjelmare/aiohomeconnect/commit/584e423907d77f1f7807331659fe928763339e24))
+
+### Breaking Changes
+
+- Adjust the names of two event options:
+  `HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN_SPEED_MODE` was changed to
+  `HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_OPTION_FAN_SPEED_MODE`, and
+  `HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN_SPEED_PERCENTAGE` was changed to
+  `HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_OPTION_FAN_SPEED_PERCENTAGE`
+
+
 ## v0.34.0 (2026-04-07)
 
 ### Features
