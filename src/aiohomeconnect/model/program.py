@@ -252,6 +252,8 @@ class OptionKey(StrEnum):
     LAUNDRY_CARE_COMMON_LOAD_RECOMMENDATION = (
         "LaundryCare.Common.Option.LoadRecommendation"
     )
+    LAUNDRY_CARE_COMMON_PROCESS_PHASE = "LaundryCare.Common.Option.ProcessPhase"
+    LAUNDRY_CARE_COMMON_REFER_TO_PROGRAM = "LaundryCare.Common.Option.ReferToProgram"
     LAUNDRY_CARE_COMMON_SILENT_MODE = "LaundryCare.Common.Option.SilentMode"
     LAUNDRY_CARE_COMMON_VARIO_PERFECT = "LaundryCare.Common.Option.VarioPerfect"
     LAUNDRY_CARE_DRYER_DRYING_TARGET = "LaundryCare.Dryer.Option.DryingTarget"
@@ -264,6 +266,7 @@ class OptionKey(StrEnum):
     LAUNDRY_CARE_WASHER_RINSE_HOLD = "LaundryCare.Washer.Option.RinseHold"
     LAUNDRY_CARE_WASHER_RINSE_PLUS = "LaundryCare.Washer.Option.RinsePlus"
     LAUNDRY_CARE_WASHER_SOAK = "LaundryCare.Washer.Option.Soak"
+    LAUNDRY_CARE_WASHER_SPEED_PERFECT = "LaundryCare.Washer.Option.SpeedPerfect"
     LAUNDRY_CARE_WASHER_SPIN_SPEED = "LaundryCare.Washer.Option.SpinSpeed"
     LAUNDRY_CARE_WASHER_STAINS = "LaundryCare.Washer.Option.Stains"
     LAUNDRY_CARE_WASHER_TEMPERATURE = "LaundryCare.Washer.Option.Temperature"
