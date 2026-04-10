@@ -246,6 +246,9 @@ class OptionKey(StrEnum):
     HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_FAN_SPEED_PERCENTAGE = (
         "HeatingVentilationAirConditioning.AirConditioner.Option.FanSpeedPercentage"
     )
+    HEATING_VENTILATION_AIR_CONDITIONING_AIR_CONDITIONER_SETPOINT_TEMPERATURE = (
+        "HeatingVentilationAirConditioning.AirConditioner.Option.SetpointTemperature"
+    )
     LAUNDRY_CARE_COMMON_LOAD_RECOMMENDATION = (
         "LaundryCare.Common.Option.LoadRecommendation"
     )
