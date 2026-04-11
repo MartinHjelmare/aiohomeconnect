@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.36.0 (2026-04-11)
+
+### Features
+
+- Add new laundry related options
+  ([#150](https://github.com/MartinHjelmare/aiohomeconnect/pull/150),
+  [`39927e5`](https://github.com/MartinHjelmare/aiohomeconnect/commit/39927e5a74e442d8262a399e61ef9408a50c763f))
+
+
 ## v0.35.0 (2026-04-10)
 
 ### Features
