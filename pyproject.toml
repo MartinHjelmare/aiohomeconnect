@@ -1,181 +1,163 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools"]
+requires = [ "setuptools>=77.0.3" ]
 
 [project]
+name = "aiohomeconnect"
+version = "0.36.0"
+description = "An asyncio client for the Home Connect API."
+readme = "README.md"
+license = "Apache-2.0"
 authors = [
-  {name = "Martin Hjelmare", email = "marhje52@gmail.com"},
+  { name = "Martin Hjelmare", email = "marhje52@gmail.com" },
 ]
+requires-python = ">=3.13"
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Developers",
   "Natural Language :: English",
   "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Libraries",
 ]
-description = "An asyncio client for the Home Connect API."
-license = "Apache-2.0"
-name = "aiohomeconnect"
-readme = "README.md"
-requires-python = ">=3.13"
-version = "0.36.0"
-
 dependencies = [
   "httpx>=0.28.0,<1",
   "httpx-sse>=0.4.0,<1",
   "mashumaro>=3.13.1,<4",
 ]
-scripts.aiohomeconnect = "aiohomeconnect.cli:cli"
+optional-dependencies.cli = [
+  "authlib>=1.3.0,<2",
+  "fastapi>=0.115.0,<1",
+  "typer>=0.15,<1",
+  "uvicorn>=0.34.0,<1",
+]
 urls."Bug Tracker" = "https://github.com/MartinHjelmare/aiohomeconnect/issues"
 urls.Changelog = "https://github.com/MartinHjelmare/aiohomeconnect/blob/main/CHANGELOG.md"
 urls.documentation = "https://aiohomeconnect.readthedocs.io"
 urls.repository = "https://github.com/MartinHjelmare/aiohomeconnect"
-
-[project.optional-dependencies]
-cli = [
-  "authlib>=1.3.0,<2",
-  "fastapi>=0.115.0,<1",
-  "uvicorn>=0.34.0,<1",
-  "typer>=0.15,<1",
-]
+scripts.aiohomeconnect = "aiohomeconnect.cli:cli"
 
 [dependency-groups]
 dev = [
   "codespell==2.4.2",
   "copier>=9.15,<9.16",
-  "mypy==1.20.1",
-  "pre-commit==4.6.0",
+  "prek==0.3.11",
+  "pytest==9.0.3",
   "pytest-asyncio==1.3.0",
+  "pytest-cov==7.1.0",
   "pytest-httpx==0.36.2",
   "python-semantic-release>=10,<11",
   "ruff==0.15.12",
-  "pytest==9.0.3",
-  "pytest-cov==7.1.0",
+  "sybil[pytest]==10.0.1",
+  "ty==0.0.34",
 ]
 docs = [
-  "furo>=2023.5.20; python_version>='3.11'",
-  "myst-parser>=0.16; python_version>='3.11'",
-  "sphinx>=4; python_version>='3.11'",
-  "sphinx-autobuild>=2025,<2026; python_version>='3.11'",
+  "furo; python_version>='3.12'",
+  "myst-parser; python_version>='3.12'",
+  "sphinx==9.*; python_version>='3.12'",
+  "sphinx-autobuild; python_version>='3.12'",
 ]
 
 [tool.ruff]
+target-version = "py313"
 line-length = 88
-lint.ignore = [
-  "ANN401", # any-type
-  "COM812", # missing-trailing-comma
-  "D203", # 1 blank line required before class docstring
-  "D213", # Multi-line docstring summary should start at the second line
-  "D417", # False positives in some occasions
-  "EM101", # raw-string-in-exception
-  "EM102", # f-string-in-exception
-  "ISC001", # single-line-implicit-string-concatenation
-  "PLR0913", # too-many-arguments
-  "PLR2004", # magic-value-comparison
-  "TC001", # typing-only-first-party-import
-  "TC002", # typing-only-third-party-import
-  "TC003", # typing-only-stdlib-import
-  "TRY003", # raise-vanilla-args
-]
-lint.isort.force-sort-within-sections = true
-lint.isort.known-first-party = ["aiohomeconnect", "tests"]
-lint.per-file-ignores."docs/conf.py" = ["D100", "D401"]
-lint.per-file-ignores."scripts/*" = ["ARG002", "ERA001", "PLR0911", "T201"]
-lint.per-file-ignores."setup.py" = ["D100"]
-lint.per-file-ignores."src/aiohomeconnect/cli/*" = ["T201"]
-lint.per-file-ignores."tests/**/*" = [
-  "FBT001", # boolean-type-hint-positional-argument
-  "S101", # assert
-  "S105", # hardcoded-password-string
-]
 lint.select = [
   "ALL", # all rules
 ]
-target-version = "py313"
+lint.ignore = [
+  "ANN401",  # any-type
+  "COM812",  # missing-trailing-comma
+  "D203",    # 1 blank line required before class docstring
+  "D213",    # Multi-line docstring summary should start at the second line
+  "D417",    # False positives in some occasions
+  "EM101",   # raw-string-in-exception
+  "EM102",   # f-string-in-exception
+  "ISC001",  # single-line-implicit-string-concatenation
+  "PLR0913", # too-many-arguments
+  "PLR2004", # magic-value-comparison
+  "TC001",   # typing-only-first-party-import
+  "TC002",   # typing-only-third-party-import
+  "TC003",   # typing-only-stdlib-import
+  "TRY003",  # raise-vanilla-args
+]
+lint.per-file-ignores."docs/conf.py" = [ "D100", "D401" ]
+lint.per-file-ignores."scripts/*" = [ "ARG002", "ERA001", "PLR0911", "T201" ]
+lint.per-file-ignores."setup.py" = [ "D100" ]
+lint.per-file-ignores."src/aiohomeconnect/cli/*" = [ "T201" ]
+lint.per-file-ignores."tests/**/*" = [
+  "FBT001", # boolean-type-hint-positional-argument
+  "S101",   # assert
+  "S105",   # hardcoded-password-string
+]
+lint.isort.force-sort-within-sections = true
+lint.isort.known-first-party = [ "aiohomeconnect", "tests" ]
 
-[tool.pytest.ini_options]
-addopts = """\
-    -Wdefault
-    --cov=aiohomeconnect
-    --cov-report=term-missing:skip-covered
-    --cov-report=xml
-    """
+[tool.pyproject-fmt]
+keep_full_version = true
+max_supported_python = "3.14"
+
+[tool.ty]
+terminal.error-on-warning = true
+src.exclude = [ "docs/", "scripts/" ]
+
+[tool.pytest]
+minversion = "9.0"
+addopts = [
+  "-Wonce",
+  "-p no:doctest",
+  "--cov=aiohomeconnect",
+  "--cov-report=term-missing",
+  "--cov-report=xml",
+]
 asyncio_default_fixture_loop_scope = "function"
 asyncio_mode = "auto"
-pythonpath = ["src"]
+pythonpath = [ "src" ]
 
-[tool.coverage.run]
-branch = true
-
-[tool.coverage.report]
-exclude_lines = [
-  "pragma: no cover",
+[tool.coverage]
+run.branch = true
+paths.source = [
+  "src",
+  ".tox/**/site-packages",
+]
+report.exclude_lines = [
   "@overload",
-  "if TYPE_CHECKING",
-  "raise NotImplementedError",
+  "def __repr__",
   'if __name__ == "__main__":',
+  "if TYPE_CHECKING",
+  "pragma: no cover",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "raise RuntimeError",
 ]
-
-[tool.mypy]
-check_untyped_defs = true
-disallow_any_generics = true
-disallow_incomplete_defs = true
-disallow_untyped_defs = true
-exclude = [
-  'docs/.*',
-  'setup.py',
-]
-mypy_path = "src/"
-no_implicit_optional = true
-show_error_codes = true
-warn_unreachable = true
-warn_unused_ignores = true
-
-[[tool.mypy.overrides]]
-allow_untyped_defs = true
-module = "tests.*"
-
-[[tool.mypy.overrides]]
-ignore_missing_imports = true
-module = "authlib.*"
 
 [tool.semantic_release]
 allow_zero_version = true
+major_on_zero = false
+version_toml = [ "pyproject.toml:project.version" ]
+version_variables = [
+  "src/aiohomeconnect/__init__.py:__version__",
+  "docs/conf.py:release",
+]
 build_command = """
 pip install uv
 uv lock
 git add uv.lock
 uv build
 """
-major_on_zero = false
-version_toml = ["pyproject.toml:project.version"]
-version_variables = [
-  "src/aiohomeconnect/__init__.py:__version__",
-  "docs/conf.py:release",
+branches.main.match = "main"
+branches.noop.match = "(?!main$)"
+branches.noop.prerelease = true
+changelog.exclude_commit_patterns = [
+  "chore(?:\\([^)]*?\\))?: .+",
+  "ci(?:\\([^)]*?\\))?: .+",
+  "refactor(?:\\([^)]*?\\))?: .+",
+  "style(?:\\([^)]*?\\))?: .+",
+  "test(?:\\([^)]*?\\))?: .+",
+  "build\\((?!deps\\): .+)",
+  "Merged? .*",
+  "Initial [Cc]ommit.*",         # codespell:ignore
 ]
-[tool.semantic_release.commit_parser_options]
-parse_squash_commits = false
-
-[tool.semantic_release.changelog]
-exclude_commit_patterns = [
-  '''chore(?:\([^)]*?\))?: .+''',
-  '''ci(?:\([^)]*?\))?: .+''',
-  '''refactor(?:\([^)]*?\))?: .+''',
-  '''style(?:\([^)]*?\))?: .+''',
-  '''test(?:\([^)]*?\))?: .+''',
-  '''build\((?!deps\): .+)''',
-  '''Merged? .*''',
-  '''Initial [Cc]ommit.*''', # codespell:ignore
-]
-
-[tool.semantic_release.changelog.environment]
-keep_trailing_newline = true
-
-[tool.semantic_release.branches.main]
-match = "main"
-
-[tool.semantic_release.branches.noop]
-match = "(?!main$)"
-prerelease = true
+changelog.environment.keep_trailing_newline = true
+commit_parser_options.parse_squash_commits = false
