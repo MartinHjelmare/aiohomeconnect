@@ -229,6 +229,7 @@ class OptionKey(StrEnum):
     COOKING_COMMON_HOOD_INTENSIVE_LEVEL = "Cooking.Common.Option.Hood.IntensiveLevel"
     COOKING_COMMON_HOOD_VENTING_LEVEL = "Cooking.Common.Option.Hood.VentingLevel"
     COOKING_OVEN_FAST_PRE_HEAT = "Cooking.Oven.Option.FastPreHeat"
+    COOKING_OVEN_LEVEL = "Cooking.Oven.Option.Level"
     COOKING_OVEN_SETPOINT_TEMPERATURE = "Cooking.Oven.Option.SetpointTemperature"
     COOKING_OVEN_WARMING_LEVEL = "Cooking.Oven.Option.WarmingLevel"
     DISHCARE_DISHWASHER_BRILLIANCE_DRY = "Dishcare.Dishwasher.Option.BrillianceDry"
@@ -271,6 +272,7 @@ class OptionKey(StrEnum):
     LAUNDRY_CARE_WASHER_STAINS = "LaundryCare.Washer.Option.Stains"
     LAUNDRY_CARE_WASHER_TEMPERATURE = "LaundryCare.Washer.Option.Temperature"
     LAUNDRY_CARE_WASHER_WATER_PLUS = "LaundryCare.Washer.Option.WaterPlus"
+    LAUNDRY_CARE_WASHER_PROGRAM_MODE = "LaundryCare.WasherDryer.Option.ProgramMode"
 
 
 class ProgramKey(StrEnum):
