@@ -78,6 +78,46 @@ class StatusKey(StrEnum):
         "BSH.Common.Status.RemoteControlStartAllowed"
     )
     BSH_COMMON_VIDEO_CAMERA_STATE = "BSH.Common.Status.Video.CameraState"
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_DUST_BOX_INSERTED = (
+        "ConsumerProducts.CleaningRobot.Status.DustBoxInserted"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_LAST_SELECTED_MAP = (
+        "ConsumerProducts.CleaningRobot.Status.LastSelectedMap"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_LIFTED = (
+        "ConsumerProducts.CleaningRobot.Status.Lifted"
+    )
+    CONSUMER_PRODUCTS_CLEANING_ROBOT_LOST = "ConsumerProducts.CleaningRobot.Status.Lost"
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffee"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE_AND_MILK = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffeeAndMilk"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_FROTHY_MILK = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterFrothyMilk"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_MILK = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotMilk"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWater"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER_CUPS = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWaterCups"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_MILK = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterMilk"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_POWDER_COFFEE = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterPowderCoffee"
+    )
+    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_RISTRETTO_ESPRESSO = (
+        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterRistrettoEspresso"
+    )
+    COOKING_OVEN_CURRENT_CAVITY_TEMPERATURE = (
+        "Cooking.Oven.Status.CurrentCavityTemperature"
+    )
     REFRIGERATION_COMMON_DOOR_BOTTLE_COOLER = (
         "Refrigeration.Common.Status.Door.BottleCooler"
     )
@@ -106,44 +146,4 @@ class StatusKey(StrEnum):
     )
     REFRIGERATION_COMMON_DOOR_WINE_COMPARTMENT = (
         "Refrigeration.Common.Status.Door.WineCompartment"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffee"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_COFFEE_AND_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterCoffeeAndMilk"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_FROTHY_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterFrothyMilk"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotMilk"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWater"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_HOT_WATER_CUPS = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterHotWaterCups"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_MILK = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterMilk"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_POWDER_COFFEE = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterPowderCoffee"
-    )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_BEVERAGE_COUNTER_RISTRETTO_ESPRESSO = (
-        "ConsumerProducts.CoffeeMaker.Status.BeverageCounterRistrettoEspresso"
-    )
-    CONSUMER_PRODUCTS_CLEANING_ROBOT_DUST_BOX_INSERTED = (
-        "ConsumerProducts.CleaningRobot.Status.DustBoxInserted"
-    )
-    CONSUMER_PRODUCTS_CLEANING_ROBOT_LAST_SELECTED_MAP = (
-        "ConsumerProducts.CleaningRobot.Status.LastSelectedMap"
-    )
-    CONSUMER_PRODUCTS_CLEANING_ROBOT_LIFTED = (
-        "ConsumerProducts.CleaningRobot.Status.Lifted"
-    )
-    CONSUMER_PRODUCTS_CLEANING_ROBOT_LOST = "ConsumerProducts.CleaningRobot.Status.Lost"
-    COOKING_OVEN_CURRENT_CAVITY_TEMPERATURE = (
-        "Cooking.Oven.Status.CurrentCavityTemperature"
     )
