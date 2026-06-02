@@ -391,7 +391,9 @@ class OptionKey(StrEnum):
     LAUNDRY_CARE_WASHER_LOW_TEMPERATURE_HYGIENE = (
         "LaundryCare.WasherDryer.Option.LowTemperatureHygiene"
     )
-    LAUNDRY_CARE_WASHER_DRYER_PROGRAM_MODE = "LaundryCare.WasherDryer.Option.ProgramMode"
+    LAUNDRY_CARE_WASHER_DRYER_PROGRAM_MODE = (
+        "LaundryCare.WasherDryer.Option.ProgramMode"
+    )
     LAUNDRY_CARE_WASHER_DRYER_WRINKLE_GUARD_BOOST = (
         "LaundryCare.WasherDryer.Option.WrinkleGuardBoost"
     )
@@ -501,7 +503,9 @@ class ProgramKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_CLEAN_BREWING_UNIT_MANUALLY = (
         "ConsumerProducts.CoffeeMaker.Program.CleaningModes.CleanBrewingUnitManually"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_CLEAN_BREWING_UNIT_MANUALLY_DETAILED = "ConsumerProducts.CoffeeMaker.Program.CleaningModes.CleanBrewingUnitManuallyDetailed"
+    CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_CLEAN_BREWING_UNIT_MANUALLY_DETAILED = (  # noqa: E501,
+        "ConsumerProducts.CoffeeMaker.Program.CleaningModes.CleanBrewingUnitManuallyDetailed"
+    )
     CONSUMER_PRODUCTS_COFFEE_MAKER_CLEANING_MODES_CLEAN_OUTLET_MANUALLY = (
         "ConsumerProducts.CoffeeMaker.Program.CleaningModes.CleanOutletManually"
     )
@@ -639,11 +643,15 @@ class ProgramKey(StrEnum):
     COOKING_OVEN_DISH_RECOMMENDATION_CONV_MEAT_PROBE_GOOSE_BREAST = (
         "Cooking.Oven.Program.Dish.Recommendation.Conv.MeatProbe.GooseBreast"
     )
-    COOKING_OVEN_DISH_RECOMMENDATION_CONV_STEAM_MEAT_PROBE_BONELESS_PORK_NECK_JOINT = "Cooking.Oven.Program.Dish.Recommendation.Conv.Steam.MeatProbe.BonelessPorkNeckJoint"
+    COOKING_OVEN_DISH_RECOMMENDATION_CONV_STEAM_MEAT_PROBE_BONELESS_PORK_NECK_JOINT = (  # avoid ruff format issues  # noqa: E501
+        "Cooking.Oven.Program.Dish.Recommendation.Conv.Steam.MeatProbe.BonelessPorkNeckJoint"
+    )
     COOKING_OVEN_DISH_RECOMMENDATION_CONV_STEAM_MEAT_PROBE_TURKEY_BREAST = (
         "Cooking.Oven.Program.Dish.Recommendation.Conv.Steam.MeatProbe.TurkeyBreast"
     )
-    COOKING_OVEN_DISH_RECOMMENDATION_CONV_STEAM_PART_COOKED_BREAD_ROLLS_OR_BAGUETTE = "Cooking.Oven.Program.Dish.Recommendation.Conv.Steam.PartCookedBreadRollsOrBaguette"
+    COOKING_OVEN_DISH_RECOMMENDATION_CONV_STEAM_PART_COOKED_BREAD_ROLLS_OR_BAGUETTE = (  # avoid ruff format issues  # noqa: E501
+        "Cooking.Oven.Program.Dish.Recommendation.Conv.Steam.PartCookedBreadRollsOrBaguette"
+    )
     COOKING_OVEN_DISH_RECOMMENDATION_FULL_STEAM_BROCCOLI = (
         "Cooking.Oven.Program.Dish.Recommendation.FullSteam.Broccoli"
     )
