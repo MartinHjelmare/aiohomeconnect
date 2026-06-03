@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.36.1 (2026-06-03)
+
+### Bug Fixes
+
+- Use float instead of int for retry_after
+  ([#164](https://github.com/MartinHjelmare/aiohomeconnect/pull/164),
+  [`2aab395`](https://github.com/MartinHjelmare/aiohomeconnect/commit/2aab39592c7c16eb5893c8270135e4301e25b0ae))
+
+
 ## v0.36.0 (2026-04-11)
 
 ### Features
