@@ -404,9 +404,7 @@ class ProgramKey(StrEnum):
 
     @classmethod
     def _missing_(cls, value: object) -> ProgramKey:
-        """Return UNKNOWN or mapped ones for missing keys."""
-        if isinstance(value, str) and value in _mapped_program_keys:
-            return _mapped_program_keys[value]
+        """Return UNKNOWN for missing keys."""
         LOGGER.debug("Unknown program key: %s", value)
         return cls.UNKNOWN
 
@@ -963,25 +961,3 @@ class ProgramKey(StrEnum):
         "LaundryCare.WasherDryer.Program.WashAndDry.90"
     )
     LAUNDRY_CARE_WASHER_DRYER_WOOL = "LaundryCare.WasherDryer.Program.Wool"
-
-
-_mapped_program_keys = {
-    "LaundryCare.WasherDryer.Program.Cotton.Cotton.Cotton": (
-        ProgramKey.LAUNDRY_CARE_WASHER_DRYER_COTTON
-    ),
-    "LaundryCare.WasherDryer.Program.DelicatesSilk.DelicatesSilk.DelicatesSilk": (
-        ProgramKey.LAUNDRY_CARE_WASHER_DRYER_DELICATES_SILK
-    ),
-    "LaundryCare.WasherDryer.Program.DrumCleanDry.DrumCare.DrumCare": (
-        ProgramKey.LAUNDRY_CARE_WASHER_DRYER_DRUM_CLEAN_AND_DRY_DRUM_CARE
-    ),
-    "LaundryCare.WasherDryer.Program.Rinse.Rinse.Rinse": (
-        ProgramKey.LAUNDRY_CARE_WASHER_DRYER_RINSE
-    ),
-    "LaundryCare.WasherDryer.Program.Sensitive.Sensitive.Sensitive": (
-        ProgramKey.LAUNDRY_CARE_WASHER_DRYER_SENSITIVE
-    ),
-    "LaundryCare.WasherDryer.Program.Wool.Wool.Wool": (
-        ProgramKey.LAUNDRY_CARE_WASHER_DRYER_WOOL
-    ),
-}
