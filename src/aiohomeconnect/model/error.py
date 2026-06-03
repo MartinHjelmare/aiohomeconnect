@@ -96,7 +96,7 @@ class UnsupportedMediaTypeError(HomeConnectApiError):
 class TooManyRequestsError(HomeConnectApiError):
     """Represent TooManyRequestsError."""
 
-    retry_after: int | None = None
+    retry_after: float | None = None
 
 
 @dataclass
