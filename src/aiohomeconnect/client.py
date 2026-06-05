@@ -145,7 +145,7 @@ class AbstractAuth(ABC):
             case codes.TOO_MANY_REQUESTS:
                 err = TooManyRequestsError.from_dict(response.json()["error"])
                 retry_after = response.headers.get("Retry-After")
-                err.retry_after = int(retry_after) if retry_after else None
+                err.retry_after = float(retry_after) if retry_after else None
                 raise err
             case codes.INTERNAL_SERVER_ERROR:
                 raise InternalServerError.from_dict(response.json()["error"])

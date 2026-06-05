@@ -4,7 +4,7 @@ requires = [ "setuptools>=77.0.3" ]
 
 [project]
 name = "aiohomeconnect"
-version = "0.36.0"
+version = "0.36.1"
 description = "An asyncio client for the Home Connect API."
 readme = "README.md"
 license = "Apache-2.0"
@@ -43,15 +43,15 @@ scripts.aiohomeconnect = "aiohomeconnect.cli:cli"
 dev = [
   "codespell==2.4.2",
   "copier>=9.15,<9.16",
-  "prek==0.4.3",
+  "prek==0.4.4",
   "pytest==9.0.3",
   "pytest-asyncio==1.4.0",
   "pytest-cov==7.1.0",
   "pytest-httpx==0.36.2",
   "python-semantic-release>=10,<11",
-  "ruff==0.15.15",
+  "ruff==0.15.16",
   "sybil[pytest]==10.0.1",
-  "ty==0.0.42",
+  "ty==0.0.44",
 ]
 docs = [
   "furo; python_version>='3.12'",
