@@ -195,17 +195,17 @@ class EventKey(StrEnum):
     CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_BEAN_CONTAINER_EMPTY = (
         "ConsumerProducts.CoffeeMaker.Event.BeanContainerEmpty"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN10CUPS = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN_10_CUPS = (
         "ConsumerProducts.CoffeeMaker.Event.CalcNCleanIn10Cups"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN15CUPS = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN_15_CUPS = (
         "ConsumerProducts.CoffeeMaker.Event.CalcNCleanIn15Cups"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN20CUPS = (
+    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN_20_CUPS = (
         "ConsumerProducts.CoffeeMaker.Event.CalcNCleanIn20Cups"
     )
-    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN5CUPS = (
-        "ConsumerProducts.CoffeeMaker.Event.CalcNCleanIn5Cup"
+    CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN_5_CUPS = (
+        "ConsumerProducts.CoffeeMaker.Event.CalcNCleanIn5Cups"
     )
     CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_DESCALING_IN_10_CUPS = (
         "ConsumerProducts.CoffeeMaker.Event.DescalingIn10Cups"
