@@ -2,6 +2,22 @@
 
 <!-- version list -->
 
+## v0.37.0 (2026-06-08)
+
+### Bug Fixes
+
+- Correct Calc N Clean typos ([#169](https://github.com/MartinHjelmare/aiohomeconnect/pull/169),
+  [`a74f42a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a74f42a3be4f16f3f108033bd1c80255fa830929))
+
+### Breaking Changes
+
+- The enum member names of the following event keys were changed:
+  CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN10CUPS,
+  CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN15CUPS,
+  CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN20CUPS,
+  CONSUMER_PRODUCTS_COFFEE_MAKER_EVENT_CALC_N_CLEAN_IN5CUPS
+
+
 ## v0.36.1 (2026-06-03)
 
 ### Bug Fixes
