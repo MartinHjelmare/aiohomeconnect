@@ -15,7 +15,7 @@ from sphinx.ext import apidoc
 project = "aiohomeconnect"
 project_copyright = "2026, Martin Hjelmare"
 author = "Martin Hjelmare"
-release = "0.37.0"
+release = "0.38.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

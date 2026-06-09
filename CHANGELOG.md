@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.38.0 (2026-06-09)
+
+### Features
+
+- New keys june 2026 ([#165](https://github.com/MartinHjelmare/aiohomeconnect/pull/165),
+  [`0710130`](https://github.com/MartinHjelmare/aiohomeconnect/commit/0710130464d37f1492c8d4c2468423d06a1afbeb))
+
+
 ## v0.37.0 (2026-06-08)
 
 ### Bug Fixes
