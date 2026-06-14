@@ -21,7 +21,9 @@ class Image(DataClassJSONMixin):
 
     key: str
     image_key: str = field(metadata=field_options(alias="imagekey"))
-    preview_image_key: str = field(metadata=field_options(alias="previewimagekey"))
     timestamp: int
     quality: str
     name: str | None = None
+    preview_image_key: str | None = field(
+        default=None, metadata=field_options(alias="previewimagekey")
+    )
