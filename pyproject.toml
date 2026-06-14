@@ -50,7 +50,7 @@ dev = [
   "pytest-httpx==0.36.2",
   "python-semantic-release>=10,<11",
   "ruff==0.15.17",
-  "sybil[pytest]==10.0.1",
+  "sybil[pytest]==10.1.0",
   "ty==0.0.46",
 ]
 docs = [
