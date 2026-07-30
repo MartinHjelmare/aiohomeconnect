@@ -2,6 +2,23 @@
 
 <!-- version list -->
 
+## v0.39.0 (2026-07-30)
+
+### Bug Fixes
+
+- Image model ([#172](https://github.com/MartinHjelmare/aiohomeconnect/pull/172),
+  [`cefa175`](https://github.com/MartinHjelmare/aiohomeconnect/commit/cefa175160fedd9c165e38bbd782580ad4f77800))
+
+### Features
+
+- Add appliance types enumeration
+  ([#173](https://github.com/MartinHjelmare/aiohomeconnect/pull/173),
+  [`1f19314`](https://github.com/MartinHjelmare/aiohomeconnect/commit/1f19314b44ac22af8b00c704d3482f91e0b49e68))
+
+- Mapped keys ([#171](https://github.com/MartinHjelmare/aiohomeconnect/pull/171),
+  [`00efbb0`](https://github.com/MartinHjelmare/aiohomeconnect/commit/00efbb06401d4e677957a9015a325c1744fc2cd3))
+
+
 ## v0.38.0 (2026-06-09)
 
 ### Features
