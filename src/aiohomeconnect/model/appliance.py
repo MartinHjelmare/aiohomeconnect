@@ -3,9 +3,32 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import StrEnum
 
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
+
+
+class ApplianceType(StrEnum):
+    """Represent an appliance type."""
+
+    AIR_CONDITIONER = "AirConditioner"
+    CLEANING_ROBOT = "CleaningRobot"
+    COFFEE_MAKER = "CoffeeMaker"
+    COOK_PROCESSOR = "CookProcessor"
+    COOKTOP = "Cooktop"
+    DISHWASHER = "Dishwasher"
+    DRYER = "Dryer"
+    FREEZER = "Freezer"
+    FRIDGE_FREEZER = "FridgeFreezer"
+    HOOD = "Hood"
+    MICROWAVE = "Microwave"
+    OVEN = "Oven"
+    REFRIGERATOR = "Refrigerator"
+    WARMING_DRAWER = "WarmingDrawer"
+    WASHER = "Washer"
+    WASHER_DRYER = "WasherDryer"
+    WINE_COOLER = "WineCooler"
 
 
 @dataclass
