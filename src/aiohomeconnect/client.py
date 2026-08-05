@@ -672,7 +672,7 @@ class Client:
         ha_id: str,
         *,
         image_key: str,
-    ) -> None:
+    ) -> bytes:
         """Get a specific image."""
         response = await self._auth.request(
             "GET",
@@ -684,6 +684,7 @@ class Client:
                 raise NotFoundError.from_dict(response.json()["error"])
             case _:
                 _raise_generic_error(response)
+        return response.content
 
     async def get_settings(
         self,
