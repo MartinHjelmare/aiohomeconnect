@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.39.1 (2026-08-11)
+
+### Bug Fixes
+
+- Return image bytes ([#183](https://github.com/MartinHjelmare/aiohomeconnect/pull/183),
+  [`bafdedd`](https://github.com/MartinHjelmare/aiohomeconnect/commit/bafdedda0eeee15599a61c584b1f83c7befde8f9))
+
+
 ## v0.39.0 (2026-07-30)
 
 ### Bug Fixes
