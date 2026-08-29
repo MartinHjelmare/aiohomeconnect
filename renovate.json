@@ -8,6 +8,7 @@
     ":semanticCommitTypeAll(chore)"
   ],
   "minimumReleaseAge": "14 days",
+  "prCreation": "not-pending",
   "packageRules": [
     {
       "groupName": "httpx",
