@@ -7,6 +7,7 @@
     ":enablePreCommit",
     ":semanticCommitTypeAll(chore)"
   ],
+  "minimumReleaseAge": "14 days",
   "packageRules": [
     {
       "groupName": "httpx",
