@@ -83,6 +83,41 @@ def _raise_generic_error(response: Response) -> None:
         )
 
 
+def _raise_request_api_error(response: Response) -> None:
+    """Raise an API error returned by an authenticated request."""
+    match response.status_code:
+        case codes.UNAUTHORIZED:
+            raise UnauthorizedError.from_dict(response.json()["error"])
+        case codes.FORBIDDEN:
+            raise ForbiddenError.from_dict(response.json()["error"])
+        case codes.NOT_ACCEPTABLE:
+            raise NotAcceptableError.from_dict(response.json()["error"])
+        case codes.REQUEST_TIMEOUT:
+            raise RequestTimeoutError.from_dict(response.json()["error"])
+        case codes.UNSUPPORTED_MEDIA_TYPE:
+            raise UnsupportedMediaTypeError.from_dict(response.json()["error"])
+        case codes.TOO_MANY_REQUESTS:
+            err = TooManyRequestsError.from_dict(response.json()["error"])
+            retry_after = response.headers.get("Retry-After")
+            err.retry_after = float(retry_after) if retry_after else None
+            raise err
+        case codes.INTERNAL_SERVER_ERROR:
+            raise InternalServerError.from_dict(response.json()["error"])
+
+
+def _get_bearer_token(headers: dict[str, str]) -> str | None:
+    """Return the bearer token from request headers."""
+    authorization = next(
+        (value for key, value in headers.items() if key.lower() == "authorization"),
+        None,
+    )
+    if authorization is None:
+        return None
+
+    scheme, _, token = authorization.partition(" ")
+    return token if scheme.lower() == "bearer" and token else None
+
+
 class AbstractAuth(ABC):
     """Abstract class to make authenticated requests."""
 
@@ -95,6 +130,18 @@ class AbstractAuth(ABC):
     async def async_get_access_token(self) -> str:
         """Return a valid access token."""
 
+    async def async_handle_invalid_token(
+        self,
+        rejected_access_token: str,  # noqa: ARG002
+    ) -> bool:
+        """Handle an access token rejected by the API.
+
+        The rejected_access_token is the exact token used for the first request
+        rejected with 401 invalid_token. Return True to retry once using the
+        current access token. The default implementation does not retry.
+        """
+        return False
+
     async def _get_headers(self, headers: dict[str, str] | None) -> dict[str, str]:
         """Return the headers for the request."""
         headers = {} if headers is None else dict(headers)
@@ -104,53 +151,66 @@ class AbstractAuth(ABC):
         headers["authorization"] = f"Bearer {access_token}"
         return headers
 
+    async def _should_retry_invalid_token(
+        self,
+        response: Response,
+        access_token: str | None,
+        *,
+        retry_allowed: bool,
+    ) -> bool:
+        """Return whether a request with an invalid token should be retried."""
+        if (
+            response.status_code != codes.UNAUTHORIZED
+            or not retry_allowed
+            or access_token is None
+        ):
+            return False
+
+        error = UnauthorizedError.from_dict(response.json()["error"])
+        return error.key == "invalid_token" and await self.async_handle_invalid_token(
+            access_token
+        )
+
     async def request(self, method: str, url: str, **kwargs: Any) -> Response:
         """Make a request.
 
         The url parameter must start with a slash.
         """
-        headers = await self._get_headers(kwargs.pop("headers", None))
-        headers["accept"] = "application/vnd.bsh.sdk.v1+json"
+        request_headers = kwargs.pop("headers", None)
         data = kwargs.pop("data", None)
-        if data is not None:
-            headers["content-type"] = "application/vnd.bsh.sdk.v1+json"
 
         LOGGER.debug("Request: %s %s | Data: %s", method, url, data)
 
-        try:
-            response = await self.client.request(
-                method,
-                f"{self.host}/api{url}",
-                **kwargs,
-                headers=headers,
-                json={"data": data} if data is not None else None,
-                timeout=Timeout(5, read=30),
-            )
-        except RequestError as e:
-            raise HomeConnectRequestError(f"{type(e).__name__}: {e}") from e
+        for attempt in range(2):
+            headers = await self._get_headers(request_headers)
+            access_token = _get_bearer_token(headers)
+            headers["accept"] = "application/vnd.bsh.sdk.v1+json"
+            if data is not None:
+                headers["content-type"] = "application/vnd.bsh.sdk.v1+json"
 
-        LOGGER.debug("Response: \n%s", response.text)
+            try:
+                response = await self.client.request(
+                    method,
+                    f"{self.host}/api{url}",
+                    **kwargs,
+                    headers=headers,
+                    json={"data": data} if data is not None else None,
+                    timeout=Timeout(5, read=30),
+                )
+            except RequestError as e:
+                raise HomeConnectRequestError(f"{type(e).__name__}: {e}") from e
 
-        match response.status_code:
-            case codes.UNAUTHORIZED:
-                raise UnauthorizedError.from_dict(response.json()["error"])
-            case codes.FORBIDDEN:
-                raise ForbiddenError.from_dict(response.json()["error"])
-            case codes.NOT_ACCEPTABLE:
-                raise NotAcceptableError.from_dict(response.json()["error"])
-            case codes.REQUEST_TIMEOUT:
-                raise RequestTimeoutError.from_dict(response.json()["error"])
-            case codes.UNSUPPORTED_MEDIA_TYPE:
-                raise UnsupportedMediaTypeError.from_dict(response.json()["error"])
-            case codes.TOO_MANY_REQUESTS:
-                err = TooManyRequestsError.from_dict(response.json()["error"])
-                retry_after = response.headers.get("Retry-After")
-                err.retry_after = float(retry_after) if retry_after else None
-                raise err
-            case codes.INTERNAL_SERVER_ERROR:
-                raise InternalServerError.from_dict(response.json()["error"])
-            case _:
-                return response
+            LOGGER.debug("Response: \n%s", response.text)
+
+            if await self._should_retry_invalid_token(
+                response, access_token, retry_allowed=attempt == 0
+            ):
+                continue
+
+            _raise_request_api_error(response)
+            return response
+
+        raise RuntimeError  # pragma: no cover
 
     @asynccontextmanager
     async def connect_sse(
@@ -160,17 +220,28 @@ class AbstractAuth(ABC):
         **kwargs: Any,
     ) -> AsyncIterator[EventSource]:
         """Create a SSE connection."""
-        headers = await self._get_headers(kwargs.pop("headers", None))
+        request_headers = kwargs.pop("headers", None)
 
         try:
-            async with aconnect_sse(
-                self.client,
-                method,
-                f"{self.host}/api{url}",
-                **kwargs,
-                headers=headers,
-            ) as event_source:
-                yield event_source
+            for attempt in range(2):
+                headers = await self._get_headers(request_headers)
+                access_token = _get_bearer_token(headers)
+                async with aconnect_sse(
+                    self.client,
+                    method,
+                    f"{self.host}/api{url}",
+                    **kwargs,
+                    headers=headers,
+                ) as event_source:
+                    response = event_source.response
+                    if response.status_code == codes.UNAUTHORIZED:
+                        await response.aread()
+                        if await self._should_retry_invalid_token(
+                            response, access_token, retry_allowed=attempt == 0
+                        ):
+                            continue
+                    yield event_source
+                    return
         except (ReadTimeout, RemoteProtocolError) as e:
             raise EventStreamInterruptedError(f"{type(e).__name__}: {e}") from e
         except RequestError as e:
