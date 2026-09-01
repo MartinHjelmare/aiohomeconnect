@@ -151,6 +151,55 @@ class AuthClient(AbstractAuth):
         return TEST_ACCESS_TOKEN
 
 
+class RefreshAuthClient(AbstractAuth):
+    """Use an auth client that replaces rejected access tokens."""
+
+    access_token = "old-token"
+    retry_invalid_token = True
+
+    def __init__(self, httpx_client: AsyncClient, host: str) -> None:
+        """Initialize the auth client."""
+        super().__init__(httpx_client, host)
+        self.rejected_access_tokens: list[str] = []
+
+    async def async_get_access_token(self) -> str:
+        """Return the current access token."""
+        return self.access_token
+
+    async def async_handle_invalid_token(self, rejected_access_token: str) -> bool:
+        """Replace an access token rejected by the API."""
+        self.rejected_access_tokens.append(rejected_access_token)
+        if self.retry_invalid_token:
+            self.access_token = "new-token"
+        return self.retry_invalid_token
+
+
+class UppercaseHeaderAuthClient(RefreshAuthClient):
+    """Use an auth client with an uppercase authorization header."""
+
+    async def _get_headers(
+        self,
+        headers: dict[str, str] | None,  # noqa: ARG002
+    ) -> dict[str, str]:
+        """Return request headers."""
+        return {"Authorization": f"Bearer {await self.async_get_access_token()}"}
+
+
+class CustomHeaderAuthClient(RefreshAuthClient):
+    """Use an auth client with a custom authorization header."""
+
+    authorization: str | None = None
+
+    async def _get_headers(
+        self,
+        headers: dict[str, str] | None,  # noqa: ARG002
+    ) -> dict[str, str]:
+        """Return request headers."""
+        if self.authorization is None:
+            return {}
+        return {"authorization": self.authorization}
+
+
 async def test_abstract_auth_request(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock
 ) -> None:
@@ -171,6 +220,161 @@ async def test_abstract_auth_request(
     assert request
     assert request.headers["authorization"] == f"Bearer {TEST_ACCESS_TOKEN}"
     assert request.url.query.decode(encoding="utf-8") == "key1=value1&key2=value2"
+
+
+async def test_abstract_auth_request_default_does_not_retry_invalid_token(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test the default invalid token handler does not retry."""
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "invalid_token", "description": "Expired"}},
+    )
+
+    client = AuthClient(httpx_client, "https://example.com")
+
+    with pytest.raises(UnauthorizedError):
+        await client.request("GET", "/test")
+
+    assert len(httpx_mock.get_requests()) == 1
+
+
+async def test_abstract_auth_request_retries_invalid_token(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test a request is retried with a replacement access token."""
+    url = "https://example.com/api/test?key=value"
+    httpx_mock.add_response(
+        url=url,
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "invalid_token", "description": "Expired"}},
+    )
+    httpx_mock.add_response(url=url, json={"result": "success"})
+
+    client = RefreshAuthClient(httpx_client, "https://example.com")
+    response = await client.request(
+        "POST",
+        "/test",
+        params={"key": "value"},
+        headers={"custom": "header"},
+        data={"setting": True},
+    )
+
+    assert response.json() == {"result": "success"}
+    assert client.rejected_access_tokens == ["old-token"]
+    requests = httpx_mock.get_requests()
+    assert [request.headers["authorization"] for request in requests] == [
+        "Bearer old-token",
+        "Bearer new-token",
+    ]
+    assert all(request.headers["custom"] == "header" for request in requests)
+    assert all(
+        json.loads(request.content) == {"data": {"setting": True}}
+        for request in requests
+    )
+
+
+async def test_abstract_auth_request_only_retries_once(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test a replacement access token is not retried again."""
+    for _ in range(2):
+        httpx_mock.add_response(
+            url="https://example.com/api/test",
+            status_code=codes.UNAUTHORIZED,
+            json={"error": {"key": "invalid_token", "description": "Expired"}},
+        )
+
+    client = RefreshAuthClient(httpx_client, "https://example.com")
+
+    with pytest.raises(UnauthorizedError):
+        await client.request("GET", "/test")
+
+    assert client.rejected_access_tokens == ["old-token"]
+    assert len(httpx_mock.get_requests()) == 2
+
+
+async def test_abstract_auth_request_handler_can_decline_retry(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test an invalid token handler can decline a retry."""
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "invalid_token", "description": "Expired"}},
+    )
+
+    client = RefreshAuthClient(httpx_client, "https://example.com")
+    client.retry_invalid_token = False
+
+    with pytest.raises(UnauthorizedError):
+        await client.request("GET", "/test")
+
+    assert client.rejected_access_tokens == ["old-token"]
+    assert len(httpx_mock.get_requests()) == 1
+
+
+async def test_abstract_auth_request_accepts_case_insensitive_authorization_header(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test authorization header matching is case insensitive."""
+    for _ in range(2):
+        httpx_mock.add_response(
+            url="https://example.com/api/test",
+            status_code=codes.UNAUTHORIZED,
+            json={"error": {"key": "invalid_token", "description": "Expired"}},
+        )
+
+    client = UppercaseHeaderAuthClient(httpx_client, "https://example.com")
+
+    with pytest.raises(UnauthorizedError):
+        await client.request("GET", "/test")
+
+    assert client.rejected_access_tokens == ["old-token"]
+    assert len(httpx_mock.get_requests()) == 2
+
+
+@pytest.mark.parametrize("authorization", [None, "Basic credentials"])
+async def test_abstract_auth_request_does_not_retry_without_bearer_token(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    authorization: str | None,
+) -> None:
+    """Test invalid token recovery requires a bearer token."""
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "invalid_token", "description": "Expired"}},
+    )
+
+    client = CustomHeaderAuthClient(httpx_client, "https://example.com")
+    client.authorization = authorization
+
+    with pytest.raises(UnauthorizedError):
+        await client.request("GET", "/test")
+
+    assert client.rejected_access_tokens == []
+    assert len(httpx_mock.get_requests()) == 1
+
+
+async def test_abstract_auth_request_does_not_retry_other_unauthorized_error(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test an unauthorized error other than invalid token is not retried."""
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "unauthorized", "description": "Unauthorized"}},
+    )
+
+    client = RefreshAuthClient(httpx_client, "https://example.com")
+
+    with pytest.raises(UnauthorizedError):
+        await client.request("GET", "/test")
+
+    assert client.rejected_access_tokens == []
+    assert len(httpx_mock.get_requests()) == 1
 
 
 async def test_abstract_auth_sse(
@@ -204,6 +408,71 @@ async def test_abstract_auth_sse(
     assert request
     assert request.headers["authorization"] == f"Bearer {TEST_ACCESS_TOKEN}"
     assert request.url.query.decode(encoding="utf-8") == "key1=value1&key2=value2"
+
+
+async def test_abstract_auth_sse_retries_invalid_token(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test an SSE connection is retried with a replacement access token."""
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "invalid_token", "description": "Expired"}},
+    )
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        stream=IteratorStream([b"data: connected\n\n"]),
+        headers={"Content-Type": "text/event-stream"},
+    )
+
+    client = RefreshAuthClient(httpx_client, "https://example.com")
+    async with client.connect_sse("GET", "/test") as event_source:
+        event = await anext(event_source.aiter_sse())
+
+    assert event.data == "connected"
+    assert client.rejected_access_tokens == ["old-token"]
+    assert [
+        request.headers["authorization"] for request in httpx_mock.get_requests()
+    ] == ["Bearer old-token", "Bearer new-token"]
+
+
+async def test_abstract_auth_sse_yields_non_retried_unauthorized_response(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test an unauthorized SSE response not retried is yielded to the caller."""
+    httpx_mock.add_response(
+        url="https://example.com/api/test",
+        status_code=codes.UNAUTHORIZED,
+        json={"error": {"key": "unauthorized", "description": "Unauthorized"}},
+    )
+
+    client = RefreshAuthClient(httpx_client, "https://example.com")
+    async with client.connect_sse("GET", "/test") as event_source:
+        assert event_source.response.status_code == codes.UNAUTHORIZED
+
+    assert client.rejected_access_tokens == []
+    assert len(httpx_mock.get_requests()) == 1
+
+
+async def test_stream_all_events_only_retries_invalid_token_once(
+    httpx_client: AsyncClient, httpx_mock: HTTPXMock
+) -> None:
+    """Test an SSE replacement access token is not retried again."""
+    for _ in range(2):
+        httpx_mock.add_response(
+            url="https://example.com/api/homeappliances/events",
+            status_code=codes.UNAUTHORIZED,
+            json={"error": {"key": "invalid_token", "description": "Expired"}},
+        )
+
+    auth = RefreshAuthClient(httpx_client, "https://example.com")
+    client = Client(auth)
+
+    with pytest.raises(UnauthorizedError):
+        await anext(client.stream_all_events())
+
+    assert auth.rejected_access_tokens == ["old-token"]
+    assert len(httpx_mock.get_requests()) == 2
 
 
 @pytest.mark.parametrize(
