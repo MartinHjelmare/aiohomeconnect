@@ -79,3 +79,36 @@ async def test_options_settings_status_references_at_events() -> None:
 async def test_mapped_program_keys(str_key: str, expected_enum_key: ProgramKey) -> None:
     """Test that the string keys are correctly mapped to the enum keys."""
     assert ProgramKey(str_key) is expected_enum_key
+
+
+@pytest.mark.parametrize(
+    ("str_key", "expected_option_key", "expected_event_key"),
+    [
+        (
+            "Cooking.Hob.Option.FryingSensorTempLevel",
+            OptionKey.COOKING_HOB_FRYING_SENSOR_TEMP_LEVEL,
+            EventKey.COOKING_HOB_OPTION_FRYING_SENSOR_TEMP_LEVEL,
+        ),
+        (
+            "Cooking.Hob.Option.JoinZone",
+            OptionKey.COOKING_HOB_JOIN_ZONE,
+            EventKey.COOKING_HOB_OPTION_JOIN_ZONE,
+        ),
+        (
+            "Cooking.Hob.Option.PowerLevel",
+            OptionKey.COOKING_HOB_POWER_LEVEL,
+            EventKey.COOKING_HOB_OPTION_POWER_LEVEL,
+        ),
+        (
+            "Cooking.Hob.Option.ZoneSelector",
+            OptionKey.COOKING_HOB_ZONE_SELECTOR,
+            EventKey.COOKING_HOB_OPTION_ZONE_SELECTOR,
+        ),
+    ],
+)
+def test_mapped_cooktop_option_keys(
+    str_key: str, expected_option_key: OptionKey, expected_event_key: EventKey
+) -> None:
+    """Test that cooktop option keys map to both enum keys."""
+    assert OptionKey(str_key) is expected_option_key
+    assert EventKey(str_key) is expected_event_key
