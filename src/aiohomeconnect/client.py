@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from collections.abc import AsyncGenerator, AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any
 
@@ -158,7 +158,7 @@ class AbstractAuth(ABC):
         method: str,
         url: str,
         **kwargs: Any,
-    ) -> AsyncIterator[EventSource]:
+    ) -> AsyncGenerator[EventSource]:
         """Create a SSE connection."""
         headers = await self._get_headers(kwargs.pop("headers", None))
 
