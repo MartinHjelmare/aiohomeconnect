@@ -85,9 +85,9 @@ async def test_mapped_program_keys(str_key: str, expected_enum_key: ProgramKey) 
     ("str_key", "expected_option_key", "expected_event_key"),
     [
         (
-            "Cooking.Hob.Option.FryingSensorTempLevel",
-            OptionKey.COOKING_HOB_FRYING_SENSOR_TEMP_LEVEL,
-            EventKey.COOKING_HOB_OPTION_FRYING_SENSOR_TEMP_LEVEL,
+            "Cooking.Hob.Option.FryingSensorLevel",
+            OptionKey.COOKING_HOB_FRYING_SENSOR_LEVEL,
+            EventKey.COOKING_HOB_OPTION_FRYING_SENSOR_LEVEL,
         ),
         (
             "Cooking.Hob.Option.JoinZone",

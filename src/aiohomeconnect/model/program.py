@@ -271,7 +271,7 @@ class OptionKey(StrEnum):
     COOKING_COMMON_HOOD_BOOST = "Cooking.Common.Option.Hood.Boost"
     COOKING_COMMON_HOOD_INTENSIVE_LEVEL = "Cooking.Common.Option.Hood.IntensiveLevel"
     COOKING_COMMON_HOOD_VENTING_LEVEL = "Cooking.Common.Option.Hood.VentingLevel"
-    COOKING_HOB_FRYING_SENSOR_TEMP_LEVEL = "Cooking.Hob.Option.FryingSensorTempLevel"
+    COOKING_HOB_FRYING_SENSOR_LEVEL = "Cooking.Hob.Option.FryingSensorLevel"
     COOKING_HOB_JOIN_ZONE = "Cooking.Hob.Option.JoinZone"
     COOKING_HOB_POWER_LEVEL = "Cooking.Hob.Option.PowerLevel"
     COOKING_HOB_ZONE_SELECTOR = "Cooking.Hob.Option.ZoneSelector"
