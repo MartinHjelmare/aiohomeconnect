@@ -324,7 +324,10 @@ async def test_stream_all_events(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    assert await anext(client.stream_all_events()) == event_message
+    assert [event async for event in client.stream_all_events()] == [
+        None,  # Successfully connected yield signal from the generator
+        event_message,
+    ]
 
 
 @pytest.mark.parametrize(
@@ -389,7 +392,10 @@ async def test_stream_events(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    assert await anext(client.stream_events(TEST_HA_ID)) == event_message
+    assert [event async for event in client.stream_events(TEST_HA_ID)] == [
+        None,  # Successfully connected yield signal from the generator
+        event_message,
+    ]
 
 
 @pytest.mark.parametrize(

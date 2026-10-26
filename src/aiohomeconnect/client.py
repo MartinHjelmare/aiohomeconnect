@@ -875,7 +875,7 @@ class Client:
         self,
         *,
         accept_language: Language | None = Language.EN,
-    ) -> AsyncGenerator[EventMessage]:
+    ) -> AsyncGenerator[EventMessage | None]:
         """Get stream of events for all appliances.
 
         Server Sent Events are available as Eventsource API in JavaScript
@@ -929,6 +929,10 @@ class Client:
                         raise InternalServerError.from_dict(response.json()["error"])
                     case _:
                         _raise_generic_error(response)
+            LOGGER.debug("Connection established successfully.")
+            # Send a None value to the generator to indicate
+            # that the connection has been established successfully.
+            yield None
 
             async for sse in event_source.aiter_sse():
                 LOGGER.debug("Event: %s", sse)
@@ -947,7 +951,7 @@ class Client:
         ha_id: str,
         *,
         accept_language: Language | None = Language.EN,
-    ) -> AsyncGenerator[EventMessage]:
+    ) -> AsyncGenerator[EventMessage | None]:
         """Get stream of events for one appliance.
 
         If you want to do a one-time query of the current status, you can ask for
@@ -1008,6 +1012,11 @@ class Client:
                         raise InternalServerError.from_dict(response.json()["error"])
                     case _:
                         _raise_generic_error(response)
+
+            LOGGER.debug("Connection established successfully.")
+            # Send a None value to the generator to indicate
+            # that the connection has been established successfully.
+            yield None
 
             async for sse in event_source.aiter_sse():
                 if (
