@@ -935,6 +935,8 @@ class Client:
 
         The id contains the home appliance ID. (except for KEEP-ALIVE event type)
 
+        None is yield when the connection has been established successfully.
+
         Further documentation can be found here:
         * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
         * [Program changes](https://api-docs.home-connect.com/events#program-changes)
@@ -980,6 +982,8 @@ class Client:
         the "data" field is populated with the JSON object defined below.
 
         The id contains the home appliance ID.
+
+        None is yield when the connection has been established successfully.
 
         Further documentation can be found here:
         * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
