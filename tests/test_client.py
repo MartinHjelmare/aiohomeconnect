@@ -255,6 +255,67 @@ async def test_generic_http_error_no_content(
         await client.get_home_appliances()
 
 
+@pytest.mark.parametrize(
+    ("status_code", "exception"),
+    [
+        (codes.UNAUTHORIZED, UnauthorizedError),
+        (codes.FORBIDDEN, ForbiddenError),
+        (codes.INTERNAL_SERVER_ERROR, InternalServerError),
+        (codes.BAD_GATEWAY, HomeConnectApiError),
+    ],
+)
+@pytest.mark.parametrize(
+    "body",
+    [
+        "<html><body>Bad Gateway</body></html>",
+        '["not", "an", "object"]',
+        '{"error": "not an object"}',
+    ],
+)
+async def test_http_error_non_json_body(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    status_code: int,
+    exception: type[HomeConnectApiError],
+    body: str,
+) -> None:
+    """Test http error with a body that has no error object."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances",
+        status_code=status_code,
+        text=body,
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(exception) as exc_info:
+        await client.get_home_appliances()
+    assert exc_info.value.key == "unknown"
+    assert exc_info.value.description == (
+        f"Unknown HTTP error (Status code: {status_code}): {body}"
+    )
+
+
+async def test_http_error_body_text_truncated(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+) -> None:
+    """Test that a long error body is collapsed and truncated in the description."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances",
+        status_code=codes.BAD_GATEWAY,
+        text="<html>\n  <body>" + "x" * 500 + "</body>\n</html>",
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(HomeConnectApiError) as exc_info:
+        await client.get_home_appliances()
+    assert exc_info.value.description == (
+        "Unknown HTTP error (Status code: 502): " + ("<html> <body>" + "x" * 500)[:200]
+    )
+
+
 async def test_rate_limit_error(
     httpx_client: AsyncClient, httpx_mock: HTTPXMock
 ) -> None:
@@ -357,6 +418,40 @@ async def test_stream_all_events_http_error(
 
     with pytest.raises(exception):
         await anext(client.stream_all_events())
+
+
+@pytest.mark.parametrize(
+    ("status_code", "exception"),
+    [
+        (codes.UNAUTHORIZED, UnauthorizedError),
+        (codes.TOO_MANY_REQUESTS, TooManyRequestsError),
+        (codes.INTERNAL_SERVER_ERROR, InternalServerError),
+        (codes.BAD_GATEWAY, HomeConnectApiError),
+        (codes.SERVICE_UNAVAILABLE, HomeConnectApiError),
+    ],
+)
+async def test_stream_all_events_http_error_non_json_body(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+    status_code: int,
+    exception: type[HomeConnectApiError],
+) -> None:
+    """Test stream all events http error with a body that is not JSON."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances/events",
+        status_code=status_code,
+        text="<html><body>Service Unavailable</body></html>",
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(exception) as exc_info:
+        await anext(client.stream_all_events())
+    assert exc_info.value.key == "unknown"
+    assert exc_info.value.description == (
+        f"Unknown HTTP error (Status code: {status_code}): "
+        "<html><body>Service Unavailable</body></html>"
+    )
 
 
 @pytest.mark.parametrize(

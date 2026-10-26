@@ -69,18 +69,32 @@ from .model.error import (
     WrongOperationStateError,
 )
 
+ERROR_TEXT_MAX_LENGTH = 200
+
+
+def _error_dict(response: Response) -> dict[str, Any]:
+    """Return the error object of an error response.
+
+    Fall back to an unknown error if the body is empty, is not JSON
+    or has no error object, for example an HTML page from a proxy.
+    The fallback description carries the start of the body text.
+    """
+    try:
+        error = response.json().get("error")
+    except (ValueError, AttributeError):
+        error = None
+    if isinstance(error, dict) and "key" in error:
+        return error
+    description = f"Unknown HTTP error (Status code: {response.status_code})"
+    if text := " ".join(response.text.split()):
+        description += f": {text[:ERROR_TEXT_MAX_LENGTH]}"
+    return {"key": "unknown", "description": description}
+
 
 def _raise_generic_error(response: Response) -> None:
     """Raise a generic error if the response is an error."""
     if response.is_error:
-        raise (
-            HomeConnectApiError.from_dict(error)
-            if response.content and (error := response.json().get("error"))
-            else HomeConnectApiError(
-                "unknown",
-                f"Unknown HTTP error (Status code: {response.status_code})",
-            )
-        )
+        raise HomeConnectApiError.from_dict(_error_dict(response))
 
 
 class AbstractAuth(ABC):
@@ -133,22 +147,22 @@ class AbstractAuth(ABC):
 
         match response.status_code:
             case codes.UNAUTHORIZED:
-                raise UnauthorizedError.from_dict(response.json()["error"])
+                raise UnauthorizedError.from_dict(_error_dict(response))
             case codes.FORBIDDEN:
-                raise ForbiddenError.from_dict(response.json()["error"])
+                raise ForbiddenError.from_dict(_error_dict(response))
             case codes.NOT_ACCEPTABLE:
-                raise NotAcceptableError.from_dict(response.json()["error"])
+                raise NotAcceptableError.from_dict(_error_dict(response))
             case codes.REQUEST_TIMEOUT:
-                raise RequestTimeoutError.from_dict(response.json()["error"])
+                raise RequestTimeoutError.from_dict(_error_dict(response))
             case codes.UNSUPPORTED_MEDIA_TYPE:
-                raise UnsupportedMediaTypeError.from_dict(response.json()["error"])
+                raise UnsupportedMediaTypeError.from_dict(_error_dict(response))
             case codes.TOO_MANY_REQUESTS:
-                err = TooManyRequestsError.from_dict(response.json()["error"])
+                err = TooManyRequestsError.from_dict(_error_dict(response))
                 retry_after = response.headers.get("Retry-After")
                 err.retry_after = float(retry_after) if retry_after else None
                 raise err
             case codes.INTERNAL_SERVER_ERROR:
-                raise InternalServerError.from_dict(response.json()["error"])
+                raise InternalServerError.from_dict(_error_dict(response))
             case _:
                 return response
 
@@ -237,7 +251,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise Conflict.from_dict(response.json()["error"])
+                raise Conflict.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return ArrayOfPrograms.from_dict(response.json()["data"])
@@ -256,7 +270,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise WrongOperationStateError.from_dict(response.json()["error"])
+                raise WrongOperationStateError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return ArrayOfAvailablePrograms.from_dict(response.json()["data"])
@@ -276,7 +290,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ProgramNotAvailableError.from_dict(response.json()["error"])
+                raise ProgramNotAvailableError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return ProgramDefinition.from_dict(response.json()["data"])
@@ -295,9 +309,9 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NoProgramActiveError.from_dict(response.json()["error"])
+                raise NoProgramActiveError.from_dict(_error_dict(response))
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return Program.from_dict(response.json()["data"])
@@ -356,7 +370,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -374,7 +388,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise WrongOperationStateError.from_dict(response.json()["error"])
+                raise WrongOperationStateError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -409,7 +423,7 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NoProgramActiveError.from_dict(response.json()["error"])
+                raise NoProgramActiveError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return ArrayOfOptions.from_dict(response.json()["data"])
@@ -439,7 +453,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ActiveProgramNotSetError.from_dict(response.json()["error"])
+                raise ActiveProgramNotSetError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -458,7 +472,7 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NoProgramActiveError.from_dict(response.json()["error"])
+                raise NoProgramActiveError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return Option.from_dict(response.json()["data"])
@@ -498,7 +512,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ActiveProgramNotSetError.from_dict(response.json()["error"])
+                raise ActiveProgramNotSetError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -521,7 +535,7 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NoProgramSelectedError.from_dict(response.json()["error"])
+                raise NoProgramSelectedError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return Program.from_dict(response.json()["data"])
@@ -558,7 +572,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -576,7 +590,7 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NoProgramSelectedError.from_dict(response.json()["error"])
+                raise NoProgramSelectedError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return ArrayOfOptions.from_dict(response.json()["data"])
@@ -597,7 +611,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise SelectedProgramNotSetError.from_dict(response.json()["error"])
+                raise SelectedProgramNotSetError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -616,7 +630,7 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NoProgramSelectedError.from_dict(response.json()["error"])
+                raise NoProgramSelectedError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return Option.from_dict(response.json()["data"])
@@ -648,7 +662,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise SelectedProgramNotSetError.from_dict(response.json()["error"])
+                raise SelectedProgramNotSetError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -681,7 +695,7 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NotFoundError.from_dict(response.json()["error"])
+                raise NotFoundError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return response.content
@@ -723,7 +737,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -742,9 +756,9 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NotFoundError.from_dict(response.json()["error"])
+                raise NotFoundError.from_dict(_error_dict(response))
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return GetSetting.from_dict(response.json()["data"])
@@ -767,9 +781,9 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NotFoundError.from_dict(response.json()["error"])
+                raise NotFoundError.from_dict(_error_dict(response))
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
 
@@ -791,7 +805,7 @@ class Client:
         )
         match response.status_code:
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return ArrayOfStatus.from_dict(response.json()["data"])
@@ -815,9 +829,9 @@ class Client:
         )
         match response.status_code:
             case codes.NOT_FOUND:
-                raise NotFoundError.from_dict(response.json()["error"])
+                raise NotFoundError.from_dict(_error_dict(response))
             case codes.CONFLICT:
-                raise ConflictError.from_dict(response.json()["error"])
+                raise ConflictError.from_dict(_error_dict(response))
             case _:
                 _raise_generic_error(response)
         return Status.from_dict(response.json()["data"])
@@ -918,15 +932,15 @@ class Client:
                 await response.aread()
                 match event_source.response.status_code:
                     case codes.UNAUTHORIZED:
-                        raise UnauthorizedError.from_dict(response.json()["error"])
+                        raise UnauthorizedError.from_dict(_error_dict(response))
                     case codes.FORBIDDEN:
-                        raise ForbiddenError.from_dict(response.json()["error"])
+                        raise ForbiddenError.from_dict(_error_dict(response))
                     case codes.NOT_ACCEPTABLE:
-                        raise NotAcceptableError.from_dict(response.json()["error"])
+                        raise NotAcceptableError.from_dict(_error_dict(response))
                     case codes.TOO_MANY_REQUESTS:
-                        raise TooManyRequestsError.from_dict(response.json()["error"])
+                        raise TooManyRequestsError.from_dict(_error_dict(response))
                     case codes.INTERNAL_SERVER_ERROR:
-                        raise InternalServerError.from_dict(response.json()["error"])
+                        raise InternalServerError.from_dict(_error_dict(response))
                     case _:
                         _raise_generic_error(response)
 
@@ -997,15 +1011,15 @@ class Client:
                 await response.aread()
                 match event_source.response.status_code:
                     case codes.UNAUTHORIZED:
-                        raise UnauthorizedError.from_dict(response.json()["error"])
+                        raise UnauthorizedError.from_dict(_error_dict(response))
                     case codes.FORBIDDEN:
-                        raise ForbiddenError.from_dict(response.json()["error"])
+                        raise ForbiddenError.from_dict(_error_dict(response))
                     case codes.NOT_ACCEPTABLE:
-                        raise NotAcceptableError.from_dict(response.json()["error"])
+                        raise NotAcceptableError.from_dict(_error_dict(response))
                     case codes.TOO_MANY_REQUESTS:
-                        raise TooManyRequestsError.from_dict(response.json()["error"])
+                        raise TooManyRequestsError.from_dict(_error_dict(response))
                     case codes.INTERNAL_SERVER_ERROR:
-                        raise InternalServerError.from_dict(response.json()["error"])
+                        raise InternalServerError.from_dict(_error_dict(response))
                     case _:
                         _raise_generic_error(response)
 
