@@ -185,6 +185,9 @@ async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -
     while True:
         try:
             async for event in client.stream_all_events():
+                if event is None:
+                    console.log("Connection established successfully")
+                    continue
                 console.log(event)
         except EventStreamInterruptedError as e:
             warning_console.log(f"{type(e).__name__}: {e} continuing...")
@@ -210,6 +213,9 @@ async def _subscribe_appliance_events(
     while True:
         try:
             async for event in client.stream_events(ha_id):
+                if event is None:
+                    console.log(f"Connection established for appliance {ha_id}")
+                    continue
                 console.log(event)
         except EventStreamInterruptedError as e:
             warning_console.log(f"{type(e).__name__}: {e} continuing...")

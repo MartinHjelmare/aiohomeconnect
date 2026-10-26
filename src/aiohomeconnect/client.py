@@ -874,6 +874,8 @@ class Client:
     async def _stream_events(
         self, url: str, accept_language: Language | None
     ) -> AsyncGenerator[EventMessage | None]:
+        # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
+        # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
         async with self._auth.connect_sse(
             "GET",
             url,
@@ -935,7 +937,7 @@ class Client:
 
         The id contains the home appliance ID. (except for KEEP-ALIVE event type)
 
-        None is yield when the connection has been established successfully.
+        None is yielded when the connection has been established successfully.
 
         Further documentation can be found here:
         * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
@@ -983,7 +985,7 @@ class Client:
 
         The id contains the home appliance ID.
 
-        None is yield when the connection has been established successfully.
+        None is yielded when the connection has been established successfully.
 
         Further documentation can be found here:
         * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
