@@ -871,6 +871,45 @@ class Client:
         )
         _raise_generic_error(response)
 
+    async def _stream_events(
+        self, url: str, accept_language: Language | None
+    ) -> AsyncGenerator[EventMessage | None]:
+        async with self._auth.connect_sse(
+            "GET",
+            url,
+            timeout=Timeout(60),
+            headers={
+                "Accept-Language": accept_language,
+            },
+        ) as event_source:
+            response = event_source.response
+            if response.is_error:
+                await response.aread()
+                match event_source.response.status_code:
+                    case codes.UNAUTHORIZED:
+                        raise UnauthorizedError.from_dict(response.json()["error"])
+                    case codes.FORBIDDEN:
+                        raise ForbiddenError.from_dict(response.json()["error"])
+                    case codes.NOT_ACCEPTABLE:
+                        raise NotAcceptableError.from_dict(response.json()["error"])
+                    case codes.TOO_MANY_REQUESTS:
+                        raise TooManyRequestsError.from_dict(response.json()["error"])
+                    case codes.INTERNAL_SERVER_ERROR:
+                        raise InternalServerError.from_dict(response.json()["error"])
+                    case _:
+                        _raise_generic_error(response)
+            LOGGER.debug('Connection established successfully for "%s"', url)
+            # Send a None value to the generator to indicate
+            # that the connection has been established successfully.
+            yield None
+
+            async for sse in event_source.aiter_sse():
+                LOGGER.debug("Event: %s", sse)
+
+                if sse.event not in EventType or sse.event == EventType.KEEP_ALIVE:
+                    continue
+                yield EventMessage.from_server_sent_event(sse)
+
     async def stream_all_events(
         self,
         *,
@@ -903,48 +942,11 @@ class Client:
         * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
         * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
         """
-        # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
-        # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
-        async with self._auth.connect_sse(
-            "GET",
+        async for event in self._stream_events(
             "/homeappliances/events",
-            timeout=Timeout(60),
-            headers={
-                "Accept-Language": accept_language,
-            },
-        ) as event_source:
-            response = event_source.response
-            if response.is_error:
-                await response.aread()
-                match event_source.response.status_code:
-                    case codes.UNAUTHORIZED:
-                        raise UnauthorizedError.from_dict(response.json()["error"])
-                    case codes.FORBIDDEN:
-                        raise ForbiddenError.from_dict(response.json()["error"])
-                    case codes.NOT_ACCEPTABLE:
-                        raise NotAcceptableError.from_dict(response.json()["error"])
-                    case codes.TOO_MANY_REQUESTS:
-                        raise TooManyRequestsError.from_dict(response.json()["error"])
-                    case codes.INTERNAL_SERVER_ERROR:
-                        raise InternalServerError.from_dict(response.json()["error"])
-                    case _:
-                        _raise_generic_error(response)
-            LOGGER.debug("Connection established successfully.")
-            # Send a None value to the generator to indicate
-            # that the connection has been established successfully.
-            yield None
-
-            async for sse in event_source.aiter_sse():
-                LOGGER.debug("Event: %s", sse)
-
-                if (
-                    # _value2member_map_ is required for Python 3.11,
-                    # remove after dropping support for it.
-                    sse.event not in EventType._value2member_map_
-                    or sse.event == EventType.KEEP_ALIVE
-                ):
-                    continue
-                yield EventMessage.from_server_sent_event(sse)
+            accept_language=accept_language,
+        ):
+            yield event
 
     async def stream_events(
         self,
@@ -986,44 +988,8 @@ class Client:
         * [Program progress changes](https://api-docs.home-connect.com/events#program-progress-changes)
         * [Home appliance state changes](https://api-docs.home-connect.com/events#home-appliance-state-changes)
         """
-        # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
-        # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
-        async with self._auth.connect_sse(
-            "GET",
+        async for event in self._stream_events(
             f"/homeappliances/{ha_id}/events",
-            timeout=Timeout(60),
-            headers={
-                "Accept-Language": accept_language,
-            },
-        ) as event_source:
-            response = event_source.response
-            if response.is_error:
-                await response.aread()
-                match event_source.response.status_code:
-                    case codes.UNAUTHORIZED:
-                        raise UnauthorizedError.from_dict(response.json()["error"])
-                    case codes.FORBIDDEN:
-                        raise ForbiddenError.from_dict(response.json()["error"])
-                    case codes.NOT_ACCEPTABLE:
-                        raise NotAcceptableError.from_dict(response.json()["error"])
-                    case codes.TOO_MANY_REQUESTS:
-                        raise TooManyRequestsError.from_dict(response.json()["error"])
-                    case codes.INTERNAL_SERVER_ERROR:
-                        raise InternalServerError.from_dict(response.json()["error"])
-                    case _:
-                        _raise_generic_error(response)
-
-            LOGGER.debug("Connection established successfully.")
-            # Send a None value to the generator to indicate
-            # that the connection has been established successfully.
-            yield None
-
-            async for sse in event_source.aiter_sse():
-                if (
-                    # _value2member_map_ is required for Python 3.11,
-                    # remove after dropping support for it.
-                    sse.event not in EventType._value2member_map_
-                    or sse.event == EventType.KEEP_ALIVE
-                ):
-                    continue
-                yield EventMessage.from_server_sent_event(sse)
+            accept_language=accept_language,
+        ):
+            yield event
