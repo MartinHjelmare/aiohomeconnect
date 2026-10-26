@@ -69,12 +69,15 @@ from .model.error import (
     WrongOperationStateError,
 )
 
+ERROR_TEXT_MAX_LENGTH = 200
+
 
 def _error_dict(response: Response) -> dict[str, Any]:
     """Return the error object of an error response.
 
     Fall back to an unknown error if the body is empty, is not JSON
     or has no error object, for example an HTML page from a proxy.
+    The fallback description carries the start of the body text.
     """
     try:
         error = response.json().get("error")
@@ -82,10 +85,10 @@ def _error_dict(response: Response) -> dict[str, Any]:
         error = None
     if isinstance(error, dict) and "key" in error:
         return error
-    return {
-        "key": "unknown",
-        "description": f"Unknown HTTP error (Status code: {response.status_code})",
-    }
+    description = f"Unknown HTTP error (Status code: {response.status_code})"
+    if text := " ".join(response.text.split()):
+        description += f": {text[:ERROR_TEXT_MAX_LENGTH]}"
+    return {"key": "unknown", "description": description}
 
 
 def _raise_generic_error(response: Response) -> None:

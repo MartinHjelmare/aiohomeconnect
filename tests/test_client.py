@@ -291,6 +291,29 @@ async def test_http_error_non_json_body(
     with pytest.raises(exception) as exc_info:
         await client.get_home_appliances()
     assert exc_info.value.key == "unknown"
+    assert exc_info.value.description == (
+        f"Unknown HTTP error (Status code: {status_code}): {body}"
+    )
+
+
+async def test_http_error_body_text_truncated(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+) -> None:
+    """Test that a long error body is collapsed and truncated in the description."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances",
+        status_code=codes.BAD_GATEWAY,
+        text="<html>\n  <body>" + "x" * 500 + "</body>\n</html>",
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    with pytest.raises(HomeConnectApiError) as exc_info:
+        await client.get_home_appliances()
+    assert exc_info.value.description == (
+        "Unknown HTTP error (Status code: 502): " + ("<html> <body>" + "x" * 500)[:200]
+    )
 
 
 async def test_rate_limit_error(
@@ -425,7 +448,10 @@ async def test_stream_all_events_http_error_non_json_body(
     with pytest.raises(exception) as exc_info:
         await anext(client.stream_all_events())
     assert exc_info.value.key == "unknown"
-    assert str(status_code) in str(exc_info.value)
+    assert exc_info.value.description == (
+        f"Unknown HTTP error (Status code: {status_code}): "
+        "<html><body>Service Unavailable</body></html>"
+    )
 
 
 @pytest.mark.parametrize(
