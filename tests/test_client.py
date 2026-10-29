@@ -324,7 +324,10 @@ async def test_stream_all_events(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    assert await anext(client.stream_all_events()) == event_message
+    assert [event async for event in client.stream_all_events()] == [
+        None,  # Successfully connected yield signal from the generator
+        event_message,
+    ]
 
 
 @pytest.mark.parametrize(
@@ -389,7 +392,94 @@ async def test_stream_events(
 
     client = Client(AuthClient(httpx_client, "https://example.com"))
 
-    assert await anext(client.stream_events(TEST_HA_ID)) == event_message
+    assert [event async for event in client.stream_events(TEST_HA_ID)] == [
+        None,  # Successfully connected yield signal from the generator
+        event_message,
+    ]
+
+
+async def test_stream_all_events_ignore_keep_alive(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+) -> None:
+    """Test stream all events with keep-alive events."""
+    httpx_mock.add_response(
+        url="https://example.com/api/homeappliances/events",
+        stream=IteratorStream(
+            [
+                "\n".join(
+                    [
+                        f"id: {TEST_HA_ID}",
+                        "data:",
+                        f"event: {EventType.KEEP_ALIVE}",
+                        "\n",
+                    ]
+                ).encode(),
+                "\n".join(
+                    [
+                        f"id: {TEST_HA_ID}",
+                        "data:",
+                        f"event: {TEST_EVENT_TYPE}",
+                        "\n",
+                    ]
+                ).encode(),
+            ]
+        ),
+        headers={"Content-Type": "text/event-stream"},
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    assert [event async for event in client.stream_all_events()] == [
+        None,
+        EventMessage(
+            TEST_HA_ID,
+            TEST_EVENT_TYPE,
+            ArrayOfEvents([]),
+        ),
+    ]
+
+
+async def test_stream_events_ignore_keep_alive(
+    httpx_client: AsyncClient,
+    httpx_mock: HTTPXMock,
+) -> None:
+    """Test stream events from a specific home appliance with keep-alive events."""
+    httpx_mock.add_response(
+        url=f"https://example.com/api/homeappliances/{TEST_HA_ID}/events",
+        stream=IteratorStream(
+            [
+                "\n".join(
+                    [
+                        f"id: {TEST_HA_ID}",
+                        "data:",
+                        f"event: {EventType.KEEP_ALIVE}",
+                        "\n",
+                    ]
+                ).encode(),
+                "\n".join(
+                    [
+                        f"id: {TEST_HA_ID}",
+                        "data:",
+                        f"event: {TEST_EVENT_TYPE}",
+                        "\n",
+                    ]
+                ).encode(),
+            ]
+        ),
+        headers={"Content-Type": "text/event-stream"},
+    )
+
+    client = Client(AuthClient(httpx_client, "https://example.com"))
+
+    assert [event async for event in client.stream_events(TEST_HA_ID)] == [
+        None,
+        EventMessage(
+            TEST_HA_ID,
+            TEST_EVENT_TYPE,
+            ArrayOfEvents([]),
+        ),
+    ]
 
 
 @pytest.mark.parametrize(
