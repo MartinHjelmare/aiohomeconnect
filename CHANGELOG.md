@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.40.0 (2026-11-02)
+
+### Features
+
+- **model**: Add cooktop option keys
+  ([#203](https://github.com/MartinHjelmare/aiohomeconnect/pull/203),
+  [`9f8b46f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9f8b46fd9c7022ff3dbddf2f809f6e7ff5da9d30))
+
+
 ## v0.39.1 (2026-08-11)
 
 ### Bug Fixes
