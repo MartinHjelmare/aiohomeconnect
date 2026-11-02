@@ -2,6 +2,15 @@
 
 <!-- version list -->
 
+## v0.40.1 (2026-11-02)
+
+### Bug Fixes
+
+- **client**: Handle error responses without a JSON error object
+  ([#207](https://github.com/MartinHjelmare/aiohomeconnect/pull/207),
+  [`50a1e6a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/50a1e6ac40112a08ec4a18a38862b7f778d02f44))
+
+
 ## v0.40.0 (2026-11-02)
 
 ### Features
