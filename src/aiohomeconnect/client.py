@@ -887,7 +887,7 @@ class Client:
 
     async def _stream_events(
         self, url: str, accept_language: Language | None
-    ) -> AsyncGenerator[EventMessage]:
+    ) -> AsyncGenerator[EventMessage | None]:
         # We use 60 seconds timeout because at least every 55 seconds a KEEP-ALIVE event
         # will be sent. See https://api-docs.home-connect.com/events/#availability-matrix
         async with self._auth.connect_sse(
@@ -914,6 +914,10 @@ class Client:
                         raise InternalServerError.from_dict(_error_dict(response))
                     case _:
                         _raise_generic_error(response)
+            LOGGER.debug('Connection established successfully for "%s"', url)
+            # Send a None value to the generator to indicate
+            # that the connection has been established successfully.
+            yield None
 
             async for sse in event_source.aiter_sse():
                 LOGGER.debug("Event: %s", sse)
@@ -926,7 +930,7 @@ class Client:
         self,
         *,
         accept_language: Language | None = Language.EN,
-    ) -> AsyncGenerator[EventMessage]:
+    ) -> AsyncGenerator[EventMessage | None]:
         """Get stream of events for all appliances.
 
         Server Sent Events are available as Eventsource API in JavaScript
@@ -947,6 +951,8 @@ class Client:
 
         The id contains the home appliance ID. (except for KEEP-ALIVE event type)
 
+        None is yielded when the connection has been established successfully.
+
         Further documentation can be found here:
         * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
         * [Program changes](https://api-docs.home-connect.com/events#program-changes)
@@ -965,7 +971,7 @@ class Client:
         ha_id: str,
         *,
         accept_language: Language | None = Language.EN,
-    ) -> AsyncGenerator[EventMessage]:
+    ) -> AsyncGenerator[EventMessage | None]:
         """Get stream of events for one appliance.
 
         If you want to do a one-time query of the current status, you can ask for
@@ -992,6 +998,8 @@ class Client:
         the "data" field is populated with the JSON object defined below.
 
         The id contains the home appliance ID.
+
+        None is yielded when the connection has been established successfully.
 
         Further documentation can be found here:
         * [Events availability matrix](https://api-docs.home-connect.com/events#availability-matrix)
