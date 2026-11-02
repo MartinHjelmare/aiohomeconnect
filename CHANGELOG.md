@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v0.40.1 (2026-11-02)
+
+### Bug Fixes
+
+- **client**: Handle error responses without a JSON error object
+  ([#207](https://github.com/MartinHjelmare/aiohomeconnect/pull/207),
+  [`50a1e6a`](https://github.com/MartinHjelmare/aiohomeconnect/commit/50a1e6ac40112a08ec4a18a38862b7f778d02f44))
+
+
+## v0.40.0 (2026-11-02)
+
+### Features
+
+- **model**: Add cooktop option keys
+  ([#203](https://github.com/MartinHjelmare/aiohomeconnect/pull/203),
+  [`9f8b46f`](https://github.com/MartinHjelmare/aiohomeconnect/commit/9f8b46fd9c7022ff3dbddf2f809f6e7ff5da9d30))
+
+
 ## v0.39.1 (2026-08-11)
 
 ### Bug Fixes
