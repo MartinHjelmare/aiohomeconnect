@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.41.0 (2026-11-02)
+
+### Features
+
+- Signal connection established on event stream
+  ([#208](https://github.com/MartinHjelmare/aiohomeconnect/pull/208),
+  [`98b4bc4`](https://github.com/MartinHjelmare/aiohomeconnect/commit/98b4bc4a0393ffea6a48a1b12711dd65316ff446))
+
+### Breaking Changes
+
+- The stream_all_events and stream_events methods may now yield None values.
+
+
 ## v0.40.1 (2026-11-02)
 
 ### Bug Fixes
