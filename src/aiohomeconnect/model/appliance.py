@@ -37,7 +37,7 @@ class HomeAppliance(DataClassJSONMixin):
 
     ha_id: str = field(metadata=field_options(alias="haId"))
     name: str
-    type: str
+    type: ApplianceType
     brand: str
     vib: str
     e_number: str = field(metadata=field_options(alias="enumber"))
