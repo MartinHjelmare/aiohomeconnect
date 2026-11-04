@@ -3,6 +3,7 @@
 from enum import StrEnum
 
 from .appliance import (
+    ApplianceType,
     ArrayOfHomeAppliances,
     HomeAppliance,
 )
@@ -47,6 +48,7 @@ from .status import (
 )
 
 __all__ = [
+    "ApplianceType",
     "ArrayOfAvailablePrograms",
     "ArrayOfCommands",
     "ArrayOfEvents",
