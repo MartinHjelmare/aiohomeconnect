@@ -2,7 +2,15 @@
 
 import pytest
 
-from aiohomeconnect.model import EventKey, OptionKey, ProgramKey, SettingKey, StatusKey
+from aiohomeconnect.model import (
+    ApplianceType,
+    EventKey,
+    OptionKey,
+    ProgramKey,
+    SettingKey,
+    StatusKey,
+)
+from aiohomeconnect.model.appliance import HomeAppliance
 
 
 def test_unknown_enum_values() -> None:
@@ -112,3 +120,20 @@ def test_mapped_cooktop_option_keys(
     """Test that cooktop option keys map to both enum keys."""
     assert OptionKey(str_key) is expected_option_key
     assert EventKey(str_key) is expected_event_key
+
+
+def test_home_appliance_from_dict_parses_appliance_type() -> None:
+    """Ensure API appliance type values deserialize to enum members."""
+    payload = {
+        "haId": "A-UNIQUE-ID",
+        "name": "Oven",
+        "type": "Oven",
+        "brand": "Siemens",
+        "vib": "VIB",
+        "enumber": "EN123",
+        "connected": True,
+    }
+
+    appliance = HomeAppliance.from_dict(payload)
+
+    assert appliance.type is ApplianceType.OVEN
