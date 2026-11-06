@@ -8,10 +8,19 @@ from enum import StrEnum
 from mashumaro import field_options
 from mashumaro.mixins.json import DataClassJSONMixin
 
+from aiohomeconnect.const import LOGGER
+
 
 class ApplianceType(StrEnum):
     """Represent an appliance type."""
 
+    @classmethod
+    def _missing_(cls, value: object) -> ApplianceType:
+        """Return UNKNOWN or mapped ones for missing keys."""
+        LOGGER.debug("Unknown appliance type: %s", value)
+        return cls.UNKNOWN
+
+    UNKNOWN = "unknown"
     AIR_CONDITIONER = "AirConditioner"
     CLEANING_ROBOT = "CleaningRobot"
     COFFEE_MAKER = "CoffeeMaker"
