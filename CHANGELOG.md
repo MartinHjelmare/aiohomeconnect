@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v0.42.0 (2026-11-06)
+
+### Bug Fixes
+
+- Replace cooktop for hob ([#212](https://github.com/MartinHjelmare/aiohomeconnect/pull/212),
+  [`a0c1092`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a0c10924bd7095016d0be086810040885f85a451))
+
+### Features
+
+- Change HomeAppliance type field to use ApplianceType enum
+  ([#213](https://github.com/MartinHjelmare/aiohomeconnect/pull/213),
+  [`42d5bce`](https://github.com/MartinHjelmare/aiohomeconnect/commit/42d5bcefcc5a8a54d83464066652b8b984794069))
+
+### Breaking Changes
+
+- `ApplianceType.COOKTOP` is no longer available.
+
+
 ## v0.41.0 (2026-11-02)
 
 ### Features
