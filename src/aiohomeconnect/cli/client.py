@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+from enum import StrEnum
 import json
 from pathlib import Path
 import time
@@ -13,10 +14,24 @@ from authlib.integrations.httpx_client import AsyncOAuth2Client
 from httpx import AsyncClient
 
 from aiohomeconnect.client import AbstractAuth, Client
-from aiohomeconnect.const import API_ENDPOINT, OAUTH2_AUTHORIZE, OAUTH2_TOKEN
+from aiohomeconnect.const import (
+    API_ENDPOINT,
+    API_ENDPOINT_CHINA,
+    OAUTH2_AUTHORIZE,
+    OAUTH2_AUTHORIZE_CHINA,
+    OAUTH2_TOKEN,
+    OAUTH2_TOKEN_CHINA,
+)
 
 TOKEN_FILE = "token.json"  # noqa: S105
 TOKEN_EXPIRES_MARGIN = 20
+
+
+class Server(StrEnum):
+    """Represent the server."""
+
+    GLOBAL = "global"
+    CN = "cn"
 
 
 class CLIClient(Client):
@@ -28,17 +43,20 @@ class CLIClient(Client):
         client_secret: str,
         redirect_uri: str | None = None,
         scope: str | None = None,
+        server: Server = Server.GLOBAL,
     ) -> None:
         """Initialize the client."""
+        host = API_ENDPOINT if server == Server.GLOBAL else API_ENDPOINT_CHINA
         super().__init__(
             Auth(
                 AsyncClient(),
-                API_ENDPOINT,
+                host,
                 TokenManager(
                     client_id=client_id,
                     client_secret=client_secret,
                     redirect_uri=redirect_uri,
                     scope=scope,
+                    server=server,
                 ),
             ),
         )
@@ -81,12 +99,20 @@ class TokenManager:
         client_secret: str,
         redirect_uri: str | None = None,
         scope: str | None = None,
+        server: Server = Server.GLOBAL,
     ) -> None:
         """Initialize the token manager."""
         self.access_token: str | None = None
         self._refresh_token: str | None = None
         self._state: str | None = None
         self._token: dict[str, Any] = {}
+        match server:
+            case Server.GLOBAL:
+                self._token_url = OAUTH2_TOKEN
+                self._authorization_url = OAUTH2_AUTHORIZE
+            case Server.CN:
+                self._token_url = OAUTH2_TOKEN_CHINA
+                self._authorization_url = OAUTH2_AUTHORIZE_CHINA
         self._client = AsyncOAuth2Client(
             client_id,
             client_secret,
@@ -97,7 +123,7 @@ class TokenManager:
     async def create_authorization_url(self) -> str:
         """Create the authorization URL."""
         uri, self._state = self._client.create_authorization_url(
-            OAUTH2_AUTHORIZE,
+            self._authorization_url,
         )
         return uri
 
@@ -108,7 +134,7 @@ class TokenManager:
     async def fetch_access_token(self, code: str) -> dict[str, Any]:
         """Fetch the access token."""
         token = self._token = await self._client.fetch_token(
-            OAUTH2_TOKEN,
+            self._token_url,
             code=code,
             grant_type="authorization_code",
             state=self._state,
@@ -127,7 +153,7 @@ class TokenManager:
     async def refresh_access_token(self) -> None:
         """Refresh the access token."""
         token = self._token = await self._client.refresh_token(
-            OAUTH2_TOKEN,
+            self._token_url,
             refresh_token=self._refresh_token,
             client_id=self._client.client_id,
             client_secret=self._client.client_secret,
