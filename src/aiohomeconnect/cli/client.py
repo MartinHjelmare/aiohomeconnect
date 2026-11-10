@@ -46,7 +46,7 @@ class CLIClient(Client):
         server: Server = Server.GLOBAL,
     ) -> None:
         """Initialize the client."""
-        host = API_ENDPOINT if server == Server.GLOBAL else API_ENDPOINT_CHINA
+        host = API_ENDPOINT_CHINA if server == Server.CN else API_ENDPOINT
         super().__init__(
             Auth(
                 AsyncClient(),
