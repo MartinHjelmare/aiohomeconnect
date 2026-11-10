@@ -16,7 +16,7 @@ from aiohomeconnect.model.error import (
     HomeConnectRequestError,
 )
 
-from .client import CLIClient, TokenManager
+from .client import CLIClient, Server, TokenManager
 
 app = FastAPI()
 cli = typer.Typer()
@@ -37,16 +37,18 @@ logging.getLogger("aiohomeconnect").setLevel(logging.DEBUG)
 def authorize(
     client_id: str,
     client_secret: str,
+    server: Server = Server.GLOBAL,
 ) -> None:
     """Authorize the client."""
-    asyncio.run(_authorize(client_id, client_secret))
+    asyncio.run(_authorize(client_id, client_secret, server))
 
 
-async def _authorize(client_id: str, client_secret: str) -> None:
+async def _authorize(client_id: str, client_secret: str, server: Server) -> None:
     """Authorize the client."""
     token_manager = TokenManager(
         client_id=client_id,
         client_secret=client_secret,
+        server=server,
     )
     uri = await token_manager.create_authorization_url()
 
@@ -68,7 +70,7 @@ async def _authorize(client_id: str, client_secret: str) -> None:
         console.log(f"Token fetched: {token}")
         return {"code": code, "state": state}
 
-    server = uvicorn.Server(
+    uvicorn_server = uvicorn.Server(
         uvicorn.Config("aiohomeconnect.cli:app", port=5000, log_level="info"),
     )
 
@@ -77,25 +79,27 @@ async def _authorize(client_id: str, client_secret: str) -> None:
         return await token_manager.fetch_access_token(code)
 
     console.print(f"Visit the following URL to authorize this client:\n{uri}")
-    await server.serve()
+    await uvicorn_server.serve()
 
 
 @cli.command()
 def get_appliances(
     client_id: str,
     client_secret: str,
+    server: Server = Server.GLOBAL,
 ) -> None:
     """Get the appliances."""
-    asyncio.run(_get_appliances(client_id, client_secret))
+    asyncio.run(_get_appliances(client_id, client_secret, server))
 
 
 async def _get_appliances(
     client_id: str,
     client_secret: str,
+    server: Server = Server.GLOBAL,
 ) -> None:
     """Get the appliances."""
     try:
-        client = CLIClient(client_id, client_secret)
+        client = CLIClient(client_id, client_secret, server=server)
         console.log(await client.get_home_appliances())
     except HomeConnectApiError as e:
         error_console.log(f"{type(e).__name__}: {e}")
@@ -104,15 +108,25 @@ async def _get_appliances(
 
 
 @cli.command()
-def get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
+def get_operation_state(
+    client_id: str,
+    client_secret: str,
+    ha_id: str,
+    server: Server = Server.GLOBAL,
+) -> None:
     """Get the operation state of the device."""
-    asyncio.run(_get_operation_state(client_id, client_secret, ha_id))
+    asyncio.run(_get_operation_state(client_id, client_secret, ha_id, server))
 
 
-async def _get_operation_state(client_id: str, client_secret: str, ha_id: str) -> None:
+async def _get_operation_state(
+    client_id: str,
+    client_secret: str,
+    ha_id: str,
+    server: Server = Server.GLOBAL,
+) -> None:
     """Get the operation state of the device."""
     try:
-        client = CLIClient(client_id, client_secret)
+        client = CLIClient(client_id, client_secret, server=server)
         console.log(
             await client.get_status_value(
                 ha_id, status_key=StatusKey.BSH_COMMON_OPERATION_STATE
@@ -134,6 +148,7 @@ def set_selected_program_option(
     bool_value: bool | None = None,
     float_value: float | None = None,
     string_value: str | None = None,
+    server: Server = Server.GLOBAL,
 ) -> None:
     """Set an option of a program on an appliance."""
     value: bool | float | str
@@ -148,7 +163,12 @@ def set_selected_program_option(
     console.log(f"Setting option {option_key} to {value}")
     asyncio.run(
         _set_selected_program_option(
-            client_id, client_secret, ha_id, option_key=option_key, value=value
+            client_id,
+            client_secret,
+            ha_id,
+            option_key=option_key,
+            value=value,
+            server=server,
         )
     )
 
@@ -160,10 +180,11 @@ async def _set_selected_program_option(
     *,
     option_key: OptionKey,
     value: Any,
+    server: Server = Server.GLOBAL,
 ) -> None:
     """Set an option of a program on an appliance."""
     try:
-        client = CLIClient(client_id, client_secret)
+        client = CLIClient(client_id, client_secret, server=server)
         await client.set_selected_program_option(
             ha_id, option_key=option_key, value=value
         )
@@ -174,14 +195,22 @@ async def _set_selected_program_option(
 
 
 @cli.command()
-def subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
+def subscribe_all_appliances_events(
+    client_id: str,
+    client_secret: str,
+    server: Server = Server.GLOBAL,
+) -> None:
     """Subscribe and print events from all the appliances."""
-    asyncio.run(_subscribe_all_appliances_events(client_id, client_secret))
+    asyncio.run(_subscribe_all_appliances_events(client_id, client_secret, server))
 
 
-async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -> None:
+async def _subscribe_all_appliances_events(
+    client_id: str,
+    client_secret: str,
+    server: Server = Server.GLOBAL,
+) -> None:
     """Subscribe and print events from all the appliances."""
-    client = CLIClient(client_id, client_secret)
+    client = CLIClient(client_id, client_secret, server=server)
     while True:
         try:
             async for event in client.stream_all_events():
@@ -200,16 +229,24 @@ async def _subscribe_all_appliances_events(client_id: str, client_secret: str) -
 
 
 @cli.command()
-def subscribe_appliance_events(client_id: str, client_secret: str, ha_id: str) -> None:
+def subscribe_appliance_events(
+    client_id: str,
+    client_secret: str,
+    ha_id: str,
+    server: Server = Server.GLOBAL,
+) -> None:
     """Subscribe and print events from one appliance."""
-    asyncio.run(_subscribe_appliance_events(client_id, client_secret, ha_id))
+    asyncio.run(_subscribe_appliance_events(client_id, client_secret, ha_id, server))
 
 
 async def _subscribe_appliance_events(
-    client_id: str, client_secret: str, ha_id: str
+    client_id: str,
+    client_secret: str,
+    ha_id: str,
+    server: Server = Server.GLOBAL,
 ) -> None:
     """Subscribe and print events from one appliance."""
-    client = CLIClient(client_id, client_secret)
+    client = CLIClient(client_id, client_secret, server=server)
     while True:
         try:
             async for event in client.stream_events(ha_id):
