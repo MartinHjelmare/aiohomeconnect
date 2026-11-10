@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.43.0 (2026-11-10)
+
+### Features
+
+- Add china endpoints ([#215](https://github.com/MartinHjelmare/aiohomeconnect/pull/215),
+  [`a50a5b1`](https://github.com/MartinHjelmare/aiohomeconnect/commit/a50a5b14eef2a35d139cd82d827a2a24a7d1fcd3))
+
+
 ## v0.42.0 (2026-11-06)
 
 ### Bug Fixes
